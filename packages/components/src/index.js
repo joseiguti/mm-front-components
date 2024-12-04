@@ -1,1 +1,1 @@
-export const Button = () => "I am a Button!";
+export const Button = () => 'I am a Button!';

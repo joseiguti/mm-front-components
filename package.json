@@ -8,7 +8,11 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "lerna run build",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "clean": "lerna clean"
   },
   "keywords": [],
   "author": "",
