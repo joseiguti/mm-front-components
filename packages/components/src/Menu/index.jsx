@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Nav = styled.nav`
   background-color: ${({ theme }) => theme.colors.primary};
@@ -28,8 +28,8 @@ const Li = styled.li`
 `;
 
 const Icon = styled.span`
-    font-size: ${({ theme }) => theme.icons.size};
-    margin-right: ${({ theme }) => theme.spacing.small};
+  font-size: ${({ theme }) => theme.icons.size};
+  margin-right: ${({ theme }) => theme.spacing.small};
 `;
 
 export const Menu = ({ items }) => {
