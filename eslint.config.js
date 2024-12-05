@@ -5,6 +5,7 @@ import path from 'path';
 import reactPlugin from 'eslint-plugin-react';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
+import styledComponentsPlugin from 'eslint-plugin-styled-components-a11y';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -32,6 +33,7 @@ export default [
       react: reactPlugin,
       'jsx-a11y': jsxA11yPlugin,
       prettier: prettierPlugin,
+      'styled-components-a11y': styledComponentsPlugin,
     },
     rules: {
       'prettier/prettier': 'error',

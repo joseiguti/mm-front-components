@@ -12,17 +12,27 @@
     "build": "lerna run build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.2",
     "@eslint/js": "^9.16.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-vite": "^8.4.7",
+    "@storybook/test": "^8.4.7",
     "eslint": "^9.16.0",
     "eslint-config-next": "^15.0.3",
     "eslint-config-prettier": "^9.1.0",
@@ -30,12 +40,24 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-storybook": "^0.11.1",
+    "eslint-plugin-styled-components-a11y": "^2.1.36",
     "globals": "^15.13.0",
     "lerna": "^8.1.9",
     "prettier": "^3.4.2",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rollup": "^4.28.0",
+    "storybook": "^8.4.7",
     "typescript-eslint": "^8.17.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "dependencies": {
+    "styled-components": "^6.1.13"
   }
 }

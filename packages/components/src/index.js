@@ -1,1 +1,2 @@
-export const Button = () => 'I am a Button!';
+export * from './Menu';
+export * from './GlobalStyles';
