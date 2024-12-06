@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Nav, Ul, Li, Icon, HamburgerButton, StyledLink } from "./Menu.styles";
+import { Nav, Ul, Li, Icon, HamburgerButton, StyledLink, Divider } from "./Menu.styles";
 
 export const Menu = ({ items }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -11,11 +11,11 @@ export const Menu = ({ items }) => {
   return (
     <Nav $isCollapsed={isCollapsed}>
       <HamburgerButton onClick={toggleMenu}>
-        <span />
-        <span />
-        <span />
+        <span style={{ width: '20px' }} />
+        <span style={{ width: '20px' }} />
+        <span style={{ width: '10px' }} />
       </HamburgerButton>
-
+      <Divider />
       <Ul>
         {items.map((item, index) => (
           <Li key={index}>

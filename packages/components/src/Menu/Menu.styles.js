@@ -1,10 +1,20 @@
 import styled from "styled-components";
 
 export const Nav = styled.nav`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: ${({ $isCollapsed }) => ($isCollapsed ? "60px" : "250px")};
+    height: 100vh;
     background-color: ${({ theme }) => theme.colors.primary};
-    padding: ${({ theme }) => theme.spacing.medium};
-    width: ${({ $isCollapsed }) => ($isCollapsed ? "60px" : "200px")};
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transition: width 0.3s ease;
+    z-index: 1000;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 `;
 
 export const Ul = styled.ul`
@@ -35,6 +45,7 @@ export const HamburgerButton = styled.button`
     flex-direction: column;
     justify-content: center;
     gap: 4px;
+    padding: 8px;
     margin-bottom: ${({ theme }) => theme.spacing.small};
 
     span {
@@ -58,4 +69,11 @@ export const StyledLink = styled.a`
 export const Icon = styled.span`
     font-size: ${({ theme }) => theme.icons.size};
     margin-right: ${({ theme }) => theme.spacing.small};
+`;
+
+export const Divider = styled.div`
+    width: 90%;
+    height: 1px;
+    background-color: ${({ theme }) => theme.colors.secondary};
+    margin: ${({ theme }) => theme.spacing.small} auto;
 `;
