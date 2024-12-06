@@ -45,8 +45,6 @@ export const HamburgerButton = styled.button`
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    padding: 8px;
-    margin-bottom: ${({ theme }) => theme.spacing.small};
 
     span {
         width: 24px;
@@ -76,4 +74,20 @@ export const Divider = styled.div`
     height: 1px;
     background-color: ${({ theme }) => theme.colors.secondary};
     margin: ${({ theme }) => theme.spacing.small} auto;
+`;
+
+export const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${({ theme }) => theme.spacing.small};
+    margin-bottom: ${({ theme }) => theme.spacing.small};
+`;
+
+export const Logo = styled.img`
+    max-height: 40px;
+    margin-right: auto;
+    display: ${({ $isCollapsed }) => ($isCollapsed ? "none" : "block")};
+    transition: display 0.3s ease, opacity 0.3s ease;
+    opacity: ${({ $isCollapsed }) => ($isCollapsed ? 0 : 1)};
 `;
