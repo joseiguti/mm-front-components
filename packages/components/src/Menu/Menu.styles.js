@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-    width: 240px; /* Establece el ancho predeterminado */
-    transition: width 0.3s;
     background-color: ${({ theme }) => theme.colors.primary};
-    overflow: hidden;
+    padding: ${({ theme }) => theme.spacing.medium};
+    width: ${({ $isCollapsed }) => ($isCollapsed ? "60px" : "200px")};
+    transition: width 0.3s ease;
 `;
 
 export const Ul = styled.ul`

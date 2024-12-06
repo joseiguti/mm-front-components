@@ -9,24 +9,19 @@ export const Menu = ({ items }) => {
   };
 
   return (
-    <Nav>
+    <Nav $isCollapsed={isCollapsed}>
       <HamburgerButton onClick={toggleMenu}>
         <span />
         <span />
         <span />
       </HamburgerButton>
 
-      {/* Texto para mostrar si el menú está colapsado */}
-      <p style={{ color: "white", textAlign: "center", marginTop: "10px" }}>
-        {isCollapsed ? "Menu is collapsed" : "Menu is expanded"}
-      </p>
-
       <Ul>
         {items.map((item, index) => (
           <Li key={index}>
             <StyledLink href={item.link || "#"}>
               <Icon>{item.icon}</Icon>
-              {item.label}
+              {!isCollapsed && item.label}
             </StyledLink>
           </Li>
         ))}
