@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import menuConfig from "../menuConfig.json";
-import { iconMap } from "./iconMap";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import menuConfig from '../menuConfig.json';
+import { iconMap } from './iconMap';
 import {
   Nav,
   Ul,
@@ -15,10 +15,10 @@ import {
   SubUl,
   SubLi,
   ToggleButton,
-} from "./Menu.styles";
+} from './Menu.styles';
 
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export const Menu = ({ config = {} }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -53,9 +53,9 @@ export const Menu = ({ config = {} }) => {
       <Header>
         <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
         <HamburgerButton onClick={toggleMenu}>
-          <span style={{ width: "20px" }} />
-          <span style={{ width: "20px" }} />
-          <span style={{ width: "10px" }} />
+          <span style={{ width: '20px' }} />
+          <span style={{ width: '20px' }} />
+          <span style={{ width: '10px' }} />
         </HamburgerButton>
       </Header>
       <Divider />
@@ -64,10 +64,10 @@ export const Menu = ({ config = {} }) => {
           <React.Fragment key={index}>
             <Li>
               <StyledLink
-                href={!item.children ? item.link || "#" : null}
+                href={!item.children ? item.link || '#' : null}
                 onClick={(e) => handleLinkClick(e, item, index)}
               >
-                <Icon>{React.createElement(iconMap[item.icon] || "span")}</Icon>
+                <Icon>{React.createElement(iconMap[item.icon] || 'span')}</Icon>
                 {!isCollapsed && item.label}
               </StyledLink>
               {!isCollapsed && item.children && (
@@ -84,7 +84,7 @@ export const Menu = ({ config = {} }) => {
               <SubUl>
                 {item.children.map((subitem, subIndex) => (
                   <SubLi key={subIndex}>
-                    <StyledLink href={subitem.link || "#"}>
+                    <StyledLink href={subitem.link || '#'}>
                       - {subitem.label}
                     </StyledLink>
                   </SubLi>
