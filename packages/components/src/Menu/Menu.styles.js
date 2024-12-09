@@ -60,7 +60,7 @@ export const StyledLink = styled.a`
     align-items: center;
 
     &:hover {
-        color: ${({ theme }) => theme.colors.hover};
+        color: ${({ theme }) => theme.colors.hoverLight || "#d3d3d3"};
     }
 `;
 

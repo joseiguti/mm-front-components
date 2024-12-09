@@ -3,6 +3,7 @@ const theme = {
     primary: '#0033A0',
     secondary: '#FFFFFF',
     hover: '#002080',
+    hoverLight: "#d3d3d3",
   },
   fonts: {
     primary: "'Arial', sans-serif",

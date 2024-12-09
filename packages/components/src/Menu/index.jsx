@@ -4,7 +4,7 @@ import menuConfig from "../menuConfig.json";
 import { iconMap } from "./iconMap";
 import { Nav, Ul, Li, Icon, HamburgerButton, StyledLink, Divider, Header, Logo } from "./Menu.styles";
 
-export const Menu = ({ config }) => {
+export const Menu = ({ config = {} }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const finalConfig = {
@@ -48,13 +48,9 @@ Menu.propTypes = {
       PropTypes.shape({
         label: PropTypes.string.isRequired,
         icon: PropTypes.node.isRequired,
-        link: PropTypes.string
+        link: PropTypes.string,
       })
     ),
-    logo: PropTypes.string
+    logo: PropTypes.string,
   }),
-};
-
-Menu.defaultProps = {
-  config: {},
 };
