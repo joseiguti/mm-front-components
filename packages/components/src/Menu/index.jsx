@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import menuConfig from "../menuConfig.json";
+import { iconMap } from "./iconMap";
 import { Nav, Ul, Li, Icon, HamburgerButton, StyledLink, Divider, Header, Logo } from "./Menu.styles";
 
-export const Menu = ({ items }) => {
+export const Menu = ({ config }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const finalConfig = {
+    ...menuConfig,
+    ...config,
+    items: config.items || menuConfig.items,
+  };
 
   const toggleMenu = () => {
     setIsCollapsed((prev) => !prev);
@@ -11,7 +20,7 @@ export const Menu = ({ items }) => {
   return (
     <Nav $isCollapsed={isCollapsed}>
       <Header>
-        <Logo src="path-to-your-image.png" alt="Logo" $isCollapsed={isCollapsed} />
+        <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
         <HamburgerButton onClick={toggleMenu}>
           <span style={{ width: "20px"}}/>
           <span style={{ width: "20px"}}/>
@@ -20,10 +29,10 @@ export const Menu = ({ items }) => {
       </Header>
       <Divider />
       <Ul>
-        {items.map((item, index) => (
+        {finalConfig.items.map((item, index) => (
           <Li key={index}>
             <StyledLink href={item.link || "#"}>
-              <Icon>{item.icon}</Icon>
+              <Icon>{React.createElement(iconMap[item.icon] || "span")}</Icon>
               {!isCollapsed && item.label}
             </StyledLink>
           </Li>
@@ -31,4 +40,21 @@ export const Menu = ({ items }) => {
       </Ul>
     </Nav>
   );
+};
+
+Menu.propTypes = {
+  config: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        icon: PropTypes.node.isRequired,
+        link: PropTypes.string
+      })
+    ),
+    logo: PropTypes.string
+  }),
+};
+
+Menu.defaultProps = {
+  config: {},
 };
