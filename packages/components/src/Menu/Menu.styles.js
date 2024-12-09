@@ -91,3 +91,32 @@ export const Logo = styled.img`
     transition: display 0.3s ease, opacity 0.3s ease;
     opacity: ${({ $isCollapsed }) => ($isCollapsed ? 0 : 1)};
 `;
+
+export const SubUl = styled.ul`
+    list-style: none;
+    padding: 0 16px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing.xsmall};
+`;
+
+export const SubLi = styled.li`
+    padding: ${({ theme }) => theme.spacing.xsmall} 0;
+    color: ${({ theme }) => theme.colors.secondary};
+    font-size: ${({ theme }) => theme.fonts.size.small};
+`;
+
+export const ToggleButton = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: ${({ theme }) => theme.colors.secondary};
+
+    &:hover {
+        color: ${({ theme }) => theme.colors.hover};
+    }
+`;

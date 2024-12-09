@@ -1,8 +1,24 @@
 {
   "items": [
-    { "label": "Home", "icon": "HomeIcon", "link": "/" },
-    { "label": "Settings", "icon": "SettingsIcon", "link": "/settings" },
-    { "label": "Messages", "icon": "MailIcon", "link": "/messages" }
+    {
+      "label": "Home",
+      "icon": "HomeIcon",
+      "link": "/",
+      "children": [
+        { "label": "Ayuda", "link": "/help" },
+        { "label": "Información", "link": "/info" }
+      ]
+    },
+    {
+      "label": "Settings",
+      "icon": "SettingsIcon",
+      "link": "/settings"
+    },
+    {
+      "label": "Messages",
+      "icon": "MailIcon",
+      "link": "/messages"
+    }
   ],
   "logo": "https://via.placeholder.com/150"
 }

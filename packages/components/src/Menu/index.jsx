@@ -2,10 +2,38 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import menuConfig from "../menuConfig.json";
 import { iconMap } from "./iconMap";
-import { Nav, Ul, Li, Icon, HamburgerButton, StyledLink, Divider, Header, Logo } from "./Menu.styles";
+import {
+  Nav,
+  Ul,
+  Li,
+  Icon,
+  HamburgerButton,
+  StyledLink,
+  Divider,
+  Header,
+  Logo,
+  SubUl,
+  SubLi,
+  ToggleButton,
+} from "./Menu.styles";
 
-export const Menu = ({ config = {} }) => {
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+export const Menu = ({ config }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState({});
+
+  const toggleMenu = () => {
+    setIsCollapsed((prev) => !prev);
+  };
+
+  const toggleSubmenu = (index) => {
+    setOpenSubmenus((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   const finalConfig = {
     ...menuConfig,
@@ -13,8 +41,11 @@ export const Menu = ({ config = {} }) => {
     items: config.items || menuConfig.items,
   };
 
-  const toggleMenu = () => {
-    setIsCollapsed((prev) => !prev);
+  const handleLinkClick = (e, item, index) => {
+    if (item.children) {
+      e.preventDefault();
+      toggleSubmenu(index);
+    }
   };
 
   return (
@@ -22,20 +53,45 @@ export const Menu = ({ config = {} }) => {
       <Header>
         <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
         <HamburgerButton onClick={toggleMenu}>
-          <span style={{ width: "20px"}}/>
-          <span style={{ width: "20px"}}/>
-          <span style={{ width: "10px"}}/>
+          <span style={{ width: "20px" }} />
+          <span style={{ width: "20px" }} />
+          <span style={{ width: "10px" }} />
         </HamburgerButton>
       </Header>
       <Divider />
       <Ul>
         {finalConfig.items.map((item, index) => (
-          <Li key={index}>
-            <StyledLink href={item.link || "#"}>
-              <Icon>{React.createElement(iconMap[item.icon] || "span")}</Icon>
-              {!isCollapsed && item.label}
-            </StyledLink>
-          </Li>
+          <React.Fragment key={index}>
+            <Li>
+              <StyledLink
+                href={!item.children ? item.link || "#" : null}
+                onClick={(e) => handleLinkClick(e, item, index)}
+              >
+                <Icon>{React.createElement(iconMap[item.icon] || "span")}</Icon>
+                {!isCollapsed && item.label}
+              </StyledLink>
+              {!isCollapsed && item.children && (
+                <ToggleButton onClick={() => toggleSubmenu(index)}>
+                  {openSubmenus[index] ? (
+                    <ArrowDropDownIcon />
+                  ) : (
+                    <ArrowRightIcon />
+                  )}
+                </ToggleButton>
+              )}
+            </Li>
+            {!isCollapsed && item.children && openSubmenus[index] && (
+              <SubUl>
+                {item.children.map((subitem, subIndex) => (
+                  <SubLi key={subIndex}>
+                    <StyledLink href={subitem.link || "#"}>
+                      - {subitem.label}
+                    </StyledLink>
+                  </SubLi>
+                ))}
+              </SubUl>
+            )}
+          </React.Fragment>
         ))}
       </Ul>
     </Nav>
@@ -47,10 +103,20 @@ Menu.propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string.isRequired,
-        icon: PropTypes.node.isRequired,
+        icon: PropTypes.string.isRequired,
         link: PropTypes.string,
+        children: PropTypes.arrayOf(
+          PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            link: PropTypes.string,
+          })
+        ),
       })
     ),
     logo: PropTypes.string,
   }),
+};
+
+Menu.defaultProps = {
+  config: {},
 };
