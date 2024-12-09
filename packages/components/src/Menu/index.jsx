@@ -20,7 +20,7 @@ import {
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-export const Menu = ({ config }) => {
+export const Menu = ({ config = {} }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState({});
 
@@ -115,8 +115,4 @@ Menu.propTypes = {
     ),
     logo: PropTypes.string,
   }),
-};
-
-Menu.defaultProps = {
-  config: {},
 };
