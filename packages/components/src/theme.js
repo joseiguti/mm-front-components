@@ -1,8 +1,9 @@
 export const theme = {
   colors: {
-    primary: "#000080",
+    primary: "#002F7A",
     secondary: "#FFFFFF",
     hover: "#AAAAAA",
+    secondaryBackground: "#003893"
   },
   fonts: {
     size: {
@@ -12,6 +13,10 @@ export const theme = {
   },
   icons: {
     size: "20px",
+  },
+  borderRadius: {
+    small: "8px",
+    medium: "16px",
   },
   spacing: {
     xsmall: "4px",

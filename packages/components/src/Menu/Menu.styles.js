@@ -24,8 +24,9 @@ export const Ul = styled.ul`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.spacing.small};
+    background-color: ${({ theme }) => theme.colors.secondaryBackground};
+    border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
-
 export const Li = styled.li`
     display: flex;
     align-items: center;
