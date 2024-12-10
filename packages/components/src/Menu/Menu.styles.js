@@ -24,9 +24,10 @@ export const Ul = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.small};
-  background-color: ${({ theme }) => theme.colors.secondaryBackground};
-  border-radius: ${({ theme }) => theme.borderRadius.small};
+  background-color: ${({ theme }) => theme.colors.secondaryBackground || "#f7f7f7"};
+  border-radius: ${({ theme }) => theme.borderRadius.small || "10px"};
 `;
+
 export const Li = styled.li`
   display: flex;
   align-items: center;

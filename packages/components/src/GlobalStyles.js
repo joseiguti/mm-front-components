@@ -5,7 +5,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: ${({ theme }) => theme.fonts.primary};
     background-color: ${({ theme }) => '#FFF'};
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => '#000'};
   }
 
   a {
