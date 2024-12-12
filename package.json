@@ -59,10 +59,12 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^3.2.3",
+    "@chakra-ui/storybook-addon": "^5.2.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
+    "@storybook/addon-themes": "^8.4.7",
     "framer-motion": "^11.13.5",
     "styled-components": "^6.1.13"
   }
