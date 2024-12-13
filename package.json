@@ -65,7 +65,7 @@
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
     "@storybook/addon-themes": "^8.4.7",
-    "framer-motion": "^11.13.5",
+    "framer-motion": "^11.14.1",
     "styled-components": "^6.1.13"
   }
 }

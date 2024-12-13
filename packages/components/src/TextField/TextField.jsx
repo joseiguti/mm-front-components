@@ -1,49 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Text, Input } from "@chakra-ui/react";
+import { StyledBox, StyledText, StyledInput } from "./TextField.styles.jsx";
+import themeForm from "../themeForm";
 
 const TextField = ({
-                       label = "",
-                       value = "",
-                       onChange,
-                       placeholder = "Enter text",
-                       errorMessage = "",
-                       isInvalid = false,
+                     label = "",
+                     value = "",
+                     onChange,
+                     placeholder = "Enter text",
+                     errorMessage = "",
+                     isInvalid = false,
                    }) => {
-    return (
-      <Box>
-          {label && (
-            <Text mb={2} fontWeight="bold">
-                {label}
-            </Text>
-          )}
-          <Input
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            size="md"
-            borderColor={isInvalid ? "red.500" : "gray.300"}
-            aria-invalid={isInvalid}
-            _focus={{
-                borderColor: isInvalid ? "red.500" : "blue.500",
-            }}
-          />
-          {isInvalid && errorMessage && (
-            <Text mt={1} fontSize="sm" color="red.500">
-                {errorMessage}
-            </Text>
-          )}
-      </Box>
-    );
+
+  return (
+    <StyledBox>
+      {label && <StyledText>{label}</StyledText>}
+      <StyledInput
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        isInvalid={isInvalid}
+        aria-invalid={isInvalid}
+      />
+      {isInvalid && errorMessage && (
+        <StyledText
+          fontSize="sm"
+          color={themeForm.colors.errorTextColor}
+          isInvalid={isInvalid}
+        >
+          {errorMessage}
+        </StyledText>
+      )}
+    </StyledBox>
+  );
 };
 
 TextField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string,
-    errorMessage: PropTypes.string,
-    isInvalid: PropTypes.bool,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  errorMessage: PropTypes.string,
+  isInvalid: PropTypes.bool,
 };
 
 export default TextField;

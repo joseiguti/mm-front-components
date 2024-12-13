@@ -10,11 +10,11 @@ const Template = (args) => {
     const [value, setValue] = useState("");
 
     return (
-        <TextField
-            {...args}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-        />
+      <TextField
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
     );
 };
 
