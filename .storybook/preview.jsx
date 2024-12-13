@@ -1,12 +1,10 @@
-import React from "react";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import React from 'react';
+import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { ThemeProvider } from 'styled-components';
 import theme from '../packages/components/src/theme';
 import { GlobalStyles } from '../packages/components/src/GlobalStyles';
 
-const chakraCategories = [
-  "Components/TextField"
-];
+const chakraCategories = ['Components/TextField'];
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -26,8 +24,7 @@ const preview = {
             <Story />
           </ChakraProvider>
         );
-
-      } else if (context.kind === "Components/Menu") {
+      } else if (context.kind === 'Components/Menu') {
         return (
           <ThemeProvider theme={theme}>
             <GlobalStyles />
