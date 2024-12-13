@@ -31,3 +31,19 @@ WithError.args = {
     isInvalid: true,
     errorMessage: "This field is required",
 };
+
+export const CustomTheme = Template.bind({});
+CustomTheme.args = {
+    label: "Custom Themed Label",
+    placeholder: "Type something...",
+    isInvalid: false,
+    theme: {
+        colors: {
+            labelColor: "teal.600",
+            inputBorderColor: "teal.300",
+            inputFocusBorderColor: "teal.500",
+            errorBorderColor: "red.600",
+            errorTextColor: "red.600",
+        },
+    },
+};

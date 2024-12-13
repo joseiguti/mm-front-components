@@ -7,12 +7,13 @@ export const StyledBox = (props) => (
 );
 
 export const StyledText = (props) => {
+  const color = props.color || (props.isInvalid ? themeForm.colors.errorTextColor : themeForm.colors.labelColor);
   return (
     <Text
       {...props}
       mb={2}
       fontWeight="bold"
-      color={props.isInvalid ? themeForm.colors.errorTextColor : themeForm.colors.labelColor}
+      color={color}
     />
   );
 };

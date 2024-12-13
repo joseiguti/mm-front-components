@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StyledBox, StyledText, StyledInput } from "./TextField.styles.jsx";
-import themeForm from "../themeForm";
+import defaultTheme from "../themeForm";
 
 const TextField = ({
                      label = "",
@@ -10,22 +10,30 @@ const TextField = ({
                      placeholder = "Enter text",
                      errorMessage = "",
                      isInvalid = false,
+                     theme = defaultTheme,
                    }) => {
+  const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
     <StyledBox>
-      {label && <StyledText>{label}</StyledText>}
+      {label && (
+        <StyledText color={mergedTheme.colors.labelColor}>{label}</StyledText>
+      )}
       <StyledInput
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         isInvalid={isInvalid}
         aria-invalid={isInvalid}
+        borderColor={mergedTheme.colors.inputBorderColor}
+        _focus={{
+          borderColor: mergedTheme.colors.inputFocusBorderColor,
+        }}
       />
       {isInvalid && errorMessage && (
         <StyledText
           fontSize="sm"
-          color={themeForm.colors.errorTextColor}
+          color={mergedTheme.colors.errorTextColor}
           isInvalid={isInvalid}
         >
           {errorMessage}
@@ -42,6 +50,7 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
   isInvalid: PropTypes.bool,
+  theme: PropTypes.object,
 };
 
 export default TextField;
