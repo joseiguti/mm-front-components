@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import {
   SelectRoot,
@@ -26,16 +27,36 @@ export const StyledText = (props) => (
 
 export const StyledSelect = ({ options, ...props }) => {
 
-  const frameworks = createListCollection({
+  const [value, setValue] = useState([]);
+  const selectOptions = createListCollection({
     items: options,
   })
 
+  const handleValueChange = (selectedItem) => {
+    const value = Array.isArray(selectedItem.value)
+      ? selectedItem.value[0]
+      : selectedItem.value;
+
+    setValue(value);
+    if (props.onChange) {
+      props.onChange(value);
+    } else {
+      console.warn("props.onChange is undefined!");
+    }
+  };
+
   return (
-    <SelectRoot collection={frameworks} size={props.size}>
+    <SelectRoot
+      collection={selectOptions}
+      size={props.size}
+      onValueChange={(value) => {
+        handleValueChange(value);
+      }}
+    >
       <SelectTrigger>
         <SelectValueText placeholder={props.placeholder} />
         <SelectContent>
-          {frameworks.items.map((record) => (
+          {selectOptions.items.map((record) => (
             <SelectItem item={record} key={record.value}>
               {record.label}
             </SelectItem>

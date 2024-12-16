@@ -7,20 +7,66 @@ export default {
 };
 
 const Template = (args) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(args.value || "");
 
   return (
     <SelectField
       {...args}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(selectedValue) => {
+        setValue(selectedValue);
+        if (args.onChange) {
+          args.onChange(selectedValue);
+        }
+      }}
     />
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  label: "Default Select",
+  label: "Framework",
+  placeholder: "Choose a framework...",
+  size: "lg",
+  options: [
+    { value: "1", label: "VueJs" },
+    { value: "2", label: "ReactJs" },
+    { value: "3", label: "NextJs" },
+  ],
+  onChange: (value) => {
+    console.log("Selected value from story:", value);
+  },
+};
+
+export const WithError = Template.bind({});
+WithError.args = {
+  label: "Select with Error",
+  placeholder: "Choose an option...",
+  value: "",
+  isInvalid: true,
+  errorMessage: "This field is required.",
+  options: [
+    { value: "1", label: "VueJs" },
+    { value: "2", label: "ReactJs" },
+    { value: "3", label: "NextJs" },
+  ],
+};
+
+export const PreselectedValue = Template.bind({});
+PreselectedValue.args = {
+  label: "Preselected Value",
+  placeholder: "Choose an option...",
+  value: "2",
+  options: [
+    { value: "1", label: "VueJs" },
+    { value: "2", label: "ReactJs" },
+    { value: "3", label: "NextJs" },
+  ],
+};
+
+export const LargeSize = Template.bind({});
+LargeSize.args = {
+  label: "Large Size Select",
   placeholder: "Choose a framework...",
   size: "lg",
   options: [
@@ -30,3 +76,12 @@ Default.args = {
   ],
 };
 
+export const ManyOptions = Template.bind({});
+ManyOptions.args = {
+  label: "Many Options Select",
+  placeholder: "Scroll to see more...",
+  options: Array.from({ length: 20 }, (_, i) => ({
+    value: `${i + 1}`,
+    label: `Option ${i + 1}`,
+  })),
+};
