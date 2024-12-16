@@ -4,7 +4,10 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../packages/components/src/theme';
 import { GlobalStyles } from '../packages/components/src/GlobalStyles';
 
-const chakraCategories = ['Components/TextField'];
+const chakraCategories = [
+  'Components/TextField',
+  'Components/SelectField',
+];
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
