@@ -27,22 +27,17 @@ export const StyledText = (props) => (
 export const StyledSelect = ({ options, ...props }) => {
 
   const frameworks = createListCollection({
-    items: [
-      { label: "React.js", value: "react" },
-      { label: "Vue.js", value: "vue" },
-      { label: "Angular", value: "angular" },
-      { label: "Svelte", value: "svelte" },
-    ],
+    items: options,
   })
 
   return (
-    <SelectRoot collection={frameworks}>
+    <SelectRoot collection={frameworks} size={props.size}>
       <SelectTrigger>
-        <SelectValueText placeholder="Select..." />
+        <SelectValueText placeholder={props.placeholder} />
         <SelectContent>
-          {frameworks.items.map((movie) => (
-            <SelectItem item={movie} key={movie.value}>
-              {movie.label}
+          {frameworks.items.map((record) => (
+            <SelectItem item={record} key={record.value}>
+              {record.label}
             </SelectItem>
           ))}
         </SelectContent>
