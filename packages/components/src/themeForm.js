@@ -10,6 +10,7 @@ const themeForm = {
     body: 'Arial, sans-serif',
     heading: 'Georgia, serif',
   },
+  size: "md"
 };
 
 export default themeForm;

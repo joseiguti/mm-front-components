@@ -18,7 +18,7 @@ export const StyledText = (props) => {
 export const StyledInput = (props) => (
   <Input
     {...props}
-    size="md"
+    size={props.size}
     borderColor={
       props.isInvalid
         ? themeForm.colors.errorBorderColor

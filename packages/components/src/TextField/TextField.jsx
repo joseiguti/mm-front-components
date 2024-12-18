@@ -26,6 +26,7 @@ const TextField = ({
         isInvalid={isInvalid}
         aria-invalid={isInvalid}
         borderColor={mergedTheme.colors.inputBorderColor}
+        size={mergedTheme.size}
         _focus={{
           borderColor: mergedTheme.colors.inputFocusBorderColor,
         }}

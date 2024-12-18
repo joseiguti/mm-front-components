@@ -1,31 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StyledBox, StyledText, StyledSelect } from "./SelectField.styles.jsx";
+import defaultTheme from '../themeForm';
 
 const SelectField = ({
                        label = "",
-                       value = "",
+                       defaultValue = "",
                        onChange,
                        options = [],
                        placeholder = "Select an option",
                        errorMessage = "",
                        isInvalid = false,
+                       isMultiple = false,
+                       theme = defaultTheme,
                      }) => {
+  const mergedTheme = { ...defaultTheme, ...theme };
+
+  console.log(mergedTheme)
+
   return (
     <StyledBox>
-      {label && <StyledText>{label}</StyledText>}
+      {label && <StyledText color={mergedTheme.colors.labelColor}>{label}</StyledText>}
       <StyledSelect
-        value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         options={options}
         placeholder={placeholder}
         isInvalid={isInvalid}
+        isMultiple={isMultiple}
+        errorMessage={errorMessage}
+        borderColor={mergedTheme.colors.inputBorderColor}
+        size={mergedTheme.size}
+        _focus={{
+          borderColor: mergedTheme.colors.inputFocusBorderColor,
+        }}
       />
-      {isInvalid && errorMessage && (
-        <StyledText fontSize="sm" color="red.500">
-          {errorMessage}
-        </StyledText>
-      )}
     </StyledBox>
   );
 };

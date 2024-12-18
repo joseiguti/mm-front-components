@@ -38,6 +38,7 @@ CustomTheme.args = {
   placeholder: 'Type something...',
   isInvalid: false,
   theme: {
+    size: "lg",
     colors: {
       labelColor: 'teal.600',
       inputBorderColor: 'teal.300',

@@ -114,3 +114,43 @@ const App = () => (
   />
 );
 ```
+
+
+### Advanced Example with Error Handling
+
+Here is an advanced example demonstrating error handling with the `SelectField` component:
+
+```javascript
+import React, { useState } from "react";
+import SelectField from "@mi-paquete/selectfield";
+
+const App = () => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const [isInvalid, setIsInvalid] = useState(false);
+
+  const handleChange = (value) => {
+    setSelectedValue(value);
+    setIsInvalid(!value); // Mark as invalid if no value is selected
+  };
+
+  return (
+    <div>
+      <SelectField
+        label="Select an Option"
+        placeholder="Choose a framework..."
+        options={[
+          { value: "1", label: "React.js" },
+          { value: "2", label: "Vue.js" },
+          { value: "3", label: "Angular" },
+        ]}
+        value={selectedValue}
+        onChange={handleChange}
+        isInvalid={isInvalid}
+        errorMessage={isInvalid ? "Please select an option." : ""}
+      />
+    </div>
+  );
+};
+
+export default App;
+```
