@@ -8,9 +8,6 @@ export default {
 
 const Template = (args) => {
 
-  console.log('Template ',args)
-  console.log('isInvalid in args:', args.isInvalid);
-
   const [value, setValue] = useState(args.value || "");
 
   return (

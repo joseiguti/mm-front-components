@@ -7,6 +7,7 @@ import { GlobalStyles } from '../packages/components/src/GlobalStyles';
 const chakraCategories = [
   'Components/TextField',
   'Components/SelectField',
+  'Components/Button'
 ];
 
 /** @type { import('@storybook/react').Preview } */

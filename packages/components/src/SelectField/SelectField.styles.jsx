@@ -18,7 +18,6 @@ export const StyledBox = (props) => (
 );
 
 export const StyledText = (props) => {
-  console.log("StyledText Props: ", props);
 
   const color =
     props.color ||
@@ -55,8 +54,6 @@ export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
       console.warn("props.onChange is undefined!");
     }
   };
-
-  console.log("StyledSelect ", props);
 
   return (
     <>
@@ -104,5 +101,4 @@ export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
     </>
   );
 };
-
 
