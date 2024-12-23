@@ -45,6 +45,7 @@ WithError.args = {
   placeholder: "Choose an option...",
   value: "",
   isInvalid: true,
+  isRequired: true,
   errorMessage: "This field is required.",
   options: [
     { value: "1", label: "VueJs" },

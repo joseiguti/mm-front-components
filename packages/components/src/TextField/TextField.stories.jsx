@@ -24,12 +24,27 @@ Default.args = {
   placeholder: 'Enter text',
 };
 
+export const Required = Template.bind({});
+Required.args = {
+  label: 'Required filed',
+  isRequired: true,
+  placeholder: 'Enter text',
+};
+
 export const WithError = Template.bind({});
 WithError.args = {
   label: 'Error Label',
   placeholder: 'Enter text',
+  isRequired: true,
   isInvalid: true,
   errorMessage: 'This field is required',
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: 'Disabled Field',
+  placeholder: 'Enter text',
+  isDisabled: true,
 };
 
 export const CustomTheme = Template.bind({});
@@ -40,7 +55,7 @@ CustomTheme.args = {
   theme: {
     size: "lg",
     colors: {
-      labelColor: 'teal.600',
+      labelColor: 'green',
       inputBorderColor: 'teal.300',
       inputFocusBorderColor: 'teal.500',
       errorBorderColor: 'red.600',

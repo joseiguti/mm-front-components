@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyledBox, StyledText, StyledInput } from './TextField.styles.jsx';
+import { StyledBox, StyledInput } from './TextField.styles.jsx';
 import defaultTheme from '../themeForm';
+
 
 const TextField = ({
   label = '',
@@ -10,16 +11,17 @@ const TextField = ({
   placeholder = 'Enter text',
   errorMessage = '',
   isInvalid = false,
+  isDisabled = false,
+  isRequired = false,
   theme = defaultTheme,
 }) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
     <StyledBox>
-      {label && (
-        <StyledText color={mergedTheme.colors.labelColor}>{label}</StyledText>
-      )}
       <StyledInput
+        label={label}
+        errorText={errorMessage || ""}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -27,19 +29,13 @@ const TextField = ({
         aria-invalid={isInvalid}
         borderColor={mergedTheme.colors.inputBorderColor}
         size={mergedTheme.size}
+        labelColor={mergedTheme.colors.labelColor}
+        isDisabled={isDisabled}
+        isRequired={isRequired}
         _focus={{
           borderColor: mergedTheme.colors.inputFocusBorderColor,
         }}
       />
-      {isInvalid && errorMessage && (
-        <StyledText
-          fontSize="sm"
-          color={mergedTheme.colors.errorTextColor}
-          isInvalid={isInvalid}
-        >
-          {errorMessage}
-        </StyledText>
-      )}
     </StyledBox>
   );
 };
@@ -51,6 +47,8 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
   isInvalid: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  isRequired: PropTypes.bool,
   theme: PropTypes.object,
 };
 

@@ -14,28 +14,11 @@ import { createListCollection } from "@chakra-ui/react"
 import themeForm from "../themeForm";
 
 export const StyledBox = (props) => (
-  <Box {...props} bg="gray.50" p={4} borderRadius="md" />
+  <Box {...props} pb={4} borderRadius="md" />
 );
 
-export const StyledText = (props) => {
+export const StyledSelect = ({ label, options, isInvalid, isRequired, isMultiple, ...props }) => {
 
-  const color =
-    props.color ||
-    (props.isInvalid
-      ? themeForm.colors.errorTextColor
-      : themeForm.colors.labelColor);
-
-  return (
-    <Text
-      {...props}
-      mb={2}
-      fontWeight="bold"
-      color={color}
-    />
-  );
-};
-
-export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
   const [value, setValue] = useState([]);
 
   const selectOptions = createListCollection({
@@ -58,7 +41,13 @@ export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
   return (
     <>
       {isInvalid ? (
-        <Field invalid errorText={props.errorMessage || "Error"}>
+        <Field
+          invalid
+          errorText={props.errorMessage || "Error"}
+          label={label}
+          css={{ color: props.labelColor }}
+          {...(isRequired && { required: true })}
+        >
           <SelectRoot
             collection={selectOptions}
             size={props.size}
@@ -79,6 +68,11 @@ export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
           </SelectRoot>
         </Field>
       ) : (
+        <Field
+          label={label}
+          css={{ color: props.labelColor }}
+          {...(isRequired && { required: true })}
+        >
         <SelectRoot
           collection={selectOptions}
           size={props.size}
@@ -97,6 +91,7 @@ export const StyledSelect = ({ options, isInvalid, isMultiple, ...props }) => {
             ))}
           </SelectContent>
         </SelectRoot>
+        </Field>
       )}
     </>
   );
