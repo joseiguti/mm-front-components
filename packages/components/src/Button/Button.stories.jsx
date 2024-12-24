@@ -8,12 +8,20 @@ export default {
 
 const Template = (args) => {
   const handleClick = () => {
+    alert('Default OnClick event');
   };
-  return <Button {...args} onClick={args.onClick || handleClick} />;
+  const handleSubmit = () => {
+    alert('Default OnSubmit event');
+  };
+  return <Button
+    {...args}
+    onClick={args.onClick || handleClick}
+    onSubmit={args.onSubmit || handleSubmit}
+  />;
 };
 
-export const Default = Template.bind({});
-Default.args = {
+export const aButton = Template.bind({});
+aButton.args = {
   label: 'Say Hello!',
   onClick: () => {
     alert('Greetings from the Onclick event');
@@ -31,6 +39,7 @@ Loading.args = {
   label: 'Loading Button',
   isLoading: true,
   loadingText: 'Saving...',
+  isSubmit: true,
 };
 
 export const Disabled = Template.bind({});
@@ -52,5 +61,14 @@ CustomTheme.args = {
       buttonBg: 'green.500',
       buttonText: 'white',
     },
+  },
+};
+
+export const aSubmit = Template.bind({});
+aSubmit.args = {
+  label: 'Submit',
+  isSubmit: true,
+  onSubmit: () => {
+    alert('Greetings from the OnSubmit event');
   },
 };

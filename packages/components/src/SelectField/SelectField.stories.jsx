@@ -54,6 +54,19 @@ WithError.args = {
   ],
 };
 
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: "Select Disabled",
+  placeholder: "Choose an option...",
+  value: "",
+  isDisabled: true,
+  options: [
+    { value: "1", label: "VueJs" },
+    { value: "2", label: "ReactJs" },
+    { value: "3", label: "NextJs" },
+  ],
+};
+
 export const PreselectedValue = Template.bind({});
 PreselectedValue.args = {
   label: "Preselected Value",

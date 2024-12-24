@@ -7,8 +7,10 @@ const Button = ({
                   label = "",
                   isLoading = false,
                   isDisabled = false,
+                  isSubmit = false,
                   onClick,
-                  iconName = "", // Icon name as a string
+                  onSubmit,
+                  iconName = "",
                   size = "",
                   loadingText = "",
                   theme = defaultTheme,
@@ -22,9 +24,11 @@ const Button = ({
       isDisabled={isDisabled}
       size={size}
       onClick={onClick}
+      onSubmit={onSubmit}
       loadingText={loadingText}
       iconName={iconName}
       theme={mergedTheme}
+      isSubmit={isSubmit}
     />
   );
 };
@@ -33,7 +37,9 @@ Button.propTypes = {
   label: PropTypes.string,
   isLoading: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isSubmit: PropTypes.bool,
   onClick: PropTypes.func,
+  onSubmit: PropTypes.func,
   iconName: PropTypes.string,
   size: PropTypes.oneOf(["xs", "sm", "md", "lg"]),
   loadingText: PropTypes.string,
@@ -42,8 +48,10 @@ Button.propTypes = {
 Button.defaultProps = {
   label: "Click Me",
   isLoading: false,
+  isSubmit: false,
   isDisabled: false,
   onClick: () => {},
+  onSubmit: () => {},
   iconName: null,
   size: "md",
   loadingText: "Loading...",

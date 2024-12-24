@@ -11,13 +11,11 @@ import {
 import { Field } from "../../../../src/components/ui/field"
 import { createListCollection } from "@chakra-ui/react"
 
-import themeForm from "../themeForm";
-
 export const StyledBox = (props) => (
   <Box {...props} pb={4} borderRadius="md" />
 );
 
-export const StyledSelect = ({ label, options, isInvalid, isRequired, isMultiple, ...props }) => {
+export const StyledSelect = ({ label, options, isDisabled, isInvalid, isRequired, isMultiple, ...props }) => {
 
   const [value, setValue] = useState([]);
 
@@ -42,6 +40,7 @@ export const StyledSelect = ({ label, options, isInvalid, isRequired, isMultiple
     <>
       {isInvalid ? (
         <Field
+          disabled={isDisabled}
           invalid
           errorText={props.errorMessage || "Error"}
           label={label}
@@ -69,6 +68,7 @@ export const StyledSelect = ({ label, options, isInvalid, isRequired, isMultiple
         </Field>
       ) : (
         <Field
+          disabled={isDisabled}
           label={label}
           css={{ color: props.labelColor }}
           {...(isRequired && { required: true })}

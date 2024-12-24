@@ -1,20 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StyledBox, StyledInput } from './TextField.styles.jsx';
-import defaultTheme from '../themeForm';
-
+import React from "react";
+import PropTypes from "prop-types";
+import { StyledBox, StyledInput } from "./TextField.styles.jsx";
+import defaultTheme from "../themeForm";
 
 const TextField = ({
-  label = '',
-  value = '',
-  onChange,
-  placeholder = 'Enter text',
-  errorMessage = '',
-  isInvalid = false,
-  isDisabled = false,
-  isRequired = false,
-  theme = defaultTheme,
-}) => {
+                     label = "",
+                     value = "",
+                     onChange,
+                     placeholder = "Enter text",
+                     errorMessage = "",
+                     isInvalid = false,
+                     isDisabled = false,
+                     isRequired = false,
+                     theme = defaultTheme,
+                   }) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
