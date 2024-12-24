@@ -120,3 +120,116 @@ ajaxCall.args = {
   ],
   component: (props) => <Form {...props} />,
 };
+
+export const ComplexForm = Template.bind({});
+ComplexForm.args = {
+  fields: [
+    [
+      {
+        name: "firstName",
+        label: "First Name",
+        type: "text",
+        placeholder: "Enter your first name",
+        isRequired: true,
+        errorMessage: "First name is required",
+      },
+      {
+        name: "lastName",
+        label: "Last Name",
+        type: "text",
+        placeholder: "Enter your last name",
+        isRequired: true,
+        errorMessage: "Last name is required",
+      },
+    ],
+    [
+      {
+        name: "email",
+        label: "Email Address",
+        type: "text",
+        placeholder: "Enter your email",
+        isRequired: true,
+        validate: (value) => {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            return "Invalid email format";
+          }
+          return null;
+        },
+      },
+      {
+        name: "phone",
+        label: "Phone Number",
+        type: "text",
+        placeholder: "Enter your phone number",
+        isRequired: true,
+        errorMessage: "Phone number is required",
+      },
+      {
+        name: "city",
+        label: "City",
+        type: "text",
+        placeholder: "Enter your city",
+      },
+    ],
+    [
+      {
+        name: "country",
+        label: "Country",
+        type: "select",
+        options: [
+          { value: "usa", label: "United States" },
+          { value: "canada", label: "Canada" },
+          { value: "mexico", label: "Mexico" },
+        ],
+        placeholder: "Select your country",
+        isRequired: true,
+        errorMessage: "Country is required",
+      },
+      {
+        name: "zipCode",
+        label: "ZIP Code",
+        type: "text",
+        placeholder: "Enter your ZIP code",
+        isRequired: true,
+      },
+      {
+        name: "state",
+        label: "State",
+        type: "text",
+        placeholder: "Enter your state",
+        isRequired: true,
+      },
+      {
+        name: "address",
+        label: "Address",
+        type: "text",
+        placeholder: "Enter your address",
+      },
+    ],
+    [
+      {
+        name: "bio",
+        label: "Biography",
+        type: "text",
+        placeholder: "Write about yourself",
+        isRequired: false,
+      },
+    ],
+    {
+      type: "button",
+      label: "Submit Form",
+      isSubmit: true,
+      size: "lg",
+      theme: {
+        colors: {
+          buttonBg: "purple.500",
+          buttonText: "white",
+        },
+      },
+    },
+  ],
+  onSubmit: (values) => {
+    alert(`Form submitted with values: ${JSON.stringify(values, null, 2)}`);
+  },
+};
