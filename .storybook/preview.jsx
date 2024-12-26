@@ -8,7 +8,8 @@ const chakraCategories = [
   'Components/TextField',
   'Components/SelectField',
   'Components/Button',
-  'Components/Form'
+  'Components/Form',
+  'Components/Grid',
 ];
 
 /** @type { import('@storybook/react').Preview } */
