@@ -114,6 +114,7 @@ ajaxCall.args = {
         colors: {
           buttonBg: 'green.500',
           buttonText: 'white',
+          buttonDisabled: "green.300",
         },
       },
     },
@@ -218,12 +219,26 @@ ComplexForm.args = {
     ],
     {
       type: "button",
-      label: "Submit Form",
-      isSubmit: true,
-      size: "lg",
+      label: 'Cancel',
+      iconName: "RiCloseFill",
       theme: {
         colors: {
-          buttonBg: "purple.500",
+          buttonBg: "red.600",
+          buttonText: "white",
+        },
+      },
+      onClick: () => {
+        alert('Cancel Button Event');
+      },
+    },
+    {
+      type: "button",
+      label: "Save",
+      isSubmit: true,
+      iconName: "RiSave2Fill",
+      theme: {
+        colors: {
+          buttonBg: "green.600",
           buttonText: "white",
         },
       },
@@ -232,4 +247,5 @@ ComplexForm.args = {
   onSubmit: (values) => {
     alert(`Form submitted with values: ${JSON.stringify(values, null, 2)}`);
   },
+  buttonsPosition: "right",
 };

@@ -5,9 +5,7 @@ import SelectField from "../SelectField";
 import Button from "../Button";
 import { Box, Flex, Stack } from "@chakra-ui/react";
 
-
-
-const Form = ({ fields, theme, onSubmit }) => {
+const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {
@@ -124,24 +122,6 @@ const Form = ({ fields, theme, onSubmit }) => {
             );
           }
 
-          if (field.type === "button") {
-            return (
-              <Button
-                key={field.label}
-                label={field.label}
-                isLoading={field.isLoading}
-                loadingText={field.loadingText}
-                isDisabled={field.isDisabled}
-                size={field.size}
-                onClick={field.onClick}
-                onSubmit={field.onSubmit}
-                iconName={field.iconName}
-                theme={field.theme}
-                isSubmit={field.isSubmit}
-              />
-            );
-          }
-
           if (field.type === "text" || field.type === "select") {
             return (
               <React.Fragment key={field.name}>
@@ -176,12 +156,33 @@ const Form = ({ fields, theme, onSubmit }) => {
 
           return null;
         })}
+
+        <Flex justify={buttonsPosition} gap="2">
+          {fields
+            .filter((field) => field.type === "button")
+            .map((field, index) => (
+              <Button
+                key={index}
+                label={field.label}
+                isLoading={field.isLoading}
+                loadingText={field.loadingText}
+                isDisabled={field.isDisabled}
+                size={field.size}
+                onClick={field.onClick}
+                onSubmit={field.onSubmit}
+                iconName={field.iconName}
+                theme={field.theme}
+                isSubmit={field.isSubmit}
+              />
+            ))}
+        </Flex>
       </Stack>
     </Box>
   );
 };
 
 Form.propTypes = {
+  buttonsPosition: PropTypes.oneOf(["flex-start", "center", "flex-end", "space-between"]),
   fields: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.shape({
