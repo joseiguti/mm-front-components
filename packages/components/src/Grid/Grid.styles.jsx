@@ -1,5 +1,5 @@
 const defaultTheme = {
-  size: "sm",
+  size: "md",
   colorScheme: "teal",
   headerColor: "gray.700",
   cellColor: "gray.600",

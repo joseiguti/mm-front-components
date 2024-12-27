@@ -30,7 +30,10 @@ const Grid = ({ headers, data, theme }) => {
       {/* Body */}
       <Table.Body>
         {data.map((row, rowIndex) => (
-          <Table.Row key={row.id || rowIndex}>
+          <Table.Row
+            key={row.id || rowIndex}
+            _hover={{ bg: mergedTheme.rowHoverBg }}
+          >
             {headers.map((header, cellIndex) => (
               <Table.Cell
                 key={cellIndex}
