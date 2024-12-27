@@ -10,7 +10,8 @@ const themeForm = {
     errorBorderColor: 'red.500',
     errorTextColor: 'red.700',
   },
-  buttonMinWidth: "100px",
+  buttonMinWidth: "50px",
+  buttonMaxWidth: "300px",
   fonts: {
     body: 'Arial, sans-serif',
     heading: 'Georgia, serif',

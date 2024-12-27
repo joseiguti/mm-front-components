@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Table,
+  Table, Flex
 } from "@chakra-ui/react";
-import Button from "../Button"; // Tu componente Button
+import Button from "../Button";
 import defaultTheme from "./Grid.styles";
 
 const Grid = ({ headers, data, theme }) => {
@@ -17,8 +17,9 @@ const Grid = ({ headers, data, theme }) => {
           {headers.map((header, index) => (
             <Table.ColumnHeader
               key={index}
-              textAlign={header.textAlign || "start"}
+              textAlign={header.textAlign || "center"}
               color={mergedTheme.headerColor}
+              style={{ width: header.width ? `${header.width}%` : "auto" }}
             >
               {header.label}
             </Table.ColumnHeader>
@@ -33,17 +34,24 @@ const Grid = ({ headers, data, theme }) => {
             {headers.map((header, cellIndex) => (
               <Table.Cell
                 key={cellIndex}
-                textAlign={header.textAlign || "start"}
+                textAlign={header.textAlign || "center"}
                 color={mergedTheme.cellColor}
+                style={{ width: header.width ? `${header.width}%` : "auto" }}
               >
-                {header.isButton ? (
-                  <Button
-                    label={header.buttonLabel || "Action"}
-                    iconName={header.iconName} // Ícono para el botón
-                    size="sm"
-                    theme={header.buttonTheme || mergedTheme.buttonTheme}
-                    onClick={() => header.onButtonClick(row, header.key)}
-                  />
+                {header.buttons && Array.isArray(header.buttons) ? (
+                  <Flex gap="2" justify={header.textAlign || "center"}>
+                    {header.buttons.map((buttonConfig, btnIndex) => (
+
+                      <Button
+                        key={btnIndex}
+                        label={buttonConfig.label}
+                        iconName={buttonConfig.iconName}
+                        size="sm"
+                        theme={buttonConfig.theme || mergedTheme.buttonTheme}
+                        onClick={() => buttonConfig.onClick(row, header.key)}
+                      />
+                    ))}
+                  </Flex>
                 ) : header.isLink ? (
                   <a href={row[header.key]} target="_blank" rel="noopener noreferrer">
                     {row[header.key]}
@@ -63,15 +71,19 @@ const Grid = ({ headers, data, theme }) => {
 Grid.propTypes = {
   headers: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired, // Nombre de la columna
-      key: PropTypes.string.isRequired,   // Clave para buscar en los datos
-      textAlign: PropTypes.oneOf(["start", "center", "end"]), // Alineación
-      isLink: PropTypes.bool,             // Si es un link
-      isButton: PropTypes.bool,           // Si tiene un botón asociado
-      buttonLabel: PropTypes.string,      // Texto del botón
-      buttonTheme: PropTypes.object,      // Tema del botón
-      onButtonClick: PropTypes.func,      // Función asociada al botón
-      iconName: PropTypes.string,         // Nombre del ícono para el botón
+      label: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      textAlign: PropTypes.oneOf(["start", "center", "end"]),
+      width: PropTypes.number,
+      isLink: PropTypes.bool,
+      buttons: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          iconName: PropTypes.string,
+          theme: PropTypes.object,
+          onClick: PropTypes.func.isRequired,
+        })
+      ),
     })
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,

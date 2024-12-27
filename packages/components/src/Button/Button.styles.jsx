@@ -41,7 +41,10 @@ export const StyledButton = (props) => {
           loadingText={props.loadingText || "Loading..."}
           bg={themeForm.colors.buttonDisabled}
           color={themeForm.colors.buttonText}
-          css={{ minWidth: themeForm.buttonMinWidth }}
+          css={{
+            minWidth: themeForm.buttonMinWidth,
+            maxWidth: themeForm.buttonMaxWidth
+          }}
           size={props.size}
           type={props.isSubmit ? "submit" : "button"}
         >
@@ -57,7 +60,10 @@ export const StyledButton = (props) => {
       type={props.isSubmit ? "submit" : "button"}
       bg={props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonBg}
       color={theme.colors.buttonText}
-      css={{ minWidth: themeForm.buttonMinWidth }}
+      css={{
+        minWidth: themeForm.buttonMinWidth,
+        maxWidth: themeForm.buttonMaxWidth
+      }}
       isDisabled={props.isDisabled}
       _hover={{
         bg: props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonHover,
