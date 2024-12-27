@@ -46,7 +46,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  label: "Click Me",
+  label: "",
   isLoading: false,
   isSubmit: false,
   isDisabled: false,

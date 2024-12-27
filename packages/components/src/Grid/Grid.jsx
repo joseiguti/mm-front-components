@@ -1,13 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Table, Flex
-} from "@chakra-ui/react";
+import { Flex, Table } from '@chakra-ui/react';
 import Button from "../Button";
 import defaultTheme from "./Grid.styles";
 
 const Grid = ({ headers, data, theme }) => {
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const mergedTheme = { ...defaultTheme, ...theme };
+
+  const handleSort = (key) => {
+    if (sortConfig.key === key) {
+      setSortConfig({
+        key,
+        direction: sortConfig.direction === "asc" ? "desc" : "asc",
+      });
+    } else {
+      setSortConfig({ key, direction: "asc" });
+    }
+  };
+
+  const sortedData = [...data].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
+
+    if (typeof aValue === "string" && typeof bValue === "string") {
+      return sortConfig.direction === "asc"
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
+    }
+
+    if (typeof aValue === "number" && typeof bValue === "number") {
+      return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
+    }
+
+    return 0;
+  });
 
   return (
     <Table.Root size={mergedTheme.size} colorScheme={mergedTheme.colorScheme}>
@@ -20,8 +49,15 @@ const Grid = ({ headers, data, theme }) => {
               textAlign={header.textAlign || "center"}
               color={mergedTheme.headerColor}
               style={{ width: header.width ? `${header.width}%` : "auto" }}
+              cursor={header.isSortable ? "pointer" : "default"}
+              onClick={
+                header.isSortable ? () => handleSort(header.key) : undefined
+              }
             >
               {header.label}
+              {header.isSortable &&
+                sortConfig.key === header.key &&
+                (sortConfig.direction === "asc" ? " ↑" : " ↓")}
             </Table.ColumnHeader>
           ))}
         </Table.Row>
@@ -29,7 +65,7 @@ const Grid = ({ headers, data, theme }) => {
 
       {/* Body */}
       <Table.Body>
-        {data.map((row, rowIndex) => (
+        {sortedData.map((row, rowIndex) => (
           <Table.Row
             key={row.id || rowIndex}
             _hover={{ bg: mergedTheme.rowHoverBg }}
@@ -37,14 +73,13 @@ const Grid = ({ headers, data, theme }) => {
             {headers.map((header, cellIndex) => (
               <Table.Cell
                 key={cellIndex}
-                textAlign={header.textAlign || "center"}
+                textAlign={header.textAlign || "start"}
                 color={mergedTheme.cellColor}
                 style={{ width: header.width ? `${header.width}%` : "auto" }}
               >
                 {header.buttons && Array.isArray(header.buttons) ? (
                   <Flex gap="2" justify={header.textAlign || "center"}>
                     {header.buttons.map((buttonConfig, btnIndex) => (
-
                       <Button
                         key={btnIndex}
                         label={buttonConfig.label}
@@ -78,6 +113,7 @@ Grid.propTypes = {
       key: PropTypes.string.isRequired,
       textAlign: PropTypes.oneOf(["start", "center", "end"]),
       width: PropTypes.number,
+      isSortable: PropTypes.bool,
       isLink: PropTypes.bool,
       buttons: PropTypes.arrayOf(
         PropTypes.shape({
