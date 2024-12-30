@@ -70,3 +70,7 @@ const data = [
 export const Default = () => <Grid headers={headers} data={data} />;
 
 export const Actions = () => <Grid headers={headers.concat(actions)} data={data} />;
+
+export const WithPagination = () => (
+  <Grid headers={headers.concat(actions)} data={data} pagination itemsPerPage={5} />
+);

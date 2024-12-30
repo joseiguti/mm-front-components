@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Flex, Table } from '@chakra-ui/react';
+import { Flex, Table, Box, HStack } from "@chakra-ui/react";
+import {
+  PaginationItems,
+  PaginationNextTrigger,
+  PaginationPrevTrigger,
+  PaginationRoot,
+} from "../../../../src/components/ui/pagination";
 import Button from "../Button";
 import defaultTheme from "./Grid.styles";
 
-const Grid = ({ headers, data, theme }) => {
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+const Grid = ({ headers, data, theme, pagination, itemsPerPage }) => {
+  const [page, setPage] = useState(1);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" }); // Inicialización del estado
   const mergedTheme = { ...defaultTheme, ...theme };
+
+  const visibleData = pagination
+    ? data.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    : data;
 
   const handleSort = (key) => {
     if (sortConfig.key === key) {
@@ -19,7 +30,7 @@ const Grid = ({ headers, data, theme }) => {
     }
   };
 
-  const sortedData = [...data].sort((a, b) => {
+  const sortedData = [...visibleData].sort((a, b) => {
     if (!sortConfig.key) return 0;
 
     const aValue = a[sortConfig.key];
@@ -39,70 +50,85 @@ const Grid = ({ headers, data, theme }) => {
   });
 
   return (
-    <Table.Root size={mergedTheme.size} colorScheme={mergedTheme.colorScheme}>
-      {/* Header */}
-      <Table.Header>
-        <Table.Row>
-          {headers.map((header, index) => (
-            <Table.ColumnHeader
-              key={index}
-              textAlign={header.textAlign || "center"}
-              color={mergedTheme.headerColor}
-              style={{ width: header.width ? `${header.width}%` : "auto" }}
-              cursor={header.isSortable ? "pointer" : "default"}
-              onClick={
-                header.isSortable ? () => handleSort(header.key) : undefined
-              }
-            >
-              {header.label}
-              {header.isSortable &&
-                sortConfig.key === header.key &&
-                (sortConfig.direction === "asc" ? " ↑" : " ↓")}
-            </Table.ColumnHeader>
-          ))}
-        </Table.Row>
-      </Table.Header>
-
-      {/* Body */}
-      <Table.Body>
-        {sortedData.map((row, rowIndex) => (
-          <Table.Row
-            key={row.id || rowIndex}
-            _hover={{ bg: mergedTheme.rowHoverBg }}
-          >
-            {headers.map((header, cellIndex) => (
-              <Table.Cell
-                key={cellIndex}
-                textAlign={header.textAlign || "start"}
-                color={mergedTheme.cellColor}
+    <Box>
+      <Table.Root size={mergedTheme.size} colorScheme={mergedTheme.colorScheme}>
+        <Table.Header>
+          <Table.Row>
+            {headers.map((header, index) => (
+              <Table.ColumnHeader
+                key={index}
+                textAlign={header.textAlign || "center"}
+                color={mergedTheme.headerColor}
                 style={{ width: header.width ? `${header.width}%` : "auto" }}
+                cursor={header.isSortable ? "pointer" : "default"}
+                onClick={
+                  header.isSortable ? () => handleSort(header.key) : undefined
+                }
               >
-                {header.buttons && Array.isArray(header.buttons) ? (
-                  <Flex gap="2" justify={header.textAlign || "center"}>
-                    {header.buttons.map((buttonConfig, btnIndex) => (
-                      <Button
-                        key={btnIndex}
-                        label={buttonConfig.label}
-                        iconName={buttonConfig.iconName}
-                        size="sm"
-                        theme={buttonConfig.theme || mergedTheme.buttonTheme}
-                        onClick={() => buttonConfig.onClick(row, header.key)}
-                      />
-                    ))}
-                  </Flex>
-                ) : header.isLink ? (
-                  <a href={row[header.key]} target="_blank" rel="noopener noreferrer">
-                    {row[header.key]}
-                  </a>
-                ) : (
-                  row[header.key]
-                )}
-              </Table.Cell>
+                {header.label}
+                {header.isSortable &&
+                  sortConfig.key === header.key &&
+                  (sortConfig.direction === "asc" ? " ↑" : " ↓")}
+              </Table.ColumnHeader>
             ))}
           </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+        </Table.Header>
+
+        <Table.Body>
+          {sortedData.map((row, rowIndex) => (
+            <Table.Row
+              key={row.id || rowIndex}
+              _hover={{ bg: mergedTheme.rowHoverBg }}
+            >
+              {headers.map((header, cellIndex) => (
+                <Table.Cell
+                  key={cellIndex}
+                  textAlign={header.textAlign || "start"}
+                  color={mergedTheme.cellColor}
+                  style={{ width: header.width ? `${header.width}%` : "auto" }}
+                >
+                  {header.buttons && Array.isArray(header.buttons) ? (
+                    <Flex gap="2" justify={header.textAlign || "center"}>
+                      {header.buttons.map((buttonConfig, btnIndex) => (
+                        <Button
+                          key={btnIndex}
+                          label={buttonConfig.label}
+                          iconName={buttonConfig.iconName}
+                          size="sm"
+                          theme={buttonConfig.theme || mergedTheme.buttonTheme}
+                          onClick={() => buttonConfig.onClick(row, header.key)}
+                        />
+                      ))}
+                    </Flex>
+                  ) : header.isLink ? (
+                    <a href={row[header.key]} target="_blank" rel="noopener noreferrer">
+                      {row[header.key]}
+                    </a>
+                  ) : (
+                    row[header.key]
+                  )}
+                </Table.Cell>
+              ))}
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+
+      {pagination && (
+        <PaginationRoot
+          count={data.length}
+          pageSize={itemsPerPage}
+          page={page}
+          onPageChange={(e) => setPage(e.page)}
+        >
+          <HStack justify="center" mt={4}>
+            <PaginationPrevTrigger />
+            <PaginationItems />
+            <PaginationNextTrigger />
+          </HStack>
+        </PaginationRoot>
+      )}
+    </Box>
   );
 };
 
@@ -127,10 +153,14 @@ Grid.propTypes = {
   ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   theme: PropTypes.object,
+  pagination: PropTypes.bool,
+  itemsPerPage: PropTypes.number,
 };
 
 Grid.defaultProps = {
   theme: {},
+  pagination: false,
+  itemsPerPage: 10,
 };
 
 export default Grid;
