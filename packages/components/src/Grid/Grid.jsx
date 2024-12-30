@@ -11,16 +11,18 @@ import Button from "../Button";
 import defaultTheme from "./Grid.styles";
 import SelectField from '../SelectField';
 
-const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting }) => {
+const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerPage, enableSorting }) => {
   const [page, setPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const mergedTheme = { ...defaultTheme, ...theme };
-  const itemPerPageOptions =
-    [
-      { value: "10", label: "10" },
-      { value: "20", label: "20" },
-      { value: "30", label: "30" }
-    ];
+
+  const itemPerPageOptions = [
+    { value: "5", label: "5" },
+    { value: "10", label: "10" },
+    { value: "20", label: "20" },
+    { value: "30", label: "30" },
+  ];
 
   const visibleData = pagination
     ? data.slice((page - 1) * itemsPerPage, page * itemsPerPage)
@@ -36,6 +38,11 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting })
     } else {
       setSortConfig({ key, direction: "asc" });
     }
+  };
+
+  const handleItemsPerPageChange = (value) => {
+    setItemsPerPage(Number(value));
+    setPage(1);
   };
 
   const sortedData = enableSorting
@@ -132,14 +139,14 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting })
           page={page}
           onPageChange={(e) => setPage(e.page)}
         >
-          <HStack justify="center" mt={4}>
+          <HStack justify="center" mt={4} gap="1">
             <PaginationPrevTrigger />
-            <Box pt={4} css={{minWidth: "100px"}}>
+            <Box pt={4} css={{ minWidth: "100px" }}>
               <SelectField
                 options={itemPerPageOptions}
-                defaultValue="20"
-              >
-              </SelectField>
+                defaultValue={itemsPerPage.toString()}
+                onChange={handleItemsPerPageChange}
+              />
             </Box>
             <PaginationItems />
             <PaginationNextTrigger />
@@ -179,7 +186,7 @@ Grid.propTypes = {
 Grid.defaultProps = {
   theme: {},
   pagination: false,
-  itemsPerPage: 10,
+  itemsPerPage: 5,
   enableSorting: false,
 };
 

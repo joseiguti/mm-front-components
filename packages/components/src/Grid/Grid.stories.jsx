@@ -76,5 +76,5 @@ export const Sorting = () => (
 export const Actions = () => <Grid headers={headers.concat(actions)} data={data} />;
 
 export const WithPagination = () => (
-  <Grid headers={headers.concat(actions)} data={data} pagination itemsPerPage={5} />
+  <Grid headers={headers} data={data} pagination itemsPerPage={5} />
 );
