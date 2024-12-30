@@ -69,6 +69,10 @@ const data = [
 
 export const Default = () => <Grid headers={headers} data={data} />;
 
+export const Sorting = () => (
+  <Grid headers={headers} data={data} enableSorting={true} />
+);
+
 export const Actions = () => <Grid headers={headers.concat(actions)} data={data} />;
 
 export const WithPagination = () => (

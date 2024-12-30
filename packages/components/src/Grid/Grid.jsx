@@ -10,9 +10,9 @@ import {
 import Button from "../Button";
 import defaultTheme from "./Grid.styles";
 
-const Grid = ({ headers, data, theme, pagination, itemsPerPage }) => {
+const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting }) => {
   const [page, setPage] = useState(1);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" }); // Inicialización del estado
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const mergedTheme = { ...defaultTheme, ...theme };
 
   const visibleData = pagination
@@ -20,6 +20,7 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage }) => {
     : data;
 
   const handleSort = (key) => {
+    if (!enableSorting) return;
     if (sortConfig.key === key) {
       setSortConfig({
         key,
@@ -30,24 +31,26 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage }) => {
     }
   };
 
-  const sortedData = [...visibleData].sort((a, b) => {
-    if (!sortConfig.key) return 0;
+  const sortedData = enableSorting
+    ? [...visibleData].sort((a, b) => {
+      if (!sortConfig.key) return 0;
 
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
 
-    if (typeof aValue === "string" && typeof bValue === "string") {
-      return sortConfig.direction === "asc"
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
-    }
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortConfig.direction === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
 
-    if (typeof aValue === "number" && typeof bValue === "number") {
-      return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
-    }
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
+      }
 
-    return 0;
-  });
+      return 0;
+    })
+    : visibleData;
 
   return (
     <Box>
@@ -60,13 +63,14 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage }) => {
                 textAlign={header.textAlign || "center"}
                 color={mergedTheme.headerColor}
                 style={{ width: header.width ? `${header.width}%` : "auto" }}
-                cursor={header.isSortable ? "pointer" : "default"}
+                cursor={header.isSortable && enableSorting ? "pointer" : "default"}
                 onClick={
-                  header.isSortable ? () => handleSort(header.key) : undefined
+                  header.isSortable && enableSorting ? () => handleSort(header.key) : undefined
                 }
               >
                 {header.label}
                 {header.isSortable &&
+                  enableSorting &&
                   sortConfig.key === header.key &&
                   (sortConfig.direction === "asc" ? " ↑" : " ↓")}
               </Table.ColumnHeader>
@@ -155,12 +159,14 @@ Grid.propTypes = {
   theme: PropTypes.object,
   pagination: PropTypes.bool,
   itemsPerPage: PropTypes.number,
+  enableSorting: PropTypes.bool,
 };
 
 Grid.defaultProps = {
   theme: {},
   pagination: false,
   itemsPerPage: 10,
+  enableSorting: false,
 };
 
 export default Grid;
