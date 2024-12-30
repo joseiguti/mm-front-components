@@ -9,11 +9,18 @@ import {
 } from "../../../../src/components/ui/pagination";
 import Button from "../Button";
 import defaultTheme from "./Grid.styles";
+import SelectField from '../SelectField';
 
 const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting }) => {
   const [page, setPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const mergedTheme = { ...defaultTheme, ...theme };
+  const itemPerPageOptions =
+    [
+      { value: "10", label: "10" },
+      { value: "20", label: "20" },
+      { value: "30", label: "30" }
+    ];
 
   const visibleData = pagination
     ? data.slice((page - 1) * itemsPerPage, page * itemsPerPage)
@@ -127,6 +134,13 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage, enableSorting })
         >
           <HStack justify="center" mt={4}>
             <PaginationPrevTrigger />
+            <Box pt={4} css={{minWidth: "100px"}}>
+              <SelectField
+                options={itemPerPageOptions}
+                defaultValue="20"
+              >
+              </SelectField>
+            </Box>
             <PaginationItems />
             <PaginationNextTrigger />
           </HStack>
