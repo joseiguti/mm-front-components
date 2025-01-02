@@ -10,6 +10,7 @@ const chakraCategories = [
   'Components/Button',
   'Components/Form',
   'Components/Grid',
+  'Components/Dialog',
 ];
 
 /** @type { import('@storybook/react').Preview } */
