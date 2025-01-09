@@ -13,7 +13,6 @@ const chakraCategories = [
   'Components/Grid',
   'Components/Dialog',
   'Components/Notifications',
-  'Components/Alerts',
 ];
 
 /** @type { import('@storybook/react').Preview } */

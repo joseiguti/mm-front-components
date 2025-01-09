@@ -2,41 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import Toastify from "toastify-js";
-import * as RiIcons from "react-icons/ri";
+import defaultStyles from "./Notifications.styles";
 import "toastify-js/src/toastify.css";
 
-const Notifications = ({ message, type = "info", duration = 5000, position = "top-right", iconName }) => {
-  const IconComponent = iconName ? RiIcons[iconName] : null;
-
+const Notifications = ({ message, type = "info", duration = 5000, position = "top-right", theme }) => {
   const notify = () => {
-    // Creamos un nodo React con el contenido
-    const content = (
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        {IconComponent && <IconComponent style={{ fontSize: "24px", marginRight: "8px" }} />}
-        <span>{message}</span>
-      </div>
-    );
 
-    // Renderizamos el nodo React en un contenedor DOM
-    const container = document.createElement("div");
-    ReactDOM.render(content, container);
+    const styles = theme
+      ? { ...defaultStyles[type], ...theme }
+      : defaultStyles[type];
+
+    const content = ({message});
 
     Toastify({
-      node: container, // Pasamos el nodo como contenido
+      node: content,
       duration: duration,
       close: true,
       gravity: position.includes("top") ? "top" : "bottom",
       position: position.includes("left") ? "left" : "right",
       style: {
-        background:
-          type === "success"
-            ? "green"
-            : type === "error"
-              ? "red"
-              : type === "warning"
-                ? "orange"
-                : "blue",
-        color: "white",
+        background: styles.background,
+        color: styles.color,
       },
     }).showToast();
   };
@@ -49,13 +35,17 @@ Notifications.propTypes = {
   type: PropTypes.oneOf(["success", "error", "warning", "info"]),
   duration: PropTypes.number,
   position: PropTypes.oneOf(["top-right", "top-left", "bottom-right", "bottom-left"]),
-  iconName: PropTypes.string,
+  theme: PropTypes.shape({
+    background: PropTypes.string,
+    color: PropTypes.string,
+  }),
 };
 
 Notifications.defaultProps = {
   type: "info",
   duration: 5000,
   position: "top-right",
+  theme: null,
 };
 
 export default Notifications;
