@@ -47,6 +47,13 @@ Disabled.args = {
   isDisabled: true,
 };
 
+export const DateField = Template.bind({});
+DateField.args = {
+  label: "Select a Date",
+  placeholder: "Enter date",
+  type: "date",
+};
+
 export const CustomTheme = Template.bind({});
 CustomTheme.args = {
   label: 'Custom Themed Label',

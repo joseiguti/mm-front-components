@@ -13,6 +13,7 @@ export const StyledInput = ({
                               isRequired,
                               value,
                               onChange,
+                              type,
                               ...props
                             }) => {
   return (
@@ -31,6 +32,7 @@ export const StyledInput = ({
             placeholder={props.placeholder}
             value={value}
             onChange={onChange}
+            type={type} // Pasar el tipo al Input
           />
         </Field>
       ) : (
@@ -45,6 +47,7 @@ export const StyledInput = ({
             placeholder={props.placeholder}
             value={value}
             onChange={onChange}
+            type={type} // Pasar el tipo al Input
           />
         </Field>
       )}

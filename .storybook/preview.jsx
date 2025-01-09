@@ -13,6 +13,7 @@ const chakraCategories = [
   'Components/Grid',
   'Components/Dialog',
   'Components/Notifications',
+  'Components/FileUpload',
 ];
 
 /** @type { import('@storybook/react').Preview } */

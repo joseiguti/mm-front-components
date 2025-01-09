@@ -12,6 +12,7 @@ const TextField = ({
                      isInvalid = false,
                      isDisabled = false,
                      isRequired = false,
+                     type = "text",
                      theme = defaultTheme,
                    }) => {
   const mergedTheme = { ...defaultTheme, ...theme };
@@ -20,6 +21,7 @@ const TextField = ({
     <StyledBox>
       <StyledInput
         label={label}
+        type={type}
         errorText={errorMessage || ""}
         placeholder={placeholder}
         value={value}
@@ -48,6 +50,7 @@ TextField.propTypes = {
   isInvalid: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isRequired: PropTypes.bool,
+  type: PropTypes.string,
   theme: PropTypes.object,
 };
 
