@@ -12,11 +12,15 @@ import {
 import Button from "../Button";
 import defaultTheme from "./Dialog.styles";
 
-const Dialog = ({ isOpen, onClose, title, body, buttons, theme }) => {
+const Dialog = ({ isOpen, onClose, title, body, buttons, theme, placement }) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose}>
+    <DialogRoot
+      open={isOpen}
+      onOpenChange={onClose}
+      placement={placement}
+    >
       <DialogContent style={mergedTheme.content}>
         {title && (
           <DialogHeader>
@@ -59,10 +63,12 @@ Dialog.propTypes = {
     })
   ),
   theme: PropTypes.object,
+  placement: PropTypes.oneOf(["top", "center", "bottom"]),
 };
 
 Dialog.defaultProps = {
   theme: {},
+  placement: "center",
 };
 
 export default Dialog;

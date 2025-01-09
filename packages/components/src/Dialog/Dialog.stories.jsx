@@ -127,3 +127,48 @@ export const ExternalButtonControl = () => {
     </div>
   );
 };
+
+export const PlacementExample = () => {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [placement, setPlacement] = useState("bottom");
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    console.log("Dialog closed");
+    setDialogOpen(false);
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom: "1rem" }}>
+        <label htmlFor="placement-select">Select Placement:</label>
+        <select
+          id="placement-select"
+          value={placement}
+          onChange={(e) => setPlacement(e.target.value)}
+          style={{ marginLeft: "8px", padding: "4px" }}
+        >
+          <option value="top">Top</option>
+          <option value="center">Center</option>
+          <option value="bottom">Bottom</option>
+        </select>
+      </div>
+      <Button
+        label={`Open Dialog (${placement})`}
+        onClick={handleOpenDialog}
+        iconName="FaWindowRestore"
+      />
+      <Dialog
+        isOpen={isDialogOpen}
+        onClose={handleCloseDialog}
+        title={`Dialog with Placement: ${placement}`}
+        body={<p>This dialog is placed at the <strong>{placement}</strong>.</p>}
+        buttons={sharedButtons()}
+        placement={placement}
+      />
+    </div>
+  );
+};
