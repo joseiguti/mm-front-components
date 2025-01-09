@@ -3,6 +3,7 @@ import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { ThemeProvider } from 'styled-components';
 import theme from '../packages/components/src/theme';
 import { GlobalStyles } from '../packages/components/src/GlobalStyles';
+import 'toastify-js/src/toastify.css';
 
 const chakraCategories = [
   'Components/TextField',
@@ -11,6 +12,8 @@ const chakraCategories = [
   'Components/Form',
   'Components/Grid',
   'Components/Dialog',
+  'Components/Notifications',
+  'Components/Alerts',
 ];
 
 /** @type { import('@storybook/react').Preview } */
