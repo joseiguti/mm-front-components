@@ -4,6 +4,7 @@ import TextField from "../TextField";
 import SelectField from "../SelectField";
 import Button from "../Button";
 import FileField from "../FileField";
+import FileDropZone from "../FileDropZone";
 import { Box, Flex, Stack } from "@chakra-ui/react";
 
 const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
@@ -131,7 +132,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
             );
           }
 
-          if (field.type === "text" || field.type === "select" || field.type === "file") {
+          if (field.type === "text" || field.type === "select" || field.type === "file" || field.type === "drop") {
             return (
               <React.Fragment key={field.name}>
                 {field.type === "text" && (
@@ -166,6 +167,18 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     accept={field.accept}
                     onFileChange={(file) => handleChange(field.name, file)}
                   />
+                )}
+                {field.type === "drop" && (
+                  <Box py="2" key={field.name} flex="1" maxWidth="100%">
+                    <FileDropZone
+                      label={field.label}
+                      description={field.description}
+                      maxWidth="100%"
+                      maxFiles={field.maxFiles}
+                      accept={field.accept}
+                      onFileChange={(files) => handleChange(field.name, files)}
+                    />
+                  </Box>
                 )}
               </React.Fragment>
             );
@@ -205,7 +218,7 @@ Form.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
-        type: PropTypes.oneOf(["text", "select", "button", "file"]).isRequired,
+        type: PropTypes.oneOf(["text", "select", "button", "file", "drop"]).isRequired,
         placeholder: PropTypes.string,
         defaultValue: PropTypes.string,
         options: PropTypes.array,
@@ -214,22 +227,9 @@ Form.propTypes = {
         isRequired: PropTypes.bool,
         maxWidth: PropTypes.string,
         accept: PropTypes.arrayOf(PropTypes.string),
+        description: PropTypes.string,
+        maxFiles: PropTypes.number,
       }),
-      PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          label: PropTypes.string,
-          type: PropTypes.oneOf(["text", "select", "file"]).isRequired,
-          placeholder: PropTypes.string,
-          defaultValue: PropTypes.string,
-          options: PropTypes.array,
-          isInvalid: PropTypes.bool,
-          errorMessage: PropTypes.string,
-          isRequired: PropTypes.bool,
-          maxWidth: PropTypes.string,
-          accept: PropTypes.arrayOf(PropTypes.string),
-        })
-      ),
     ])
   ).isRequired,
   onSubmit: PropTypes.func.isRequired,

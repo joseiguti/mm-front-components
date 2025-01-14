@@ -152,6 +152,49 @@ FormWithFileField.args = {
   buttonsPosition: "center",
 };
 
+export const FormWithDropZone = () => {
+  const handleSubmit = (values) => {
+    console.log("Form Submitted:", values);
+  };
+
+  return (
+    <Form
+      fields={[
+        [
+          {
+            name: "firstName",
+            label: "First Name",
+            type: "text",
+            placeholder: "Enter your first name",
+            isRequired: true,
+          },
+          {
+            name: "lastName",
+            label: "Last Name",
+            type: "text",
+            placeholder: "Enter your last name",
+            isRequired: true,
+          },
+        ],
+        {
+          name: "fileDropZone",
+          type: "drop",
+          label: "Drag and Drop Files Here",
+          description: "Only .png and .jpg files, max size 5MB",
+          accept: ["image/png", "image/jpeg"],
+          maxFiles: 3,
+        },
+        {
+          type: "button",
+          label: "Submit",
+          isSubmit: true,
+        },
+      ]}
+      onSubmit={handleSubmit}
+    />
+  );
+};
+
 export const ComplexForm = Template.bind({});
 ComplexForm.args = {
   fields: [
