@@ -13,7 +13,8 @@ const chakraCategories = [
   'Components/Grid',
   'Components/Dialog',
   'Components/Notifications',
-  'Components/FileUpload',
+  'Components/FileField',
+  'Components/FileDropZone',
 ];
 
 /** @type { import('@storybook/react').Preview } */
@@ -28,6 +29,7 @@ const preview = {
   },
   decorators: [
     (Story, context) => {
+
       if (chakraCategories.includes(context.kind)) {
         return (
           <ChakraProvider value={defaultSystem}>
