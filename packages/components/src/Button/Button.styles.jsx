@@ -1,9 +1,9 @@
-import React from "react";
-import { Button } from "../../../../src/components/ui/button";
-import themeForm from "../themeForm";
-import * as RiIcons from "react-icons/ri";
-import * as FaIcons from "react-icons/fa";
-import * as BsIcons from "react-icons/bs";
+import React from 'react';
+import { Button } from '../../../../src/components/ui/button';
+import themeForm from '../themeForm';
+import * as RiIcons from 'react-icons/ri';
+import * as FaIcons from 'react-icons/fa';
+import * as BsIcons from 'react-icons/bs';
 
 const DynamicIcon = ({ iconName }) => {
   const IconComponent =
@@ -18,7 +18,6 @@ const DynamicIcon = ({ iconName }) => {
 };
 
 export const StyledButton = (props) => {
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (props.onSubmit && !props.isDisabled) {
@@ -36,20 +35,20 @@ export const StyledButton = (props) => {
 
   if (props.isLoading) {
     return (
-        <Button
-          loading
-          loadingText={props.loadingText || "Loading..."}
-          bg={themeForm.colors.buttonDisabled}
-          color={themeForm.colors.buttonText}
-          css={{
-            minWidth: themeForm.buttonMinWidth,
-            maxWidth: themeForm.buttonMaxWidth
-          }}
-          size={props.size}
-          type={props.isSubmit ? "submit" : "button"}
-        >
-          {props.label}
-        </Button>
+      <Button
+        loading
+        loadingText={props.loadingText || 'Loading...'}
+        bg={themeForm.colors.buttonDisabled}
+        color={themeForm.colors.buttonText}
+        css={{
+          minWidth: themeForm.buttonMinWidth,
+          maxWidth: themeForm.buttonMaxWidth,
+        }}
+        size={props.size}
+        type={props.isSubmit ? 'submit' : 'button'}
+      >
+        {props.label}
+      </Button>
     );
   }
 
@@ -57,19 +56,23 @@ export const StyledButton = (props) => {
     <Button
       onClick={props.isSubmit ? undefined : handleClick}
       onSubmit={props.isSubmit ? handleSubmit : undefined}
-      type={props.isSubmit ? "submit" : "button"}
-      bg={props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonBg}
+      type={props.isSubmit ? 'submit' : 'button'}
+      bg={
+        props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonBg
+      }
       color={theme.colors.buttonText}
       css={{
         minWidth: themeForm.buttonMinWidth,
-        maxWidth: themeForm.buttonMaxWidth
+        maxWidth: themeForm.buttonMaxWidth,
       }}
       isDisabled={props.isDisabled}
       _hover={{
-        bg: props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonHover,
+        bg: props.isDisabled
+          ? theme.colors.buttonDisabled
+          : theme.colors.buttonHover,
       }}
       _disabled={{
-        cursor: "not-allowed",
+        cursor: 'not-allowed',
         bg: themeForm.colors.buttonDisabled,
       }}
       size={props.size}

@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   DialogRoot,
   DialogContent,
@@ -8,19 +8,23 @@ import {
   DialogBody,
   DialogFooter,
   DialogCloseTrigger,
-} from "../../../../src/components/ui/dialog";
-import Button from "../Button";
-import defaultTheme from "./Dialog.styles";
+} from '../../../../src/components/ui/dialog';
+import Button from '../Button';
+import defaultTheme from './Dialog.styles';
 
-const Dialog = ({ isOpen, onClose, title, body, buttons, theme, placement }) => {
+const Dialog = ({
+  isOpen,
+  onClose,
+  title,
+  body,
+  buttons,
+  theme,
+  placement,
+}) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
-    <DialogRoot
-      open={isOpen}
-      onOpenChange={onClose}
-      placement={placement}
-    >
+    <DialogRoot open={isOpen} onOpenChange={onClose} placement={placement}>
       <DialogContent style={mergedTheme.content}>
         {title && (
           <DialogHeader>
@@ -35,7 +39,7 @@ const Dialog = ({ isOpen, onClose, title, body, buttons, theme, placement }) => 
                 key={index}
                 label={buttonConfig.label}
                 iconName={buttonConfig.iconName}
-                size={buttonConfig.size || "md"}
+                size={buttonConfig.size || 'md'}
                 theme={buttonConfig.theme || mergedTheme.buttonTheme}
                 onClick={buttonConfig.onClick}
               />
@@ -57,18 +61,18 @@ Dialog.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       iconName: PropTypes.string,
-      size: PropTypes.oneOf(["sm", "md", "lg"]),
+      size: PropTypes.oneOf(['sm', 'md', 'lg']),
       theme: PropTypes.object,
       onClick: PropTypes.func.isRequired,
     })
   ),
   theme: PropTypes.object,
-  placement: PropTypes.oneOf(["top", "center", "bottom"]),
+  placement: PropTypes.oneOf(['top', 'center', 'bottom']),
 };
 
 Dialog.defaultProps = {
   theme: {},
-  placement: "center",
+  placement: 'center',
 };
 
 export default Dialog;

@@ -1,31 +1,31 @@
-import React, { useState } from "react";
-import Dialog from "./Dialog";
-import Button from "../Button";
-import Form from "../Form/Form";
+import React, { useState } from 'react';
+import Dialog from './Dialog';
+import Button from '../Button';
+import Form from '../Form/Form';
 
 export default {
-  title: "Components/Dialog",
+  title: 'Components/Dialog',
   component: Dialog,
 };
 
 const sharedButtons = (setDialogOpen) => [
   {
-    label: "Cancel",
-    iconName: "RiCloseLine",
-    size: "sm",
-    theme: { colors: { buttonBg: "red.500", buttonText: "white" } },
+    label: 'Cancel',
+    iconName: 'RiCloseLine',
+    size: 'sm',
+    theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
     onClick: () => {
-      console.log("Cancel button clicked");
+      console.log('Cancel button clicked');
       if (setDialogOpen) setDialogOpen(false);
     },
   },
   {
-    label: "Save",
-    iconName: "RiSaveLine",
-    size: "sm",
-    theme: { colors: { buttonBg: "blue.500", buttonText: "white" } },
+    label: 'Save',
+    iconName: 'RiSaveLine',
+    size: 'sm',
+    theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
     onClick: () => {
-      console.log("Save button clicked");
+      console.log('Save button clicked');
       if (setDialogOpen) setDialogOpen(false);
     },
   },
@@ -35,7 +35,7 @@ const sharedButtons = (setDialogOpen) => [
 export const Default = () => (
   <Dialog
     isOpen={true}
-    onClose={() => console.log("Dialog closed")}
+    onClose={() => console.log('Dialog closed')}
     title="Default Dialog"
     body={<p>This is a default dialog with basic content.</p>}
     buttons={sharedButtons()}
@@ -49,49 +49,49 @@ export const FormDialog = () => {
 
   const fields = [
     {
-      name: "username",
-      label: "Username",
-      type: "text",
-      placeholder: "Enter your username",
+      name: 'username',
+      label: 'Username',
+      type: 'text',
+      placeholder: 'Enter your username',
       isRequired: true,
-      errorMessage: "Username is required",
+      errorMessage: 'Username is required',
     },
     {
-      name: "email",
-      label: "Email",
-      type: "text",
-      placeholder: "Enter your email",
+      name: 'email',
+      label: 'Email',
+      type: 'text',
+      placeholder: 'Enter your email',
       validate: (value) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
-          return "Invalid email format";
+          return 'Invalid email format';
         }
         return null;
       },
       isRequired: true,
     },
     {
-      type: "button",
-      label: "Cancel",
-      iconName: "RiCloseLine",
-      theme: { colors: { buttonBg: "red.500", buttonText: "white" } },
+      type: 'button',
+      label: 'Cancel',
+      iconName: 'RiCloseLine',
+      theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
       onClick: () => {
-        console.log("Cancel button clicked");
+        console.log('Cancel button clicked');
       },
     },
     {
-      type: "button",
-      label: "Submit",
+      type: 'button',
+      label: 'Submit',
       isSubmit: true,
-      iconName: "RiCheckLine",
-      theme: { colors: { buttonBg: "blue.500", buttonText: "white" } },
+      iconName: 'RiCheckLine',
+      theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
     },
   ];
 
   return (
     <Dialog
       isOpen={true}
-      onClose={() => console.log("Dialog closed")}
+      onClose={() => console.log('Dialog closed')}
       title="Form Inside Dialog"
       body={<Form fields={fields} onSubmit={handleSubmit} />}
     />
@@ -106,7 +106,7 @@ export const ExternalButtonControl = () => {
   };
 
   const handleCloseDialog = () => {
-    console.log("Dialog closed");
+    console.log('Dialog closed');
     setDialogOpen(false);
   };
 
@@ -130,26 +130,26 @@ export const ExternalButtonControl = () => {
 
 export const PlacementExample = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [placement, setPlacement] = useState("bottom");
+  const [placement, setPlacement] = useState('bottom');
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
-    console.log("Dialog closed");
+    console.log('Dialog closed');
     setDialogOpen(false);
   };
 
   return (
     <div>
-      <div style={{ marginBottom: "1rem" }}>
+      <div style={{ marginBottom: '1rem' }}>
         <label htmlFor="placement-select">Select Placement:</label>
         <select
           id="placement-select"
           value={placement}
           onChange={(e) => setPlacement(e.target.value)}
-          style={{ marginLeft: "8px", padding: "4px" }}
+          style={{ marginLeft: '8px', padding: '4px' }}
         >
           <option value="top">Top</option>
           <option value="center">Center</option>
@@ -165,7 +165,11 @@ export const PlacementExample = () => {
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
         title={`Dialog with Placement: ${placement}`}
-        body={<p>This dialog is placed at the <strong>{placement}</strong>.</p>}
+        body={
+          <p>
+            This dialog is placed at the <strong>{placement}</strong>.
+          </p>
+        }
         buttons={sharedButtons()}
         placement={placement}
       />

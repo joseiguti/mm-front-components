@@ -15,36 +15,36 @@ npm install @mi-monorepo/grid
 Import the `Grid` component and pass the necessary props:
 
 ```javascript
-import React from "react";
-import Grid from "@mi-monorepo/grid";
+import React from 'react';
+import Grid from '@mi-monorepo/grid';
 
 const App = () => {
   const headers = [
-    { label: "Product", key: "name", isSortable: true, width: 30 },
-    { label: "Category", key: "category", isSortable: true, width: 30 },
+    { label: 'Product', key: 'name', isSortable: true, width: 30 },
+    { label: 'Category', key: 'category', isSortable: true, width: 30 },
     {
-      label: "Actions",
-      key: "actions",
+      label: 'Actions',
+      key: 'actions',
       buttons: [
         {
-          label: "Edit",
-          iconName: "RiEditLine",
+          label: 'Edit',
+          iconName: 'RiEditLine',
           onClick: (row) => alert(`Edit clicked for ${row.name}`),
         },
         {
-          iconName: "RiDeleteBinLine",
+          iconName: 'RiDeleteBinLine',
           onClick: (row) => alert(`Delete clicked for ${row.name}`),
         },
       ],
-      textAlign: "end",
+      textAlign: 'end',
       width: 40,
     },
   ];
 
   const data = [
-    { id: 1, name: "Apple", category: "Fruit" },
-    { id: 2, name: "Carrot", category: "Vegetable" },
-    { id: 3, name: "Bread", category: "Grain" },
+    { id: 1, name: 'Apple', category: 'Fruit' },
+    { id: 2, name: 'Carrot', category: 'Vegetable' },
+    { id: 3, name: 'Bread', category: 'Grain' },
   ];
 
   return <Grid headers={headers} data={data} pagination itemsPerPage={5} />;
@@ -56,37 +56,43 @@ export default App;
 ## Props
 
 ### `headers`
+
 - **Type**: `Array`
 - **Description**: Defines the columns of the grid. Each column object supports the following:
 
-| Property     | Type       | Description                                      |
-|--------------|------------|--------------------------------------------------|
-| `label`      | `string`   | The header label of the column.                  |
-| `key`        | `string`   | The key for accessing data in the row object.    |
-| `isSortable` | `boolean`  | Enables sorting for the column.                  |
-| `width`      | `number`   | Sets the width of the column as a percentage.    |
-| `buttons`    | `Array`    | Defines action buttons for the column.           |
-| `textAlign`  | `string`   | Aligns text (`"start"`, `"center"`, `"end"`).    |
+| Property     | Type      | Description                                   |
+| ------------ | --------- | --------------------------------------------- |
+| `label`      | `string`  | The header label of the column.               |
+| `key`        | `string`  | The key for accessing data in the row object. |
+| `isSortable` | `boolean` | Enables sorting for the column.               |
+| `width`      | `number`  | Sets the width of the column as a percentage. |
+| `buttons`    | `Array`   | Defines action buttons for the column.        |
+| `textAlign`  | `string`  | Aligns text (`"start"`, `"center"`, `"end"`). |
 
 ### `data`
+
 - **Type**: `Array`
 - **Description**: The data to display in the grid. Each object represents a row.
 
 ### `pagination`
+
 - **Type**: `boolean`
 - **Default**: `false`
 - **Description**: Enables pagination for the grid.
 
 ### `itemsPerPage`
+
 - **Type**: `number`
 - **Default**: `10`
 - **Description**: Sets the number of rows per page.
 
 ### `enableSorting`
+
 - **Type**: `boolean`
 - **Default**: `false`
 - **Description**: Enables column sorting functionality.
-```
+
+````
 
 ## Features
 
@@ -110,7 +116,7 @@ const customTheme = {
 };
 
 <Grid headers={headers} data={data} theme={customTheme} />;
-```
+````
 
 ## Example
 
@@ -119,32 +125,32 @@ A full example with sorting, pagination, and custom theming:
 ```javascript
 <Grid
   headers={[
-    { label: "Name", key: "name", isSortable: true, width: 30 },
-    { label: "Category", key: "category", isSortable: true, width: 30 },
+    { label: 'Name', key: 'name', isSortable: true, width: 30 },
+    { label: 'Category', key: 'category', isSortable: true, width: 30 },
     {
-      label: "Actions",
-      key: "actions",
+      label: 'Actions',
+      key: 'actions',
       buttons: [
         {
-          label: "View",
-          iconName: "RiEyeLine",
+          label: 'View',
+          iconName: 'RiEyeLine',
           onClick: (row) => alert(`Viewing ${row.name}`),
         },
       ],
       width: 40,
-      textAlign: "end",
+      textAlign: 'end',
     },
   ]}
   data={[
-    { id: 1, name: "Apple", category: "Fruit" },
-    { id: 2, name: "Carrot", category: "Vegetable" },
+    { id: 1, name: 'Apple', category: 'Fruit' },
+    { id: 2, name: 'Carrot', category: 'Vegetable' },
   ]}
   pagination
   itemsPerPage={5}
   enableSorting
   theme={{
-    headerColor: "blue.600",
-    rowHoverBg: "blue.50",
+    headerColor: 'blue.600',
+    rowHoverBg: 'blue.50',
   }}
-/>;
+/>
 ```

@@ -1,27 +1,34 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Flex, Table, Box, HStack } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Flex, Table, Box, HStack } from '@chakra-ui/react';
 import {
   PaginationItems,
   PaginationNextTrigger,
   PaginationPrevTrigger,
   PaginationRoot,
-} from "../../../../src/components/ui/pagination";
-import Button from "../Button";
-import defaultTheme from "./Grid.styles";
+} from '../../../../src/components/ui/pagination';
+import Button from '../Button';
+import defaultTheme from './Grid.styles';
 import SelectField from '../SelectField';
 
-const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerPage, enableSorting }) => {
+const Grid = ({
+  headers,
+  data,
+  theme,
+  pagination,
+  itemsPerPage: initialItemsPerPage,
+  enableSorting,
+}) => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const mergedTheme = { ...defaultTheme, ...theme };
 
   const itemPerPageOptions = [
-    { value: "5", label: "5" },
-    { value: "10", label: "10" },
-    { value: "20", label: "20" },
-    { value: "30", label: "30" },
+    { value: '5', label: '5' },
+    { value: '10', label: '10' },
+    { value: '20', label: '20' },
+    { value: '30', label: '30' },
   ];
 
   const visibleData = pagination
@@ -33,10 +40,10 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
     if (sortConfig.key === key) {
       setSortConfig({
         key,
-        direction: sortConfig.direction === "asc" ? "desc" : "asc",
+        direction: sortConfig.direction === 'asc' ? 'desc' : 'asc',
       });
     } else {
-      setSortConfig({ key, direction: "asc" });
+      setSortConfig({ key, direction: 'asc' });
     }
   };
 
@@ -47,23 +54,25 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
 
   const sortedData = enableSorting
     ? [...visibleData].sort((a, b) => {
-      if (!sortConfig.key) return 0;
+        if (!sortConfig.key) return 0;
 
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
 
-      if (typeof aValue === "string" && typeof bValue === "string") {
-        return sortConfig.direction === "asc"
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue);
-      }
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortConfig.direction === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
 
-      if (typeof aValue === "number" && typeof bValue === "number") {
-        return sortConfig.direction === "asc" ? aValue - bValue : bValue - aValue;
-      }
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortConfig.direction === 'asc'
+            ? aValue - bValue
+            : bValue - aValue;
+        }
 
-      return 0;
-    })
+        return 0;
+      })
     : visibleData;
 
   return (
@@ -74,19 +83,23 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
             {headers.map((header, index) => (
               <Table.ColumnHeader
                 key={index}
-                textAlign={header.textAlign || "center"}
+                textAlign={header.textAlign || 'center'}
                 color={mergedTheme.headerColor}
-                style={{ width: header.width ? `${header.width}%` : "auto" }}
-                cursor={header.isSortable && enableSorting ? "pointer" : "default"}
+                style={{ width: header.width ? `${header.width}%` : 'auto' }}
+                cursor={
+                  header.isSortable && enableSorting ? 'pointer' : 'default'
+                }
                 onClick={
-                  header.isSortable && enableSorting ? () => handleSort(header.key) : undefined
+                  header.isSortable && enableSorting
+                    ? () => handleSort(header.key)
+                    : undefined
                 }
               >
                 {header.label}
                 {header.isSortable &&
                   enableSorting &&
                   sortConfig.key === header.key &&
-                  (sortConfig.direction === "asc" ? " ↑" : " ↓")}
+                  (sortConfig.direction === 'asc' ? ' ↑' : ' ↓')}
               </Table.ColumnHeader>
             ))}
           </Table.Row>
@@ -101,12 +114,12 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
               {headers.map((header, cellIndex) => (
                 <Table.Cell
                   key={cellIndex}
-                  textAlign={header.textAlign || "start"}
+                  textAlign={header.textAlign || 'start'}
                   color={mergedTheme.cellColor}
-                  style={{ width: header.width ? `${header.width}%` : "auto" }}
+                  style={{ width: header.width ? `${header.width}%` : 'auto' }}
                 >
                   {header.buttons && Array.isArray(header.buttons) ? (
-                    <Flex gap="2" justify={header.textAlign || "center"}>
+                    <Flex gap="2" justify={header.textAlign || 'center'}>
                       {header.buttons.map((buttonConfig, btnIndex) => (
                         <Button
                           key={btnIndex}
@@ -119,7 +132,11 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
                       ))}
                     </Flex>
                   ) : header.isLink ? (
-                    <a href={row[header.key]} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={row[header.key]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {row[header.key]}
                     </a>
                   ) : (
@@ -141,7 +158,7 @@ const Grid = ({ headers, data, theme, pagination, itemsPerPage: initialItemsPerP
         >
           <HStack justify="center" mt={4} gap="1">
             <PaginationPrevTrigger />
-            <Box pt={4} css={{ minWidth: "100px" }}>
+            <Box pt={4} css={{ minWidth: '100px' }}>
               <SelectField
                 options={itemPerPageOptions}
                 defaultValue={itemsPerPage.toString()}
@@ -162,7 +179,7 @@ Grid.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
-      textAlign: PropTypes.oneOf(["start", "center", "end"]),
+      textAlign: PropTypes.oneOf(['start', 'center', 'end']),
       width: PropTypes.number,
       isSortable: PropTypes.bool,
       isLink: PropTypes.bool,

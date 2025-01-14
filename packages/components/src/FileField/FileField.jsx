@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { CloseButton } from "../../../../src/components/ui/close-button";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { CloseButton } from '../../../../src/components/ui/close-button';
 import {
   FileInput,
   FileUploadClearTrigger,
   FileUploadLabel,
   FileUploadRoot,
-} from "../../../../src/components/ui/file-upload";
-import { InputGroup } from "../../../../src/components/ui/input-group";
-import { LuFileUp } from "react-icons/lu";
+} from '../../../../src/components/ui/file-upload';
+import { InputGroup } from '../../../../src/components/ui/input-group';
+import { LuFileUp } from 'react-icons/lu';
 
 const FileField = ({ label, maxWidth, onFileChange, accept }) => {
   const handleFileChange = (event) => {
@@ -21,11 +21,11 @@ const FileField = ({ label, maxWidth, onFileChange, accept }) => {
   return (
     <FileUploadRoot
       gap="1"
-      maxWidth={maxWidth || "100%"}
-      accept={accept ? accept.join(",") : undefined}
+      maxWidth={maxWidth || '100%'}
+      accept={accept ? accept.join(',') : undefined}
       onFileChange={handleFileChange}
     >
-      <FileUploadLabel>{label || "Upload file"}</FileUploadLabel>
+      <FileUploadLabel>{label || 'Upload file'}</FileUploadLabel>
       <InputGroup
         w="full"
         startElement={<LuFileUp />}
@@ -57,8 +57,8 @@ FileField.propTypes = {
 };
 
 FileField.defaultProps = {
-  label: "Upload file",
-  maxWidth: "100%",
+  label: 'Upload file',
+  maxWidth: '100%',
   onFileChange: null,
   accept: null,
 };

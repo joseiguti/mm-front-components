@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import FileField from "./FileField";
+import React, { useState } from 'react';
+import FileField from './FileField';
 
 export default {
-  title: "Components/FileField",
+  title: 'Components/FileField',
   component: FileField,
 };
 
@@ -14,27 +14,22 @@ export const Default = () => {
     if (file) {
       console.log(`File uploaded: ${file.name}`);
     } else {
-      console.log("File cleared");
+      console.log('File cleared');
     }
   };
 
-  return (
-    <FileField
-      label="Upload your file"
-      onFileChange={handleFileChange}
-    />
-  );
+  return <FileField label="Upload your file" onFileChange={handleFileChange} />;
 };
 
 export const ImagesOnly = () => {
   const handleFileChange = (file) => {
-    console.log(file ? `Image uploaded: ${file.name}` : "No file uploaded");
+    console.log(file ? `Image uploaded: ${file.name}` : 'No file uploaded');
   };
 
   return (
     <FileField
       label="Upload an image"
-      accept={["image/png", "image/jpeg"]}
+      accept={['image/png', 'image/jpeg']}
       onFileChange={handleFileChange}
     />
   );
@@ -42,13 +37,13 @@ export const ImagesOnly = () => {
 
 export const TextFilesOnly = () => {
   const handleFileChange = (file) => {
-    console.log(file ? `Text file uploaded: ${file.name}` : "No file uploaded");
+    console.log(file ? `Text file uploaded: ${file.name}` : 'No file uploaded');
   };
 
   return (
     <FileField
       label="Upload a text file"
-      accept={["text/plain"]}
+      accept={['text/plain']}
       onFileChange={handleFileChange}
     />
   );

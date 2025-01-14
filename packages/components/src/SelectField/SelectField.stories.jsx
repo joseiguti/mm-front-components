@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import SelectField from "./SelectField";
+import React, { useState } from 'react';
+import SelectField from './SelectField';
 
 export default {
-  title: "Components/SelectField",
+  title: 'Components/SelectField',
   component: SelectField,
 };
 
 const Template = (args) => {
-
-  const [value, setValue] = useState(args.value || "");
+  const [value, setValue] = useState(args.value || '');
 
   return (
     <SelectField
@@ -26,70 +25,70 @@ const Template = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  label: "Framework",
-  placeholder: "Choose a framework...",
-  size: "lg",
+  label: 'Framework',
+  placeholder: 'Choose a framework...',
+  size: 'lg',
   options: [
-    { value: "1", label: "VueJs" },
-    { value: "2", label: "ReactJs" },
-    { value: "3", label: "NextJs" },
+    { value: '1', label: 'VueJs' },
+    { value: '2', label: 'ReactJs' },
+    { value: '3', label: 'NextJs' },
   ],
   onChange: (value) => {
-    console.log("Selected value from story:", value);
+    console.log('Selected value from story:', value);
   },
 };
 
 export const WithError = Template.bind({});
 WithError.args = {
-  label: "Select with Error",
-  placeholder: "Choose an option...",
-  value: "",
+  label: 'Select with Error',
+  placeholder: 'Choose an option...',
+  value: '',
   isInvalid: true,
   isRequired: true,
-  errorMessage: "This field is required.",
+  errorMessage: 'This field is required.',
   options: [
-    { value: "1", label: "VueJs" },
-    { value: "2", label: "ReactJs" },
-    { value: "3", label: "NextJs" },
+    { value: '1', label: 'VueJs' },
+    { value: '2', label: 'ReactJs' },
+    { value: '3', label: 'NextJs' },
   ],
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  label: "Select Disabled",
-  placeholder: "Choose an option...",
-  value: "",
+  label: 'Select Disabled',
+  placeholder: 'Choose an option...',
+  value: '',
   isDisabled: true,
   options: [
-    { value: "1", label: "VueJs" },
-    { value: "2", label: "ReactJs" },
-    { value: "3", label: "NextJs" },
+    { value: '1', label: 'VueJs' },
+    { value: '2', label: 'ReactJs' },
+    { value: '3', label: 'NextJs' },
   ],
 };
 
 export const PreselectedValue = Template.bind({});
 PreselectedValue.args = {
-  label: "Preselected Value",
-  placeholder: "Choose an option...",
-  defaultValue: "2",
+  label: 'Preselected Value',
+  placeholder: 'Choose an option...',
+  defaultValue: '2',
   options: [
-    { value: "1", label: "VueJs" },
-    { value: "2", label: "ReactJs" },
-    { value: "3", label: "NextJs" },
+    { value: '1', label: 'VueJs' },
+    { value: '2', label: 'ReactJs' },
+    { value: '3', label: 'NextJs' },
   ],
 };
 
 export const LargeSize = Template.bind({});
 LargeSize.args = {
-  label: "Large Size Select",
-  placeholder: "Choose a framework...",
+  label: 'Large Size Select',
+  placeholder: 'Choose a framework...',
   options: [
-    { value: "1", label: "VueJs" },
-    { value: "2", label: "ReactJs" },
-    { value: "3", label: "NextJs" },
+    { value: '1', label: 'VueJs' },
+    { value: '2', label: 'ReactJs' },
+    { value: '3', label: 'NextJs' },
   ],
   theme: {
-    size: "lg",
+    size: 'lg',
     colors: {
       labelColor: 'teal.600',
       inputBorderColor: 'teal.300',
@@ -102,8 +101,8 @@ LargeSize.args = {
 
 export const ManyOptions = Template.bind({});
 ManyOptions.args = {
-  label: "Many Options Select",
-  placeholder: "Scroll to see more...",
+  label: 'Many Options Select',
+  placeholder: 'Scroll to see more...',
   isMultiple: true,
   options: Array.from({ length: 20 }, (_, i) => ({
     value: `${i + 1}`,

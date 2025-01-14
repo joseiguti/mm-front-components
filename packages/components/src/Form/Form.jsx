@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import TextField from "../TextField";
-import SelectField from "../SelectField";
-import Button from "../Button";
-import FileField from "../FileField";
-import FileDropZone from "../FileDropZone";
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import TextField from '../TextField';
+import SelectField from '../SelectField';
+import Button from '../Button';
+import FileField from '../FileField';
+import FileDropZone from '../FileDropZone';
+import { Box, Flex, Stack } from '@chakra-ui/react';
 
 const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {
-        acc[field.name] = field.defaultValue || "";
+        acc[field.name] = field.defaultValue || '';
       }
       return acc;
     }, {})
@@ -19,7 +19,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 
   const [errors, setErrors] = useState(() =>
     fields.flat().reduce((acc, field) => {
-      acc[field.name] = "";
+      acc[field.name] = '';
       return acc;
     }, {})
   );
@@ -33,7 +33,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
         if (field.errorMessage) {
           newErrors[field.name] = field.errorMessage;
         } else {
-          newErrors[field.name] = `${field.label || "This field"} is required.`;
+          newErrors[field.name] = `${field.label || 'This field'} is required.`;
         }
       }
 
@@ -51,13 +51,13 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 
   const handleChange = (name, value) => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   const filterUndefinedFields = (values) => {
     const filteredValues = {};
     Object.keys(values).forEach((key) => {
-      if (key && key !== "undefined") {
+      if (key && key !== 'undefined') {
         filteredValues[key] = values[key];
       }
     });
@@ -81,7 +81,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
           if (Array.isArray(field)) {
             return (
               <Flex
-                key={field.map((f) => f.name || f.label).join("-")}
+                key={field.map((f) => f.name || f.label).join('-')}
                 gap="0"
                 justify="space-between"
               >
@@ -93,11 +93,13 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     flex={`0 0 ${100 / Math.min(field.length, 4)}%`}
                     maxWidth={`${100 / Math.min(field.length, 4)}%`}
                   >
-                    {subField.type === "text" && (
+                    {subField.type === 'text' && (
                       <TextField
                         label={subField.label}
                         value={formValues[subField.name]}
-                        onChange={(e) => handleChange(subField.name, e.target.value)}
+                        onChange={(e) =>
+                          handleChange(subField.name, e.target.value)
+                        }
                         placeholder={subField.placeholder}
                         isRequired={subField.isRequired}
                         isInvalid={!!errors[subField.name]}
@@ -105,7 +107,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         theme={theme}
                       />
                     )}
-                    {subField.type === "select" && (
+                    {subField.type === 'select' && (
                       <SelectField
                         label={subField.label}
                         value={formValues[subField.name]}
@@ -118,12 +120,14 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         theme={theme}
                       />
                     )}
-                    {subField.type === "file" && (
+                    {subField.type === 'file' && (
                       <FileField
                         label={subField.label}
                         maxWidth={subField.maxWidth}
                         accept={subField.accept}
-                        onFileChange={(file) => handleChange(subField.name, file)}
+                        onFileChange={(file) =>
+                          handleChange(subField.name, file)
+                        }
                       />
                     )}
                   </Box>
@@ -132,10 +136,15 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
             );
           }
 
-          if (field.type === "text" || field.type === "select" || field.type === "file" || field.type === "drop") {
+          if (
+            field.type === 'text' ||
+            field.type === 'select' ||
+            field.type === 'file' ||
+            field.type === 'drop'
+          ) {
             return (
               <React.Fragment key={field.name}>
-                {field.type === "text" && (
+                {field.type === 'text' && (
                   <TextField
                     label={field.label}
                     value={formValues[field.name]}
@@ -147,7 +156,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     theme={theme}
                   />
                 )}
-                {field.type === "select" && (
+                {field.type === 'select' && (
                   <SelectField
                     label={field.label}
                     value={formValues[field.name]}
@@ -160,7 +169,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     theme={theme}
                   />
                 )}
-                {field.type === "file" && (
+                {field.type === 'file' && (
                   <FileField
                     label={field.label}
                     maxWidth={field.maxWidth}
@@ -168,7 +177,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     onFileChange={(file) => handleChange(field.name, file)}
                   />
                 )}
-                {field.type === "drop" && (
+                {field.type === 'drop' && (
                   <Box py="2" key={field.name} flex="1" maxWidth="100%">
                     <FileDropZone
                       label={field.label}
@@ -189,7 +198,7 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 
         <Flex justify={buttonsPosition} gap="2">
           {fields
-            .filter((field) => field.type === "button")
+            .filter((field) => field.type === 'button')
             .map((field, index) => (
               <Button
                 key={index}
@@ -212,13 +221,19 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 };
 
 Form.propTypes = {
-  buttonsPosition: PropTypes.oneOf(["flex-start", "center", "flex-end", "space-between"]),
+  buttonsPosition: PropTypes.oneOf([
+    'flex-start',
+    'center',
+    'flex-end',
+    'space-between',
+  ]),
   fields: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
-        type: PropTypes.oneOf(["text", "select", "button", "file", "drop"]).isRequired,
+        type: PropTypes.oneOf(['text', 'select', 'button', 'file', 'drop'])
+          .isRequired,
         placeholder: PropTypes.string,
         defaultValue: PropTypes.string,
         options: PropTypes.array,

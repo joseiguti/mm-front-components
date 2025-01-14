@@ -49,9 +49,9 @@ Disabled.args = {
 
 export const DateField = Template.bind({});
 DateField.args = {
-  label: "Select a Date",
-  placeholder: "Enter date",
-  type: "date",
+  label: 'Select a Date',
+  placeholder: 'Enter date',
+  type: 'date',
 };
 
 export const CustomTheme = Template.bind({});
@@ -60,7 +60,7 @@ CustomTheme.args = {
   placeholder: 'Type something...',
   isInvalid: false,
   theme: {
-    size: "lg",
+    size: 'lg',
     colors: {
       labelColor: 'green',
       inputBorderColor: 'teal.300',

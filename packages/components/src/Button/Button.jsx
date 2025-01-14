@@ -1,20 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyledButton } from "./Button.styles.jsx";
-import defaultTheme from "../themeForm";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyledButton } from './Button.styles.jsx';
+import defaultTheme from '../themeForm';
 
 const Button = ({
-                  label = "",
-                  isLoading = false,
-                  isDisabled = false,
-                  isSubmit = false,
-                  onClick,
-                  onSubmit,
-                  iconName = "",
-                  size = "",
-                  loadingText = "",
-                  theme = defaultTheme,
-                }) => {
+  label = '',
+  isLoading = false,
+  isDisabled = false,
+  isSubmit = false,
+  onClick,
+  onSubmit,
+  iconName = '',
+  size = '',
+  loadingText = '',
+  theme = defaultTheme,
+}) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (
@@ -41,20 +41,20 @@ Button.propTypes = {
   onClick: PropTypes.func,
   onSubmit: PropTypes.func,
   iconName: PropTypes.string,
-  size: PropTypes.oneOf(["xs", "sm", "md", "lg"]),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
   loadingText: PropTypes.string,
 };
 
 Button.defaultProps = {
-  label: "",
+  label: '',
   isLoading: false,
   isSubmit: false,
   isDisabled: false,
   onClick: () => {},
   onSubmit: () => {},
   iconName: null,
-  size: "md",
-  loadingText: "Loading...",
+  size: 'md',
+  loadingText: 'Loading...',
 };
 
 export default Button;

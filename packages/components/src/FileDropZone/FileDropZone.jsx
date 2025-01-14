@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   FileUploadRoot,
   FileUploadDropzone,
   FileUploadList,
-} from "../../../../src/components/ui/file-upload";
+} from '../../../../src/components/ui/file-upload';
 
 const FileDropZone = ({
-                        maxWidth = "xl",
-                        maxFiles = 10,
-                        label = "Drag and drop here to upload",
-                        description = ".png, .jpg up to 5MB",
-                        onFileChange,
-                        accept = ["image/png", "image/jpeg"],
-                      }) => {
+  maxWidth = 'xl',
+  maxFiles = 10,
+  label = 'Drag and drop here to upload',
+  description = '.png, .jpg up to 5MB',
+  onFileChange,
+  accept = ['image/png', 'image/jpeg'],
+}) => {
   const handleFileChange = (event) => {
     if (onFileChange) {
       onFileChange(event);
@@ -26,13 +26,10 @@ const FileDropZone = ({
       alignItems="stretch"
       maxFiles={maxFiles}
       onFileChange={(event) => handleFileChange(event)}
-      accept={accept.join(",")}
+      accept={accept.join(',')}
     >
       <FileUploadDropzone label={label} description={description} />
-      <FileUploadList
-      showSize={true}
-      clearable={true}
-      />
+      <FileUploadList showSize={true} clearable={true} />
     </FileUploadRoot>
   );
 };

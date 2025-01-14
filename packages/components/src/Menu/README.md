@@ -27,23 +27,23 @@ npm install @mi-paquete/menu
 Import the `Menu` component and use it in your project:
 
 ```javascript
-import React from "react";
-import { Menu } from "@mi-paquete/menu";
+import React from 'react';
+import { Menu } from '@mi-paquete/menu';
 
 const App = () => {
   const customConfig = {
-    logo: "https://example.com/my-logo.png",
+    logo: 'https://example.com/my-logo.png',
     items: [
       {
-        label: "Home",
-        icon: "HomeIcon",
-        link: "/",
+        label: 'Home',
+        icon: 'HomeIcon',
+        link: '/',
         children: [
-          { label: "Sub Home 1", link: "/sub-home-1" },
-          { label: "Sub Home 2", link: "/sub-home-2" },
+          { label: 'Sub Home 1', link: '/sub-home-1' },
+          { label: 'Sub Home 2', link: '/sub-home-2' },
         ],
       },
-      { label: "Settings", icon: "SettingsIcon", link: "/settings" },
+      { label: 'Settings', icon: 'SettingsIcon', link: '/settings' },
     ],
   };
 
@@ -133,25 +133,25 @@ The component uses `styled-components` for styling, and the theme can be extende
 ```javascript
 const theme = {
   colors: {
-    primary: "#003366",
-    secondary: "#FFFFFF",
-    hover: "#F1F1F1",
-    submenuBackground: "#0055A5",
+    primary: '#003366',
+    secondary: '#FFFFFF',
+    hover: '#F1F1F1',
+    submenuBackground: '#0055A5',
   },
   spacing: {
-    small: "8px",
-    medium: "16px",
-    large: "24px",
+    small: '8px',
+    medium: '16px',
+    large: '24px',
   },
   fonts: {
     primary: "'Roboto', sans-serif",
     size: {
-      small: "14px",
-      medium: "16px",
+      small: '14px',
+      medium: '16px',
     },
   },
   icons: {
-    size: "20px",
+    size: '20px',
   },
 };
 ```
@@ -159,8 +159,8 @@ const theme = {
 Wrap your app with the `ThemeProvider`:
 
 ```javascript
-import { ThemeProvider } from "styled-components";
-import theme from "./theme";
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 <ThemeProvider theme={theme}>
   <App />

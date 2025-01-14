@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { StyledBox, StyledSelect } from "./SelectField.styles.jsx";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { StyledBox, StyledSelect } from './SelectField.styles.jsx';
 import defaultTheme from '../themeForm';
 
 const SelectField = ({
-                       label = "",
-                       defaultValue = "",
-                       onChange,
-                       options = [],
-                       placeholder = "Select an option",
-                       errorMessage = "",
-                       isInvalid = false,
-                       isDisabled = false,
-                       isRequired = false,
-                       isMultiple = false,
-                       theme = defaultTheme,
-                     }) => {
+  label = '',
+  defaultValue = '',
+  onChange,
+  options = [],
+  placeholder = 'Select an option',
+  errorMessage = '',
+  isInvalid = false,
+  isDisabled = false,
+  isRequired = false,
+  isMultiple = false,
+  theme = defaultTheme,
+}) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
-  console.log(mergedTheme)
+  console.log(mergedTheme);
 
   return (
     <StyledBox>

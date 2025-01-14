@@ -13,7 +13,7 @@ npm install toastify-js
 Include the Toastify CSS in your project:
 
 ```javascript
-import "toastify-js/src/toastify.css";
+import 'toastify-js/src/toastify.css';
 ```
 
 ## Usage
@@ -21,23 +21,21 @@ import "toastify-js/src/toastify.css";
 To use the `Notifications` component, import it and call the `notify` method to trigger a notification. Here's an example:
 
 ```javascript
-import Notifications from "./Notifications";
+import Notifications from './Notifications';
 
 const App = () => {
   const handleNotification = () => {
     const { notify } = Notifications({
-      message: "This is a success notification!",
-      type: "success",
+      message: 'This is a success notification!',
+      type: 'success',
       duration: 5000,
-      position: "top-right",
+      position: 'top-right',
     });
 
     notify();
   };
 
-  return (
-    <button onClick={handleNotification}>Show Notification</button>
-  );
+  return <button onClick={handleNotification}>Show Notification</button>;
 };
 
 export default App;
@@ -48,11 +46,13 @@ export default App;
 The `Notifications` component supports the following props:
 
 ### `message`
+
 - **Type**: `string`
 - **Required**: Yes
 - **Description**: The content of the notification message.
 
 ### `type`
+
 - **Type**: `string`
 - **Required**: No
 - **Default**: `"info"`
@@ -60,12 +60,14 @@ The `Notifications` component supports the following props:
 - **Description**: Defines the type of notification. This affects the background and text colors.
 
 ### `duration`
+
 - **Type**: `number`
 - **Required**: No
 - **Default**: `5000`
 - **Description**: Duration in milliseconds for how long the notification is visible. Setting it to `0` makes the notification persistent until manually closed.
 
 ### `position`
+
 - **Type**: `string`
 - **Required**: No
 - **Default**: `"top-right"`
@@ -73,17 +75,19 @@ The `Notifications` component supports the following props:
 - **Description**: Determines where the notification appears on the screen.
 
 ### `theme`
+
 - **Type**: `object`
 - **Required**: No
 - **Description**: Allows customization of the notification styles. Overrides the default styles.
 
 #### Example `theme` Object:
+
 ```javascript
 const customTheme = {
-  success: { background: "darkgreen", color: "white" },
-  error: { background: "darkred", color: "white" },
-  warning: { background: "darkorange", color: "white" },
-  info: { background: "darkblue", color: "white" },
+  success: { background: 'darkgreen', color: 'white' },
+  error: { background: 'darkred', color: 'white' },
+  warning: { background: 'darkorange', color: 'white' },
+  info: { background: 'darkblue', color: 'white' },
 };
 ```
 
@@ -92,26 +96,29 @@ const customTheme = {
 The `Notifications` component includes default styles for different notification types. These styles can be overridden by providing a custom `theme` object.
 
 ### Default Styles
+
 ```javascript
 const defaultStyles = {
-  success: { background: "green", color: "white" },
-  error: { background: "red", color: "white" },
-  warning: { background: "orange", color: "white" },
-  info: { background: "blue", color: "white" },
+  success: { background: 'green', color: 'white' },
+  error: { background: 'red', color: 'white' },
+  warning: { background: 'orange', color: 'white' },
+  info: { background: 'blue', color: 'white' },
 };
 ```
 
 ### Custom Styles
+
 You can provide your own theme object to override the default styles. For example:
 
 ```javascript
 const customTheme = {
-  success: { background: "limegreen", color: "black" },
-  error: { background: "darkred", color: "white" },
-  warning: { background: "goldenrod", color: "black" },
-  info: { background: "royalblue", color: "white" },
+  success: { background: 'limegreen', color: 'black' },
+  error: { background: 'darkred', color: 'white' },
+  warning: { background: 'goldenrod', color: 'black' },
+  info: { background: 'royalblue', color: 'white' },
 };
 ```
+
 Pass the theme prop to the Notifications component when invoking it:
 
 ```javascript
@@ -134,6 +141,7 @@ The `Notifications` component allows you to display notifications in different p
 - `bottom-left`
 
 ### Example Usage
+
 ```javascript
 <Notifications
   message="Notification at the top left"
@@ -149,13 +157,13 @@ To customize the placement further, you can use CSS styles and Toastify options.
 
 ```javascript
 Toastify({
-  text: "This notification appears in a custom position",
+  text: 'This notification appears in a custom position',
   style: {
-    top: "50px",
-    right: "20px",
+    top: '50px',
+    right: '20px',
   },
-  gravity: "top",
-  position: "right",
+  gravity: 'top',
+  position: 'right',
   duration: 5000,
 }).showToast();
 ```

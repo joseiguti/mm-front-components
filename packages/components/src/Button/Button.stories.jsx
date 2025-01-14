@@ -13,11 +13,13 @@ const Template = (args) => {
   const handleSubmit = () => {
     alert('Default OnSubmit event');
   };
-  return <Button
-    {...args}
-    onClick={args.onClick || handleClick}
-    onSubmit={args.onSubmit || handleSubmit}
-  />;
+  return (
+    <Button
+      {...args}
+      onClick={args.onClick || handleClick}
+      onSubmit={args.onSubmit || handleSubmit}
+    />
+  );
 };
 
 export const aButton = Template.bind({});
@@ -31,7 +33,7 @@ aButton.args = {
 export const WithIcon = Template.bind({});
 WithIcon.args = {
   label: 'Save',
-  iconName: "RiSave3Line"
+  iconName: 'RiSave3Line',
 };
 
 export const Loading = Template.bind({});
@@ -46,7 +48,7 @@ export const Disabled = Template.bind({});
 Disabled.args = {
   label: 'Save',
   isDisabled: true,
-  iconName: "RiSave3Line",
+  iconName: 'RiSave3Line',
   onClick: () => {
     alert('Greetings from the Onclick event');
   },

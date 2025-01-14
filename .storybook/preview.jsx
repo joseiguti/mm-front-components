@@ -29,7 +29,6 @@ const preview = {
   },
   decorators: [
     (Story, context) => {
-
       if (chakraCategories.includes(context.kind)) {
         return (
           <ChakraProvider value={defaultSystem}>
