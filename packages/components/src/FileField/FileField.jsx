@@ -12,10 +12,6 @@ import { LuFileUp } from "react-icons/lu";
 
 const FileField = ({ label, maxWidth, onFileChange, accept }) => {
   const handleFileChange = (event) => {
-
-    console.log(accept);
-    console.log(event);
-
     const selectedFile = event?.target?.files[0];
     if (selectedFile && onFileChange) {
       onFileChange(selectedFile);
@@ -25,7 +21,7 @@ const FileField = ({ label, maxWidth, onFileChange, accept }) => {
   return (
     <FileUploadRoot
       gap="1"
-      maxWidth={maxWidth || "300px"}
+      maxWidth={maxWidth || "100%"}
       accept={accept ? accept.join(",") : undefined}
       onFileChange={handleFileChange}
     >
@@ -62,7 +58,7 @@ FileField.propTypes = {
 
 FileField.defaultProps = {
   label: "Upload file",
-  maxWidth: "300px",
+  maxWidth: "100%",
   onFileChange: null,
   accept: null,
 };

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextField from "../TextField";
 import SelectField from "../SelectField";
 import Button from "../Button";
+import FileField from "../FileField";
 import { Box, Flex, Stack } from "@chakra-ui/react";
 
 const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
@@ -116,13 +117,21 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         theme={theme}
                       />
                     )}
+                    {subField.type === "file" && (
+                      <FileField
+                        label={subField.label}
+                        maxWidth={subField.maxWidth}
+                        accept={subField.accept}
+                        onFileChange={(file) => handleChange(subField.name, file)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Flex>
             );
           }
 
-          if (field.type === "text" || field.type === "select") {
+          if (field.type === "text" || field.type === "select" || field.type === "file") {
             return (
               <React.Fragment key={field.name}>
                 {field.type === "text" && (
@@ -148,6 +157,14 @@ const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     isInvalid={!!errors[field.name]}
                     errorMessage={errors[field.name]}
                     theme={theme}
+                  />
+                )}
+                {field.type === "file" && (
+                  <FileField
+                    label={field.label}
+                    maxWidth={field.maxWidth}
+                    accept={field.accept}
+                    onFileChange={(file) => handleChange(field.name, file)}
                   />
                 )}
               </React.Fragment>
@@ -188,25 +205,29 @@ Form.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
-        type: PropTypes.oneOf(["text", "select", "button"]).isRequired,
+        type: PropTypes.oneOf(["text", "select", "button", "file"]).isRequired,
         placeholder: PropTypes.string,
         defaultValue: PropTypes.string,
         options: PropTypes.array,
         isInvalid: PropTypes.bool,
         errorMessage: PropTypes.string,
         isRequired: PropTypes.bool,
+        maxWidth: PropTypes.string,
+        accept: PropTypes.arrayOf(PropTypes.string),
       }),
       PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,
           label: PropTypes.string,
-          type: PropTypes.oneOf(["text", "select"]).isRequired,
+          type: PropTypes.oneOf(["text", "select", "file"]).isRequired,
           placeholder: PropTypes.string,
           defaultValue: PropTypes.string,
           options: PropTypes.array,
           isInvalid: PropTypes.bool,
           errorMessage: PropTypes.string,
           isRequired: PropTypes.bool,
+          maxWidth: PropTypes.string,
+          accept: PropTypes.arrayOf(PropTypes.string),
         })
       ),
     ])

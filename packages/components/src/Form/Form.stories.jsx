@@ -122,6 +122,36 @@ ajaxCall.args = {
   component: (props) => <Form {...props} />,
 };
 
+export const FormWithFileField = Template.bind({});
+FormWithFileField.args = {
+  fields: [
+    {
+      name: "profilePicture",
+      label: "Profile Picture",
+      type: "file",
+      accept: ["image/png", "image/jpeg"],
+      isRequired: true,
+    },
+    {
+      name: "username",
+      label: "Username",
+      type: "text",
+      placeholder: "Enter your username",
+      isRequired: true,
+    },
+    {
+      type: "button",
+      label: "Submit",
+      isSubmit: true,
+      iconName: "RiCheckLine",
+    },
+  ],
+  onSubmit: (values) => {
+    console.log("Form values:", values);
+  },
+  buttonsPosition: "center",
+};
+
 export const ComplexForm = Template.bind({});
 ComplexForm.args = {
   fields: [
