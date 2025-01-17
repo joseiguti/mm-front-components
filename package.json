@@ -1,12 +1,16 @@
 {
   "name": "web-monorepo-ui-components",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "type": "module",
   "private": false,
   "workspaces": [
     "packages/*"
   ],
-  "main": "index.js",
+  "main": "packages/components/dist/index.cjs.js",
+  "module": "packages/components/dist/index.esm.js",
+  "files": [
+    "packages/components/dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "lerna run build",
@@ -20,7 +24,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A monorepo for UI components using modern tools",
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
@@ -56,6 +60,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rollup": "^4.28.0",
+    "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^8.4.7",
     "typescript-eslint": "^8.17.0"
   },
@@ -78,5 +83,9 @@
     "react-icons": "^5.4.0",
     "styled-components": "^6.1.13",
     "toastify-js": "^1.12.0"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

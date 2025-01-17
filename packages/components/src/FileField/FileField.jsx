@@ -10,7 +10,7 @@ import {
 import { InputGroup } from '../../../../src/components/ui/input-group';
 import { LuFileUp } from 'react-icons/lu';
 
-const FileField = ({ label, maxWidth, onFileChange, accept }) => {
+export const FileField = ({ label, maxWidth, onFileChange, accept }) => {
   const handleFileChange = (event) => {
     const selectedFile = event?.target?.files[0];
     if (selectedFile && onFileChange) {

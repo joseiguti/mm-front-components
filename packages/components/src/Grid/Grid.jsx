@@ -11,7 +11,7 @@ import Button from '../Button';
 import defaultTheme from './Grid.styles';
 import SelectField from '../SelectField';
 
-const Grid = ({
+export const Grid = ({
   headers,
   data,
   theme,

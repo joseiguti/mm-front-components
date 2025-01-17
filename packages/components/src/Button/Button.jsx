@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyledButton } from './Button.styles.jsx';
 import defaultTheme from '../themeForm';
 
-const Button = ({
+export const Button = ({
   label = '',
   isLoading = false,
   isDisabled = false,

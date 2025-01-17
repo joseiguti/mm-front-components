@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyledBox, StyledInput } from './TextField.styles.jsx';
 import defaultTheme from '../themeForm';
 
-const TextField = ({
+export const TextField = ({
   label = '',
   value = '',
   onChange,

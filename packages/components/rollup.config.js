@@ -2,6 +2,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: 'src/index.js',
@@ -23,20 +24,15 @@ export default {
     }),
     commonjs(),
     json(),
+    postcss(),
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**',
       extensions: ['.js', '.jsx'],
     }),
   ],
-  external: [
-    'react',
-    'react-dom',
-    '@mui/icons-material',
-    '@mui/material',
-    '@mui/system',
-    '@mui/utils',
-  ],
+
+  external: ['react', 'react-dom', '@mui/material', '@mui/icons-material', 'styled-components'],
 
   onwarn: (warning, warn) => {
     if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {

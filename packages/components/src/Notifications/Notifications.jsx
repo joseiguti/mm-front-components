@@ -3,7 +3,7 @@ import Toastify from 'toastify-js';
 import defaultStyles from './Notifications.styles';
 import 'toastify-js/src/toastify.css';
 
-const Notifications = ({
+export const Notifications = ({
   message,
   type = 'info',
   duration = 5000,

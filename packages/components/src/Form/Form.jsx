@@ -7,7 +7,7 @@ import FileField from '../FileField';
 import FileDropZone from '../FileDropZone';
 import { Box, Flex, Stack } from '@chakra-ui/react';
 
-const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
+export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {

@@ -6,7 +6,7 @@ import {
   FileUploadList,
 } from '../../../../src/components/ui/file-upload';
 
-const FileDropZone = ({
+export const FileDropZone = ({
   maxWidth = 'xl',
   maxFiles = 10,
   label = 'Drag and drop here to upload',

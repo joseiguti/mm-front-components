@@ -12,7 +12,7 @@ import {
 import Button from '../Button';
 import defaultTheme from './Dialog.styles';
 
-const Dialog = ({
+export const Dialog = ({
   isOpen,
   onClose,
   title,

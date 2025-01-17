@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyledBox, StyledSelect } from './SelectField.styles.jsx';
 import defaultTheme from '../themeForm';
 
-const SelectField = ({
+export const SelectField = ({
   label = '',
   defaultValue = '',
   onChange,
