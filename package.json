@@ -1,6 +1,6 @@
 {
   "name": "web-monorepo-ui-components",
-  "version": "1.0.6",
+  "version": "1.0.12",
   "type": "module",
   "private": false,
   "workspaces": [
@@ -29,7 +29,7 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
-    "@chakra-ui/cli": "^3.2.3",
+    "@chakra-ui/storybook-addon": "^5.2.5",
     "@chromatic-com/storybook": "^3.2.2",
     "@eslint/js": "^9.16.0",
     "@rollup/plugin-babel": "^6.0.4",
@@ -39,6 +39,7 @@
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
     "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/addon-themes": "^8.4.7",
     "@storybook/blocks": "^8.4.7",
     "@storybook/react": "^8.4.7",
     "@storybook/react-vite": "^8.4.7",
@@ -57,8 +58,6 @@
     "lerna": "^8.1.9",
     "prettier": "^3.4.2",
     "prop-types": "^15.8.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "rollup": "^4.28.0",
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^8.4.7",
@@ -70,22 +69,17 @@
     ]
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.2.4",
-    "@chakra-ui/react": "^3.2.3",
-    "@chakra-ui/storybook-addon": "^5.2.5",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.1.10",
     "@mui/material": "^6.1.10",
-    "@storybook/addon-themes": "^8.4.7",
     "bootstrap-icons": "^1.11.3",
     "framer-motion": "^11.14.1",
     "react-icons": "^5.4.0",
-    "styled-components": "^6.1.13",
+    "styled-components": "^6.1.14",
     "toastify-js": "^1.12.0"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "@chakra-ui/cli": "^3.2.3",
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.2.3"
   }
 }

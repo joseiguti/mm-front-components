@@ -10,8 +10,24 @@
     "build": "rollup -c"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "styled-components": "^6.1.13"
-  }
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "styled-components": "^6.1.14",
+    "@chakra-ui/react": "^3.2.3",
+    "@chakra-ui/icons": "^2.2.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "rollup": "^4.28.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-babel": "^6.0.4"
+  },
+  "dependencies": {}
 }

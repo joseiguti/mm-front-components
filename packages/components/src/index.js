@@ -1,3 +1,13 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+if (!React || !ReactDOM) {
+  throw new Error(
+    'React or ReactDOM is not available. Ensure peer dependencies are installed correctly in the consumer project.'
+  );
+}
+
+
 export { Menu } from './Menu/index';
 export * from './GlobalStyles';
 export { Button } from './Button/Button';

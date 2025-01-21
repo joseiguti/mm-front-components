@@ -32,7 +32,13 @@ export default {
     }),
   ],
 
-  external: ['react', 'react-dom', '@mui/material', '@mui/icons-material', 'styled-components'],
+  external: [
+    'react',
+    'react-dom',
+    '@chakra-ui/cli',
+    '@chakra-ui/icons',
+    '@chakra-ui/react',
+  ],
 
   onwarn: (warning, warn) => {
     if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
