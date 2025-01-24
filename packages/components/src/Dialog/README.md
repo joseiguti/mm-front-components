@@ -179,7 +179,7 @@ The `Dialog` component supports the `placement` prop to position the dialog on t
 
 ```javascript
 import React from 'react';
-import Dialog from '@mi-monorepo/dialog';
+import Dialog from 'web-monorepo-ui-components';
 
 const PlacementExample = () => {
   return (
