@@ -1,7 +1,6 @@
 
 A reusable and customizable button component for your projects. It supports various states like loading, disabled, and can include icons.
 [Back to Table of Contents](#table-of-contents)
----
 
 ## Usage
 
