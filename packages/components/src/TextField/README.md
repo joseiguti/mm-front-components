@@ -1,18 +1,6 @@
-# TextField Component
 
 A reusable and customizable text input field for your projects.
-
----
-
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-paquete/textfield
-```
-
----
+[Back to Table of Contents](#table-of-contents)
 
 ## Usage
 
@@ -20,7 +8,7 @@ Import the `TextField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import TextField from '@mi-paquete/textfield';
+import TextField from 'web-monorepo-ui-components';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -127,7 +115,7 @@ Here is an advanced example demonstrating error handling with the `SelectField` 
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from '@mi-paquete/selectfield';
+import SelectField from 'web-monorepo-ui-components';
 
 const App = () => {
   const [selectedValue, setSelectedValue] = useState('');

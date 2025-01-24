@@ -1,6 +1,6 @@
-# Menu Component
 
 A highly customizable and collapsible side menu built with React and Styled Components.
+[Back to Table of Contents](#table-of-contents)
 
 ## Features
 
@@ -12,23 +12,13 @@ A highly customizable and collapsible side menu built with React and Styled Comp
 
 ---
 
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-paquete/menu
-```
-
----
-
 ## Usage
 
 Import the `Menu` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import { Menu } from '@mi-paquete/menu';
+import { Menu } from 'web-monorepo-ui-components';
 
 const App = () => {
   const customConfig = {
@@ -98,34 +88,6 @@ The menu can be customized through a JSON object passed to the `config` prop. Be
 
 ---
 
-## Development
-
-### Install dependencies:
-
-```bash
-npm install
-```
-
-### Run Storybook:
-
-```bash
-npm run storybook
-```
-
-### Lint the code:
-
-```bash
-npm run lint
-```
-
-### Build the package:
-
-```bash
-npm run build
-```
-
----
-
 ## Theming
 
 The component uses `styled-components` for styling, and the theme can be extended using the `ThemeProvider`. Below is an example of a theme:
@@ -166,19 +128,3 @@ import theme from './theme';
   <App />
 </ThemeProvider>;
 ```
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/new-feature`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature/new-feature`).
-5. Open a pull request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.

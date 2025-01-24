@@ -1,18 +1,6 @@
-# SelectField Component
 
 A reusable and customizable select field component for your projects.
-
----
-
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-paquete/selectfield
-```
-
----
+[Back to Table of Contents](#table-of-contents)
 
 ## Usage
 
@@ -20,7 +8,7 @@ Import the `SelectField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from '@mi-paquete/selectfield';
+import SelectField from 'web-monorepo-ui-components';
 
 const App = () => {
   const [value, setValue] = useState('');

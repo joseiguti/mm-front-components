@@ -1,6 +1,6 @@
-# Dialog Component
 
 A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons using Chakra UI.
+[Back to Table of Contents](#table-of-contents)
 
 ## Features
 
@@ -10,22 +10,14 @@ A reusable and customizable dialog component designed for seamless integration i
 - **External Control**: Option to control the dialog’s visibility from external components.
 - **Customizable Theme**: Override default styles with a custom theme object.
 
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-monorepo/dialog
-```
-
 ## Usage
 
 Import the `Dialog` component and configure it with dynamic properties:
 
 ```javascript
 import React, { useState } from 'react';
-import Dialog from '@mi-monorepo/dialog';
-import Button from '@mi-monorepo/button';
+import Dialog from 'web-monorepo-ui-components';
+import Button from 'web-monorepo-ui-components';
 
 const App = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);

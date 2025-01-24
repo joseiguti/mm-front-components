@@ -1,6 +1,6 @@
 {
   "name": "web-monorepo-ui-components",
-  "version": "1.0.12",
+  "version": "1.0.21",
   "type": "module",
   "private": false,
   "workspaces": [
@@ -12,6 +12,7 @@
     "packages/components/dist"
   ],
   "scripts": {
+    "build-readme": "node generate-readme.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "lerna run build",
     "lint": "eslint .",

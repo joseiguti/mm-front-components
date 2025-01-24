@@ -1,14 +1,6 @@
-# Form Component
 
 A reusable and customizable form component for your projects. It supports dynamic field configurations, validations, file uploads, and flexible layouts with Chakra UI.
-
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-monorepo/form
-```
+[Back to Table of Contents](#table-of-contents)
 
 ## Usage
 
@@ -16,7 +8,7 @@ Import the `Form` component and configure it with dynamic fields:
 
 ```javascript
 import React from 'react';
-import Form from '@mi-monorepo/form';
+import Form from 'web-monorepo-ui-components';
 
 const App = () => {
   return (

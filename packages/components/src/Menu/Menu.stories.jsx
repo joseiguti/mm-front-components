@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu } from './index';
 import { Home, Settings, Mail } from '@mui/icons-material';
+import theme from '../theme';
 
 export default {
   title: 'Components/Menu',
@@ -47,6 +48,7 @@ Expanded.args = {
     { label: 'Settings', icon: <Settings />, link: '/settings' },
     { label: 'Messages', icon: <Mail />, link: '/messages' },
   ],
+  theme: theme
 };
 
 export const Collapsed = Template.bind({});
@@ -56,4 +58,5 @@ Collapsed.args = {
     { label: 'Settings', icon: <Settings />, link: '/settings' },
     { label: 'Messages', icon: <Mail />, link: '/messages' },
   ],
+  theme: theme
 };

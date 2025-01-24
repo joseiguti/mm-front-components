@@ -1,17 +1,6 @@
-# Button Component
 
 A reusable and customizable button component for your projects. It supports various states like loading, disabled, and can include icons.
-
----
-
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-paquete/button
-```
-
+[Back to Table of Contents](#table-of-contents)
 ---
 
 ## Usage
@@ -20,7 +9,7 @@ Import the `Button` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import Button from '@mi-paquete/button';
+import Button from 'web-monorepo-ui-components';
 
 const App = () => {
   return (

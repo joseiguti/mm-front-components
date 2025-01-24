@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import menuConfig from '../menuConfig.json';
 import { iconMap } from './iconMap';
+import { ThemeProvider } from "styled-components";
 import {
   Nav,
   Ul,
@@ -22,6 +23,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export const Menu = ({
   config = {},
+  theme,
   isCollapsed: externalIsCollapsed,
   toggleMenu,
 }) => {
@@ -62,52 +64,54 @@ export const Menu = ({
   };
 
   return (
-    <Nav $isCollapsed={isCollapsed}>
-      <Header>
-        <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
-        <HamburgerButton onClick={handleToggleMenu}>
-          <span style={{ width: '20px' }} />
-          <span style={{ width: '20px' }} />
-          <span style={{ width: '10px' }} />
-        </HamburgerButton>
-      </Header>
-      <Divider />
-      <Ul>
-        {finalConfig.items.map((item, index) => (
-          <React.Fragment key={index}>
-            <Li>
-              <StyledLink
-                href={!item.children ? item.link || '#' : null}
-                onClick={(e) => handleLinkClick(e, item, index)}
-              >
-                <Icon>{React.createElement(iconMap[item.icon] || 'span')}</Icon>
-                {!isCollapsed && item.label}
-              </StyledLink>
-              {!isCollapsed && item.children && (
-                <ToggleButton onClick={() => toggleSubmenu(index)}>
-                  {openSubmenus[index] ? (
-                    <ArrowDropDownIcon />
-                  ) : (
-                    <ArrowRightIcon />
-                  )}
-                </ToggleButton>
+    <ThemeProvider theme={theme}>
+      <Nav $isCollapsed={isCollapsed}>
+        <Header>
+          <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
+          <HamburgerButton onClick={handleToggleMenu}>
+            <span style={{ width: '20px' }} />
+            <span style={{ width: '20px' }} />
+            <span style={{ width: '10px' }} />
+          </HamburgerButton>
+        </Header>
+        <Divider />
+        <Ul>
+          {finalConfig.items.map((item, index) => (
+            <React.Fragment key={index}>
+              <Li>
+                <StyledLink
+                  href={!item.children ? item.link || '#' : null}
+                  onClick={(e) => handleLinkClick(e, item, index)}
+                >
+                  <Icon>{React.createElement(iconMap[item.icon] || 'span')}</Icon>
+                  {!isCollapsed && item.label}
+                </StyledLink>
+                {!isCollapsed && item.children && (
+                  <ToggleButton onClick={() => toggleSubmenu(index)}>
+                    {openSubmenus[index] ? (
+                      <ArrowDropDownIcon />
+                    ) : (
+                      <ArrowRightIcon />
+                    )}
+                  </ToggleButton>
+                )}
+              </Li>
+              {!isCollapsed && item.children && openSubmenus[index] && (
+                <SubUl>
+                  {item.children.map((subitem, subIndex) => (
+                    <SubLi key={subIndex}>
+                      <StyledLink href={subitem.link || '#'}>
+                        - {subitem.label}
+                      </StyledLink>
+                    </SubLi>
+                  ))}
+                </SubUl>
               )}
-            </Li>
-            {!isCollapsed && item.children && openSubmenus[index] && (
-              <SubUl>
-                {item.children.map((subitem, subIndex) => (
-                  <SubLi key={subIndex}>
-                    <StyledLink href={subitem.link || '#'}>
-                      - {subitem.label}
-                    </StyledLink>
-                  </SubLi>
-                ))}
-              </SubUl>
-            )}
-          </React.Fragment>
-        ))}
-      </Ul>
-    </Nav>
+            </React.Fragment>
+          ))}
+        </Ul>
+      </Nav>
+    </ThemeProvider>
   );
 };
 

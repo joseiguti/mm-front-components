@@ -1,14 +1,6 @@
-# Grid Component
 
 A customizable and feature-rich data grid component for displaying tabular data with sorting, pagination, and custom actions. Built with Chakra UI.
-
-## Installation
-
-Install the package via NPM:
-
-```bash
-npm install @mi-monorepo/grid
-```
+[Back to Table of Contents](#table-of-contents)
 
 ## Usage
 
@@ -16,7 +8,7 @@ Import the `Grid` component and pass the necessary props:
 
 ```javascript
 import React from 'react';
-import Grid from '@mi-monorepo/grid';
+import Grid from 'web-monorepo-ui-components';
 
 const App = () => {
   const headers = [
@@ -91,8 +83,6 @@ export default App;
 - **Type**: `boolean`
 - **Default**: `false`
 - **Description**: Enables column sorting functionality.
-
-````
 
 ## Features
 
