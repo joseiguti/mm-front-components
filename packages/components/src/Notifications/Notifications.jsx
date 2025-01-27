@@ -15,10 +15,8 @@ export const Notifications = ({
       ? { ...defaultStyles[type], ...theme }
       : defaultStyles[type];
 
-    const content = { message };
-
     Toastify({
-      node: content,
+      text: message,
       duration: duration,
       close: true,
       gravity: position.includes('top') ? 'top' : 'bottom',
