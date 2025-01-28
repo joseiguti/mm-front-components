@@ -1571,11 +1571,15 @@ A larger example with validations, file fields, drop zones, and theming:
       accept: ['application/pdf'],
     },
     // Fifth row: Buttons
-    { type: 'button', label: 'Submit', isSubmit: true },
+    { 
+      type: 'button', 
+      label: 'Submit', 
+      isSubmit: true 
+    },
     {
       type: 'button',
       label: 'Cancel',
-      onClick: () => console.log('Form canceled'),
+      isReset: true,
     },
   ]}
   onSubmit={(values) => console.log('Form submitted:', values)}

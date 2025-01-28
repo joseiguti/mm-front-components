@@ -24,6 +24,23 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     }, {})
   );
 
+  const resetForm = () => {
+    setFormValues(
+      fields.flat().reduce((acc, field) => {
+        if (field.name) {
+          acc[field.name] = field.defaultValue || '';
+        }
+        return acc;
+      }, {})
+    );
+    setErrors(
+      fields.flat().reduce((acc, field) => {
+        acc[field.name] = '';
+        return acc;
+      }, {})
+    );
+  };
+
   const validate = () => {
     const newErrors = {};
     fields.flat().forEach((field) => {
@@ -199,19 +216,24 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
         <Flex justify={buttonsPosition} gap="2">
           {fields
             .filter((field) => field.type === 'button')
-            .map((field, index) => (
+            .map((button, index) => (
               <Button
                 key={index}
-                label={field.label}
-                isLoading={field.isLoading}
-                loadingText={field.loadingText}
-                isDisabled={field.isDisabled}
-                size={field.size}
-                onClick={field.onClick}
-                onSubmit={field.onSubmit}
-                iconName={field.iconName}
-                theme={field.theme}
-                isSubmit={field.isSubmit}
+                label={button.label}
+                isLoading={button.isLoading}
+                loadingText={button.loadingText}
+                isDisabled={button.isDisabled}
+                size={button.size}
+                onClick={
+                  button.isSubmit
+                    ? handleSubmit
+                    : button.isReset
+                      ? resetForm
+                      : button.onClick
+                }
+                iconName={button.iconName}
+                theme={button.theme}
+                isSubmit={button.isSubmit}
               />
             ))}
         </Flex>

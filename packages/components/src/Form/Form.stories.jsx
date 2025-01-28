@@ -287,16 +287,28 @@ ComplexForm.args = {
     ],
     {
       type: 'button',
+      label: 'Say hello',
+      iconName: 'RiChatSmileLine',
+      theme: {
+        colors: {
+          buttonBg: 'yellow.600',
+          buttonText: 'white',
+        },
+      },
+      onClick: () => {
+        alert('Hello!');
+      },
+    },
+    {
+      type: 'button',
       label: 'Cancel',
+      isReset: true,
       iconName: 'RiCloseFill',
       theme: {
         colors: {
           buttonBg: 'red.600',
           buttonText: 'white',
         },
-      },
-      onClick: () => {
-        alert('Cancel Button Event');
       },
     },
     {
