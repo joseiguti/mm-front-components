@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import menuConfig from '../menuConfig.json';
 import { iconMap } from './iconMap';
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from 'styled-components';
 import {
   Nav,
   Ul,
@@ -83,7 +83,9 @@ export const Menu = ({
                   href={!item.children ? item.link || '#' : null}
                   onClick={(e) => handleLinkClick(e, item, index)}
                 >
-                  <Icon>{React.createElement(iconMap[item.icon] || 'span')}</Icon>
+                  <Icon>
+                    {React.createElement(iconMap[item.icon] || 'span')}
+                  </Icon>
                   {!isCollapsed && item.label}
                 </StyledLink>
                 {!isCollapsed && item.children && (

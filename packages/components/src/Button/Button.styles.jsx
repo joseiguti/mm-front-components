@@ -1,21 +1,6 @@
 import React from 'react';
 import { Button } from '../../../../src/components/ui/button';
 import themeForm from '../themeForm';
-import * as RiIcons from 'react-icons/ri';
-import * as FaIcons from 'react-icons/fa';
-import * as BsIcons from 'react-icons/bs';
-
-const DynamicIcon = ({ iconName }) => {
-  const IconComponent =
-    RiIcons[iconName] || FaIcons[iconName] || BsIcons[iconName] || null;
-
-  if (!IconComponent) {
-    console.error(`Icon "${iconName}" not found in available libraries.`);
-    return null;
-  }
-
-  return <IconComponent />;
-};
 
 export const StyledButton = (props) => {
   const handleSubmit = (event) => {
@@ -77,7 +62,7 @@ export const StyledButton = (props) => {
       }}
       size={props.size}
     >
-      {props.iconName && <DynamicIcon iconName={props.iconName} />}
+      {props.icon && <span className="button-icon">{props.icon}</span>}
       {props.label}
     </Button>
   );

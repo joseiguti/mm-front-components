@@ -124,7 +124,7 @@ export const Grid = ({
                         <Button
                           key={btnIndex}
                           label={buttonConfig.label}
-                          iconName={buttonConfig.iconName}
+                          icon={buttonConfig.icon}
                           size="sm"
                           theme={buttonConfig.theme || mergedTheme.buttonTheme}
                           onClick={() => buttonConfig.onClick(row, header.key)}
@@ -186,7 +186,7 @@ Grid.propTypes = {
       buttons: PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string.isRequired,
-          iconName: PropTypes.string,
+          icon: PropTypes.element,
           theme: PropTypes.object,
           onClick: PropTypes.func.isRequired,
         })

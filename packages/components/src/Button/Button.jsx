@@ -10,7 +10,7 @@ export const Button = ({
   isSubmit = false,
   onClick,
   onSubmit,
-  iconName = '',
+  icon = null,
   size = '',
   loadingText = '',
   theme = defaultTheme,
@@ -26,7 +26,7 @@ export const Button = ({
       onClick={onClick}
       onSubmit={onSubmit}
       loadingText={loadingText}
-      iconName={iconName}
+      icon={icon}
       theme={mergedTheme}
       isSubmit={isSubmit}
     />
@@ -40,7 +40,7 @@ Button.propTypes = {
   isSubmit: PropTypes.bool,
   onClick: PropTypes.func,
   onSubmit: PropTypes.func,
-  iconName: PropTypes.string,
+  icon: PropTypes.element,
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
   loadingText: PropTypes.string,
 };
@@ -52,7 +52,7 @@ Button.defaultProps = {
   isDisabled: false,
   onClick: () => {},
   onSubmit: () => {},
-  iconName: null,
+  icon: null,
   size: 'md',
   loadingText: 'Loading...',
 };

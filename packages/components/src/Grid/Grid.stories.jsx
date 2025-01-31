@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from './Grid';
+import { RiDeleteBinLine, RiEditLine } from 'react-icons/ri';
 
 export default {
   title: 'Components/Grid',
@@ -23,11 +24,11 @@ const customTheme = {
 const buttons = [
   {
     label: 'Edit',
-    iconName: 'RiEditLine',
+    icon: <RiEditLine />,
     onClick: (row) => alert(`Edit clicked for ${row.name}`),
   },
   {
-    iconName: 'RiDeleteBinLine',
+    icon: <RiDeleteBinLine />,
     theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
     onClick: (row) => alert(`Delete clicked for ${row.name}`),
   },

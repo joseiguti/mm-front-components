@@ -1,5 +1,5 @@
 
-A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons using Chakra UI.
+A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons.
 [Back to Table of Contents](#table-of-contents)
 
 ## Features
@@ -18,6 +18,7 @@ Import the `Dialog` component and configure it with dynamic properties:
 import React, { useState } from 'react';
 import Dialog from 'web-monorepo-ui-components';
 import Button from 'web-monorepo-ui-components';
+import { RiCloseLine, RiSaveLine } from 'react-icons/ri';
 
 const App = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -33,14 +34,14 @@ const App = () => {
   const buttons = [
     {
       label: 'Cancel',
-      iconName: 'RiCloseLine',
+      icon: <RiCloseLine />,
       size: 'sm',
       theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
       onClick: handleCloseDialog,
     },
     {
       label: 'Save',
-      iconName: 'RiSaveLine',
+      icon: <RiSaveLine />,
       size: 'sm',
       theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
       onClick: () => {
@@ -102,7 +103,7 @@ export default App;
 #### Button Object Properties:
 
 - `label` (string): The text displayed on the button.
-- `iconName` (string): Name of the icon to display on the button.
+- `icon` (React.Element): A React component representing the icon (e.g., `<RiSaveLine />`).
 - `size` (string): Size of the button (`"sm"`, `"md"`, `"lg"`).
 - `theme` (object): Custom theme for the button's appearance.
 - `onClick` (function): Function invoked when the button is clicked.
@@ -144,6 +145,8 @@ The `Dialog` component is fully customizable. Use the `theme` prop to apply styl
 Example of a custom theme:
 
 ```javascript
+import { RiSaveLine } from 'react-icons/ri';
+
 const customTheme = {
   content: { border: '2px solid teal', borderRadius: '8px', padding: '16px' },
   title: { fontSize: '1.5rem', color: 'teal.600' },
@@ -165,7 +168,7 @@ const customTheme = {
   buttons={[
     {
       label: 'Close',
-      iconName: 'RiCloseLine',
+      iconName: <RiSaveLine />,
       onClick: () => console.log('Closed'),
     },
   ]}
@@ -180,6 +183,8 @@ The `Dialog` component supports the `placement` prop to position the dialog on t
 ```javascript
 import React from 'react';
 import Dialog from 'web-monorepo-ui-components';
+
+import { RiCloseLine } from 'react-icons/ri';
 
 const PlacementExample = () => {
   return (
@@ -196,7 +201,7 @@ const PlacementExample = () => {
           buttons={[
             {
               label: 'Close',
-              iconName: 'RiCloseLine',
+              iconName: <RiCloseLine />,
               onClick: () => console.log('Closed'),
             },
           ]}
@@ -217,6 +222,8 @@ The `Dialog` component allows you to customize its appearance using the `theme` 
 ### Example Theme
 
 ```javascript
+import { RiCloseLine } from 'react-icons/ri';
+
 const customTheme = {
   content: {
     backgroundColor: 'gray.800',
@@ -249,24 +256,10 @@ const customTheme = {
   buttons={[
     {
       label: 'Close',
-      iconName: 'RiCloseLine',
+      icon: <RiCloseLine />,
       onClick: () => console.log('Close clicked'),
-    },
-    {
-      label: 'Save',
-      iconName: 'RiSaveLine',
-      onClick: () => console.log('Save clicked'),
     },
   ]}
   theme={customTheme}
 />;
 ```
-
-### Theme Object Structure
-
-- **`content`**: Styles for the dialog container.
-- **`title`**: Styles for the dialog title.
-- **`body`**: Styles for the dialog body content.
-- **`buttonTheme`**: Styles for the action buttons within the dialog.
-
-You can combine these styles to create visually cohesive dialogs tailored to your design specifications.

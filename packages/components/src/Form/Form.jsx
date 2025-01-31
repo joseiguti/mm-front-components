@@ -231,7 +231,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       ? resetForm
                       : button.onClick
                 }
-                iconName={button.iconName}
+                icon={button.icon}
                 theme={button.theme}
                 isSubmit={button.isSubmit}
               />

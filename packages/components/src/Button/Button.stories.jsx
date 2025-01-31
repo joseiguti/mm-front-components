@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import { FaSave } from 'react-icons/fa';
 
 export default {
   title: 'Components/Button',
@@ -33,7 +34,7 @@ aButton.args = {
 export const WithIcon = Template.bind({});
 WithIcon.args = {
   label: 'Save',
-  iconName: 'RiSave3Line',
+  icon: <FaSave />,
 };
 
 export const Loading = Template.bind({});
@@ -48,7 +49,7 @@ export const Disabled = Template.bind({});
 Disabled.args = {
   label: 'Save',
   isDisabled: true,
-  iconName: 'RiSave3Line',
+  icon: <FaSave />,
   onClick: () => {
     alert('Greetings from the Onclick event');
   },

@@ -8,7 +8,8 @@ Import the `Button` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import Button from 'web-monorepo-ui-components';
+import { Button } from 'web-monorepo-ui-components';
+import { FaSave } from 'react-icons/fa';
 
 const App = () => {
   return (
@@ -16,7 +17,7 @@ const App = () => {
       <Button label="Click Me" onClick={() => alert('Button clicked!')} />
       <Button
         label="Save"
-        iconName="RiSave3Line"
+        icon={<FaSave />}
         onClick={() => alert('Save button clicked!')}
       />
       <Button label="Loading Button" isLoading={true} loadingText="Saving..." />
@@ -52,11 +53,10 @@ export default App;
 - **Type**: `boolean`
 - **Description**: If `true`, the button is disabled and cannot be interacted with.
 
-### `iconName`
+### `icon`
 
-- **Type**: `string`
-- **Description**: The name of the icon to display within the button. The component utilizes icons from the **react-icons/ri** library. If the specified icon is not found, it defaults to the fallback icon `RiErrorWarningLine`.
-- **Reference**: [Browse available icons](https://react-icons.github.io/react-icons/icons/ri/)
+- **Type**: `React.Element`
+- **Description**: A React component representing the icon to display within the button. This replaces the previous `iconName` prop, allowing the user to pass any valid React icon component.
 
 ### `onClick`
 
@@ -113,6 +113,8 @@ You can customize the `Button` component by passing a `theme` prop with your des
 #### Example:
 
 ```javascript
+import { FaCheck } from 'react-icons/fa';
+
 const customTheme = {
   colors: {
     buttonBg: 'green.500',
@@ -121,5 +123,5 @@ const customTheme = {
   },
 };
 
-<Button label="Custom Themed Button" theme={customTheme} />;
+<Button label="Custom Themed Button" icon={<FaCheck />} theme={customTheme} />;
 ```

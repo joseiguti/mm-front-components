@@ -10,6 +10,8 @@ Import the `Grid` component and pass the necessary props:
 import React from 'react';
 import Grid from 'web-monorepo-ui-components';
 
+import { RiEditLine, RiDeleteBinLine } from 'react-icons/ri';
+
 const App = () => {
   const headers = [
     { label: 'Product', key: 'name', isSortable: true, width: 30 },
@@ -20,11 +22,11 @@ const App = () => {
       buttons: [
         {
           label: 'Edit',
-          iconName: 'RiEditLine',
+          icon: <RiEditLine />,
           onClick: (row) => alert(`Edit clicked for ${row.name}`),
         },
         {
-          iconName: 'RiDeleteBinLine',
+          icon: <RiDeleteBinLine />,
           onClick: (row) => alert(`Delete clicked for ${row.name}`),
         },
       ],
@@ -113,6 +115,8 @@ const customTheme = {
 A full example with sorting, pagination, and custom theming:
 
 ```javascript
+import { RiEyeLine } from 'react-icons/ri';
+
 <Grid
   headers={[
     { label: 'Name', key: 'name', isSortable: true, width: 30 },
@@ -123,7 +127,7 @@ A full example with sorting, pagination, and custom theming:
       buttons: [
         {
           label: 'View',
-          iconName: 'RiEyeLine',
+          icon: <RiEyeLine />,
           onClick: (row) => alert(`Viewing ${row.name}`),
         },
       ],

@@ -38,7 +38,7 @@ export const Dialog = ({
               <Button
                 key={index}
                 label={buttonConfig.label}
-                iconName={buttonConfig.iconName}
+                icon={buttonConfig.icon}
                 size={buttonConfig.size || 'md'}
                 theme={buttonConfig.theme || mergedTheme.buttonTheme}
                 onClick={buttonConfig.onClick}
@@ -60,7 +60,7 @@ Dialog.propTypes = {
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      iconName: PropTypes.string,
+      icon: PropTypes.element,
       size: PropTypes.oneOf(['sm', 'md', 'lg']),
       theme: PropTypes.object,
       onClick: PropTypes.func.isRequired,

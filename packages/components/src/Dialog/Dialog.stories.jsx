@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Dialog from './Dialog';
 import Button from '../Button';
 import Form from '../Form/Form';
+import { RiCloseLine, RiSaveLine, RiCheckLine } from 'react-icons/ri';
+import { FaWindowRestore } from 'react-icons/fa';
 
 export default {
   title: 'Components/Dialog',
@@ -11,7 +13,7 @@ export default {
 const sharedButtons = (setDialogOpen) => [
   {
     label: 'Cancel',
-    iconName: 'RiCloseLine',
+    icon: <RiCloseLine />,
     size: 'sm',
     theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
     onClick: () => {
@@ -21,7 +23,7 @@ const sharedButtons = (setDialogOpen) => [
   },
   {
     label: 'Save',
-    iconName: 'RiSaveLine',
+    icon: <RiSaveLine />,
     size: 'sm',
     theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
     onClick: () => {
@@ -73,7 +75,7 @@ export const FormDialog = () => {
     {
       type: 'button',
       label: 'Cancel',
-      iconName: 'RiCloseLine',
+      icon: <RiCloseLine />,
       theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
       onClick: () => {
         console.log('Cancel button clicked');
@@ -83,7 +85,7 @@ export const FormDialog = () => {
       type: 'button',
       label: 'Submit',
       isSubmit: true,
-      iconName: 'RiCheckLine',
+      icon: <RiCheckLine />,
       theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
     },
   ];
@@ -115,7 +117,7 @@ export const ExternalButtonControl = () => {
       <Button
         label="Open External Dialog"
         onClick={handleOpenDialog}
-        iconName="FaWindowRestore"
+        icon={<FaWindowRestore />} // Reemplazado iconName por icon
       />
       <Dialog
         isOpen={isDialogOpen}
@@ -159,7 +161,7 @@ export const PlacementExample = () => {
       <Button
         label={`Open Dialog (${placement})`}
         onClick={handleOpenDialog}
-        iconName="FaWindowRestore"
+        icon={<FaWindowRestore />}
       />
       <Dialog
         isOpen={isDialogOpen}

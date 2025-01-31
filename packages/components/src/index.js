@@ -7,7 +7,6 @@ if (!React || !ReactDOM) {
   );
 }
 
-
 export { Menu } from './Menu/index';
 export * from './GlobalStyles';
 export { Button } from './Button/Button';

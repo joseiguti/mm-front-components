@@ -48,7 +48,7 @@ Expanded.args = {
     { label: 'Settings', icon: <Settings />, link: '/settings' },
     { label: 'Messages', icon: <Mail />, link: '/messages' },
   ],
-  theme: theme
+  theme: theme,
 };
 
 export const Collapsed = Template.bind({});
@@ -58,5 +58,5 @@ Collapsed.args = {
     { label: 'Settings', icon: <Settings />, link: '/settings' },
     { label: 'Messages', icon: <Mail />, link: '/messages' },
   ],
-  theme: theme
+  theme: theme,
 };

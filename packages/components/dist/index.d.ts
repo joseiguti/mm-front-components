@@ -1,8 +1,9 @@
 declare module "web-monorepo-ui-components" {
+  import { ReactNode } from "react";
 
   export interface DialogButton {
     label: string;
-    iconName?: string;
+    icon?: ReactNode;
     size?: "sm" | "md" | "lg";
     theme?: { colors: { buttonBg: string; buttonText: string } };
     onClick: () => void;
@@ -79,7 +80,7 @@ declare module "web-monorepo-ui-components" {
       width?: number;
       isSortable?: boolean;
       isLink?: boolean;
-      buttons?: { label?: string; iconName: string; onClick: (item?: any) => void; theme?: object }[];
+      buttons?: { label?: string; icon: ReactNode; onClick: (item?: any) => void; theme?: object }[];
     }[];
     data: any[];
     theme?: object;
@@ -97,7 +98,7 @@ declare module "web-monorepo-ui-components" {
     isSubmit?: boolean;
     onClick?: () => void;
     onSubmit?: () => void;
-    iconName?: string;
+    icon?: ReactNode;
     size?: string;
     loadingText?: string;
     theme?: object;
@@ -127,7 +128,7 @@ declare module "web-monorepo-ui-components" {
   export interface MenuProps {
     config?: {
       logo: string;
-      items: { label: string; icon: string; link: string }[];
+      items: { label: string; icon: ReactNode; link: string }[];
     };
     theme?: object;
     onItemClick?: (path: string) => void;

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import Form from './Form';
+import {
+  RiChatSmileLine,
+  RiCheckLine,
+  RiCloseFill,
+  RiSave2Fill,
+} from 'react-icons/ri';
 
 export default {
   title: 'Components/Form',
@@ -138,7 +144,7 @@ FormWithFileField.args = {
       type: 'button',
       label: 'Submit',
       isSubmit: true,
-      iconName: 'RiCheckLine',
+      icon: <RiCheckLine />,
     },
   ],
   onSubmit: (values) => {
@@ -288,7 +294,7 @@ ComplexForm.args = {
     {
       type: 'button',
       label: 'Say hello',
-      iconName: 'RiChatSmileLine',
+      icon: <RiChatSmileLine />,
       theme: {
         colors: {
           buttonBg: 'yellow.600',
@@ -303,7 +309,7 @@ ComplexForm.args = {
       type: 'button',
       label: 'Cancel',
       isReset: true,
-      iconName: 'RiCloseFill',
+      icon: <RiCloseFill />,
       theme: {
         colors: {
           buttonBg: 'red.600',
@@ -315,7 +321,7 @@ ComplexForm.args = {
       type: 'button',
       label: 'Save',
       isSubmit: true,
-      iconName: 'RiSave2Fill',
+      icon: <RiSave2Fill />,
       theme: {
         colors: {
           buttonBg: 'green.600',

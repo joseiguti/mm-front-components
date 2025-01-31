@@ -797,7 +797,8 @@ Import the `Button` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import Button from 'web-monorepo-ui-components';
+import { Button } from 'web-monorepo-ui-components';
+import { FaSave } from 'react-icons/fa';
 
 const App = () => {
   return (
@@ -805,7 +806,7 @@ const App = () => {
       <Button label="Click Me" onClick={() => alert('Button clicked!')} />
       <Button
         label="Save"
-        iconName="RiSave3Line"
+        icon={<FaSave />}
         onClick={() => alert('Save button clicked!')}
       />
       <Button label="Loading Button" isLoading={true} loadingText="Saving..." />
@@ -841,11 +842,10 @@ export default App;
 - **Type**: `boolean`
 - **Description**: If `true`, the button is disabled and cannot be interacted with.
 
-### `iconName`
+### `icon`
 
-- **Type**: `string`
-- **Description**: The name of the icon to display within the button. The component utilizes icons from the **react-icons/ri** library. If the specified icon is not found, it defaults to the fallback icon `RiErrorWarningLine`.
-- **Reference**: [Browse available icons](https://react-icons.github.io/react-icons/icons/ri/)
+- **Type**: `React.Element`
+- **Description**: A React component representing the icon to display within the button. This replaces the previous `iconName` prop, allowing the user to pass any valid React icon component.
 
 ### `onClick`
 
@@ -902,6 +902,8 @@ You can customize the `Button` component by passing a `theme` prop with your des
 #### Example:
 
 ```javascript
+import { FaCheck } from 'react-icons/fa';
+
 const customTheme = {
   colors: {
     buttonBg: 'green.500',
@@ -910,7 +912,7 @@ const customTheme = {
   },
 };
 
-<Button label="Custom Themed Button" theme={customTheme} />;
+<Button label="Custom Themed Button" icon={<FaCheck />} theme={customTheme} />;
 ```
 
 
@@ -1096,7 +1098,7 @@ Toastify({
 # `<Dialog />`
 
 
-A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons using Chakra UI.
+A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons.
 [Back to Table of Contents](#table-of-contents)
 
 ## Features
@@ -1115,6 +1117,7 @@ Import the `Dialog` component and configure it with dynamic properties:
 import React, { useState } from 'react';
 import Dialog from 'web-monorepo-ui-components';
 import Button from 'web-monorepo-ui-components';
+import { RiCloseLine, RiSaveLine } from 'react-icons/ri';
 
 const App = () => {
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -1130,14 +1133,14 @@ const App = () => {
   const buttons = [
     {
       label: 'Cancel',
-      iconName: 'RiCloseLine',
+      icon: <RiCloseLine />,
       size: 'sm',
       theme: { colors: { buttonBg: 'red.500', buttonText: 'white' } },
       onClick: handleCloseDialog,
     },
     {
       label: 'Save',
-      iconName: 'RiSaveLine',
+      icon: <RiSaveLine />,
       size: 'sm',
       theme: { colors: { buttonBg: 'blue.500', buttonText: 'white' } },
       onClick: () => {
@@ -1199,7 +1202,7 @@ export default App;
 #### Button Object Properties:
 
 - `label` (string): The text displayed on the button.
-- `iconName` (string): Name of the icon to display on the button.
+- `icon` (React.Element): A React component representing the icon (e.g., `<RiSaveLine />`).
 - `size` (string): Size of the button (`"sm"`, `"md"`, `"lg"`).
 - `theme` (object): Custom theme for the button's appearance.
 - `onClick` (function): Function invoked when the button is clicked.
@@ -1241,6 +1244,8 @@ The `Dialog` component is fully customizable. Use the `theme` prop to apply styl
 Example of a custom theme:
 
 ```javascript
+import { RiSaveLine } from 'react-icons/ri';
+
 const customTheme = {
   content: { border: '2px solid teal', borderRadius: '8px', padding: '16px' },
   title: { fontSize: '1.5rem', color: 'teal.600' },
@@ -1262,7 +1267,7 @@ const customTheme = {
   buttons={[
     {
       label: 'Close',
-      iconName: 'RiCloseLine',
+      iconName: <RiSaveLine />,
       onClick: () => console.log('Closed'),
     },
   ]}
@@ -1277,6 +1282,8 @@ The `Dialog` component supports the `placement` prop to position the dialog on t
 ```javascript
 import React from 'react';
 import Dialog from 'web-monorepo-ui-components';
+
+import { RiCloseLine } from 'react-icons/ri';
 
 const PlacementExample = () => {
   return (
@@ -1293,7 +1300,7 @@ const PlacementExample = () => {
           buttons={[
             {
               label: 'Close',
-              iconName: 'RiCloseLine',
+              iconName: <RiCloseLine />,
               onClick: () => console.log('Closed'),
             },
           ]}
@@ -1314,6 +1321,8 @@ The `Dialog` component allows you to customize its appearance using the `theme` 
 ### Example Theme
 
 ```javascript
+import { RiCloseLine } from 'react-icons/ri';
+
 const customTheme = {
   content: {
     backgroundColor: 'gray.800',
@@ -1346,27 +1355,13 @@ const customTheme = {
   buttons={[
     {
       label: 'Close',
-      iconName: 'RiCloseLine',
+      icon: <RiCloseLine />,
       onClick: () => console.log('Close clicked'),
-    },
-    {
-      label: 'Save',
-      iconName: 'RiSaveLine',
-      onClick: () => console.log('Save clicked'),
     },
   ]}
   theme={customTheme}
 />;
 ```
-
-### Theme Object Structure
-
-- **`content`**: Styles for the dialog container.
-- **`title`**: Styles for the dialog title.
-- **`body`**: Styles for the dialog body content.
-- **`buttonTheme`**: Styles for the action buttons within the dialog.
-
-You can combine these styles to create visually cohesive dialogs tailored to your design specifications.
 
 
 <!-- Placeholder for the Dialog README.md -->
@@ -1669,6 +1664,8 @@ Import the `Grid` component and pass the necessary props:
 import React from 'react';
 import Grid from 'web-monorepo-ui-components';
 
+import { RiEditLine, RiDeleteBinLine } from 'react-icons/ri';
+
 const App = () => {
   const headers = [
     { label: 'Product', key: 'name', isSortable: true, width: 30 },
@@ -1679,11 +1676,11 @@ const App = () => {
       buttons: [
         {
           label: 'Edit',
-          iconName: 'RiEditLine',
+          icon: <RiEditLine />,
           onClick: (row) => alert(`Edit clicked for ${row.name}`),
         },
         {
-          iconName: 'RiDeleteBinLine',
+          icon: <RiDeleteBinLine />,
           onClick: (row) => alert(`Delete clicked for ${row.name}`),
         },
       ],
@@ -1772,6 +1769,8 @@ const customTheme = {
 A full example with sorting, pagination, and custom theming:
 
 ```javascript
+import { RiEyeLine } from 'react-icons/ri';
+
 <Grid
   headers={[
     { label: 'Name', key: 'name', isSortable: true, width: 30 },
@@ -1782,7 +1781,7 @@ A full example with sorting, pagination, and custom theming:
       buttons: [
         {
           label: 'View',
-          iconName: 'RiEyeLine',
+          icon: <RiEyeLine />,
           onClick: (row) => alert(`Viewing ${row.name}`),
         },
       ],
