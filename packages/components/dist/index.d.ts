@@ -72,11 +72,20 @@ declare module "web-monorepo-ui-components" {
   export const SelectField: React.FC<SelectFieldProps>;
 
   export interface GridProps {
-    headers: string[];
+    headers: {
+      label: string;
+      key: string;
+      textAlign?: string;
+      width?: number;
+      isSortable?: boolean;
+      isLink?: boolean;
+      buttons?: { label?: string; iconName: string; onClick: (item?: any) => void; theme?: object }[];
+    }[];
     data: any[];
     theme?: object;
-    pagination?: object;
+    pagination?: boolean;
     itemsPerPage?: number;
+    enableSorting?: boolean;
   }
 
   export const Grid: React.FC<GridProps>;
@@ -104,7 +113,7 @@ declare module "web-monorepo-ui-components" {
     theme?: object;
   }
 
-  export const Notifications: React.FC<NotificationsProps>;
+  export function Notifications(props: NotificationsProps): { notify: () => void };
 
   export interface FileFieldProps {
     label: string;
@@ -116,9 +125,14 @@ declare module "web-monorepo-ui-components" {
   export const FileField: React.FC<FileFieldProps>;
 
   export interface MenuProps {
-    items: { label: string; path: string; icon?: React.ReactNode }[];
+    config?: {
+      logo: string;
+      items: { label: string; icon: string; link: string }[];
+    };
     theme?: object;
     onItemClick?: (path: string) => void;
+    isCollapsed?: boolean;
+    toggleMenu?: () => void;
   }
 
   export const Menu: React.FC<MenuProps>;
