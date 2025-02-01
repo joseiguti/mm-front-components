@@ -26,6 +26,7 @@ export const Menu = ({
   theme,
   isCollapsed: externalIsCollapsed,
   toggleMenu,
+  LinkComponent = 'a',
 }) => {
   const [internalIsCollapsed, setInternalIsCollapsed] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState({});
@@ -79,15 +80,26 @@ export const Menu = ({
           {finalConfig.items.map((item, index) => (
             <React.Fragment key={index}>
               <Li>
-                <StyledLink
-                  href={!item.children ? item.link || '#' : null}
-                  onClick={(e) => handleLinkClick(e, item, index)}
-                >
-                  <Icon>
-                    {React.createElement(iconMap[item.icon] || 'span')}
-                  </Icon>
-                  {!isCollapsed && item.label}
-                </StyledLink>
+                {item.link ? (
+                  <LinkComponent href={item.link} passHref>
+                    <StyledLink>
+                      <Icon>
+                        {React.createElement(iconMap[item.icon] || 'span')}
+                      </Icon>
+                      {!isCollapsed && item.label}
+                    </StyledLink>
+                  </LinkComponent>
+                ) : (
+                  <StyledLink
+                    as="button"
+                    onClick={(e) => handleLinkClick(e, item, index)}
+                  >
+                    <Icon>
+                      {React.createElement(iconMap[item.icon] || 'span')}
+                    </Icon>
+                    {!isCollapsed && item.label}
+                  </StyledLink>
+                )}
                 {!isCollapsed && item.children && (
                   <ToggleButton onClick={() => toggleSubmenu(index)}>
                     {openSubmenus[index] ? (
@@ -102,9 +114,9 @@ export const Menu = ({
                 <SubUl>
                   {item.children.map((subitem, subIndex) => (
                     <SubLi key={subIndex}>
-                      <StyledLink href={subitem.link || '#'}>
-                        - {subitem.label}
-                      </StyledLink>
+                      <LinkComponent href={subitem.link || '#'} passHref>
+                        <StyledLink>- {subitem.label}</StyledLink>
+                      </LinkComponent>
                     </SubLi>
                   ))}
                 </SubUl>
@@ -136,4 +148,5 @@ Menu.propTypes = {
   }),
   isCollapsed: PropTypes.bool,
   toggleMenu: PropTypes.func,
+  LinkComponent: PropTypes.elementType,
 };

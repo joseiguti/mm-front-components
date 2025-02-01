@@ -128,12 +128,18 @@ declare module "web-monorepo-ui-components" {
   export interface MenuProps {
     config?: {
       logo: string;
-      items: { label: string; icon: ReactNode; link: string }[];
+      items: {
+        label: string;
+        icon: ReactNode;
+        link?: string;
+        children?: { label: string; link: string }[];
+      }[];
     };
     theme?: object;
     onItemClick?: (path: string) => void;
     isCollapsed?: boolean;
     toggleMenu?: () => void;
+    LinkComponent?: ElementType;
   }
 
   export const Menu: React.FC<MenuProps>;

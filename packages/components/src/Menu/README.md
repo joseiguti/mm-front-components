@@ -37,7 +37,13 @@ const App = () => {
     ],
   };
 
-  return <Menu config={customConfig} />;
+  const CustomLink = ({ href, children }) => (
+    <Link href={href} legacyBehavior>
+      <a>{children}</a>
+    </Link>
+  );
+
+  return <Menu config={customConfig} LinkComponent={CustomLink} />;
 };
 
 export default App;
@@ -85,6 +91,30 @@ The menu can be customized through a JSON object passed to the `config` prop. Be
 - **Type**: `object`
 - **Description**: The configuration object for the menu.
 - **Default**: `{}`
+
+### `theme`
+
+- **Type**: `object`
+- **Description**: Theming options to override default styles.
+- **Default**: `{}`
+
+### `isCollapsed`
+
+- **Type**: `boolean`
+- **Description**: Whether the menu is collapsed.
+- **Default**: `false`
+
+### `toggleMenu`
+
+- **Type**: `function`
+- **Description**: Function to toggle the menu state.
+- **Default**: `undefined`
+
+### `LinkComponent`
+
+- **Type**: `React.ElementType`
+- **Description**: Custom component for handling navigation links. Useful for integrating with client-side routing frameworks like Next.js.
+- **Default**: `"a" (regular anchor tag)`
 
 ---
 
