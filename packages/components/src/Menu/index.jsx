@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import menuConfig from '../menuConfig.json';
-import { iconMap } from './iconMap';
 import { ThemeProvider } from 'styled-components';
+
 import {
   Nav,
   Ul,
@@ -22,8 +21,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export const Menu = ({
-  config = {},
-  theme,
+  config = {items: [], logo: ''},
+  theme = {},
   isCollapsed: externalIsCollapsed,
   toggleMenu,
   LinkComponent = 'a',
@@ -51,12 +50,6 @@ export const Menu = ({
     }));
   };
 
-  const finalConfig = {
-    ...menuConfig,
-    ...config,
-    items: config.items || menuConfig.items,
-  };
-
   const handleLinkClick = (e, item, index) => {
     if (item.children) {
       e.preventDefault();
@@ -68,7 +61,7 @@ export const Menu = ({
     <ThemeProvider theme={theme}>
       <Nav $isCollapsed={isCollapsed}>
         <Header>
-          <Logo src={finalConfig.logo} alt="Logo" $isCollapsed={isCollapsed} />
+          <Logo src={config.logo} alt="Logo" $isCollapsed={isCollapsed} />
           <HamburgerButton onClick={handleToggleMenu}>
             <span style={{ width: '20px' }} />
             <span style={{ width: '20px' }} />
@@ -77,14 +70,14 @@ export const Menu = ({
         </Header>
         <Divider />
         <Ul>
-          {finalConfig.items.map((item, index) => (
+          {config.items.map((item, index) => (
             <React.Fragment key={index}>
               <Li>
                 {item.link ? (
                   <LinkComponent href={item.link} passHref>
                     <StyledLink>
                       <Icon>
-                        {React.createElement(iconMap[item.icon] || 'span')}
+                        {item.icon && React.isValidElement(<item.icon />) ? <item.icon /> : null}
                       </Icon>
                       {!isCollapsed && item.label}
                     </StyledLink>
@@ -95,7 +88,7 @@ export const Menu = ({
                     onClick={(e) => handleLinkClick(e, item, index)}
                   >
                     <Icon>
-                      {React.createElement(iconMap[item.icon] || 'span')}
+                      {item.icon && React.isValidElement(<item.icon />) ? <item.icon /> : null}
                     </Icon>
                     {!isCollapsed && item.label}
                   </StyledLink>
@@ -134,7 +127,7 @@ Menu.propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         label: PropTypes.string.isRequired,
-        icon: PropTypes.string.isRequired,
+        icon: PropTypes.elementType,
         link: PropTypes.string,
         children: PropTypes.arrayOf(
           PropTypes.shape({

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu } from './index';
-import { Home, Settings, Mail } from '@mui/icons-material';
+import { FaSave } from 'react-icons/fa';
 import theme from '../theme';
 
 export default {
@@ -43,20 +43,42 @@ const Template = (args) => {
 
 export const Expanded = Template.bind({});
 Expanded.args = {
-  items: [
-    { label: 'Home', icon: <Home />, link: '/' },
-    { label: 'Settings', icon: <Settings />, link: '/settings' },
-    { label: 'Messages', icon: <Mail />, link: '/messages' },
-  ],
-  theme: theme,
+  config: {
+    logo: "https://via.placeholder.com/150",
+    items: [
+      {
+        label: 'Home',
+        icon: FaSave,
+        link: '/',
+        children: [
+          { label: 'Ayuda', link: '/help' },
+          { label: 'Información', link: '/info' }
+        ]
+      },
+      {
+        label: 'Settings',
+        icon: FaSave,
+        link: '/settings'
+      },
+      {
+        label: 'Messages',
+        icon: FaSave,
+        link: '/messages'
+      }
+    ],
+  },
 };
 
 export const Collapsed = Template.bind({});
 Collapsed.args = {
-  items: [
-    { label: 'Home', icon: <Home />, link: '/' },
-    { label: 'Settings', icon: <Settings />, link: '/settings' },
-    { label: 'Messages', icon: <Mail />, link: '/messages' },
-  ],
+  config: {
+    logo: "https://via.placeholder.com/150",
+    items: [
+      { label: 'Home', icon: FaSave, link: '/' },
+      { label: 'Settings', icon: FaSave, link: '/settings' },
+      { label: 'Messages', icon: FaSave, link: '/messages' },
+    ],
+  },
   theme: theme,
+  isCollapsed: false,
 };
