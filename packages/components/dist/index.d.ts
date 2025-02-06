@@ -1,5 +1,5 @@
 declare module "web-monorepo-ui-components" {
-  import { ReactNode } from "react";
+  import { ElementType, ReactNode } from 'react';
 
   export interface DialogButton {
     label: string;
@@ -130,13 +130,12 @@ declare module "web-monorepo-ui-components" {
       logo: string;
       items: {
         label: string;
-        icon: ReactNode;
+        icon?: ElementType;
         link?: string;
         children?: { label: string; link: string }[];
       }[];
     };
     theme?: object;
-    onItemClick?: (path: string) => void;
     isCollapsed?: boolean;
     toggleMenu?: () => void;
     LinkComponent?: ElementType;

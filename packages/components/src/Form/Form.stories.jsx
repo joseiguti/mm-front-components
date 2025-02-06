@@ -177,6 +177,15 @@ export const FormWithDropZone = () => {
             isRequired: true,
           },
         ],
+        [
+          {
+            name: 'birthday',
+            label: 'Birth day',
+            type: 'date',
+            placeholder: 'YYYY/MM/DD',
+            isRequired: true,
+          },
+        ],
         {
           name: 'fileDropZone',
           type: 'drop',

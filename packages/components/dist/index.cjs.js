@@ -114,8 +114,8 @@ function _objectWithoutProperties$1(e, t) {
     r,
     i = _objectWithoutPropertiesLoose$1(e, t);
   if (Object.getOwnPropertySymbols) {
-    var s = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+    var n = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
@@ -123,7 +123,7 @@ function _objectWithoutPropertiesLoose$1(r, e) {
   if (null == r) return {};
   var t = {};
   for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (e.includes(n)) continue;
+    if (-1 !== e.indexOf(n)) continue;
     t[n] = r[n];
   }
   return t;
@@ -145,7 +145,7 @@ function _toPrimitive$1(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
   if (undefined !== e) {
-    var i = e.call(t, r || "default");
+    var i = e.call(t, r);
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
@@ -482,7 +482,7 @@ var hasRequiredObjectAssign;
 function requireObjectAssign() {
   if (hasRequiredObjectAssign) return objectAssign;
   hasRequiredObjectAssign = 1;
-   
+  /* eslint-disable no-unused-vars */
   var getOwnPropertySymbols = Object.getOwnPropertySymbols;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
   var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -501,7 +501,7 @@ function requireObjectAssign() {
       // Detect buggy property enumeration order in older V8 versions.
 
       // https://bugs.chromium.org/p/v8/issues/detail?id=4118
-      var test1 = new String('abc');  
+      var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
       test1[5] = 'de';
       if (Object.getOwnPropertyNames(test1)[0] === '5') {
         return false;
@@ -798,7 +798,7 @@ function requireFactoryWithTypeCheckers() {
      * inlined Object.is polyfill to avoid requiring consumers ship their own
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
      */
-     
+    /*eslint-disable no-self-compare*/
     function is(x, y) {
       // SameValue algorithm
       if (x === y) {
@@ -810,7 +810,7 @@ function requireFactoryWithTypeCheckers() {
         return x !== x && y !== y;
       }
     }
-     
+    /*eslint-enable no-self-compare*/
 
     /**
      * We use an Error-like object for backward compatibility as people may call
@@ -1302,120 +1302,1795 @@ function requirePropTypes() {
 var propTypesExports = /*@__PURE__*/ requirePropTypes();
 var PropTypes = /*@__PURE__*/getDefaultExportFromCjs(propTypesExports);
 
-var items = [
-	{
-		label: "Home",
-		icon: "HomeIcon",
-		link: "/",
-		children: [
-			{
-				label: "Ayuda",
-				link: "/help"
-			},
-			{
-				label: "Información",
-				link: "/info"
-			}
-		]
-	},
-	{
-		label: "Settings",
-		icon: "SettingsIcon",
-		link: "/settings"
-	},
-	{
-		label: "Messages",
-		icon: "MailIcon",
-		link: "/messages"
-	}
-];
-var logo = "https://via.placeholder.com/150";
-var menuConfig = {
-	items: items,
-	logo: logo
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol */
+
+
+var __assign = function() {
+  __assign = Object.assign || function __assign(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+          s = arguments[i];
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+  };
+  return __assign.apply(this, arguments);
 };
 
-// https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
-function isPlainObject(item) {
-  if (_typeof(item) !== 'object' || item === null) {
-    return false;
-  }
-  var prototype = Object.getPrototypeOf(item);
-  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
-}
-function deepClone(source) {
-  if (/*#__PURE__*/ /*#__PURE__*/React__namespace.isValidElement(source) || !isPlainObject(source)) {
-    return source;
-  }
-  var output = {};
-  Object.keys(source).forEach(function (key) {
-    output[key] = deepClone(source[key]);
-  });
-  return output;
-}
-
-/**
- * Merge objects deeply.
- * It will shallow copy React elements.
- *
- * If `options.clone` is set to `false` the source object will be merged directly into the target object.
- *
- * @example
- * ```ts
- * deepmerge({ a: { b: 1 }, d: 2 }, { a: { c: 2 }, d: 4 });
- * // => { a: { b: 1, c: 2 }, d: 4 }
- * ````
- *
- * @param target The target object.
- * @param source The source object.
- * @param options The merge options.
- * @param options.clone Set to `false` to merge the source object directly into the target object.
- * @returns The merged object.
- */
-function deepmerge(target, source) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
-    clone: true
-  };
-  var output = options.clone ? _objectSpread2({}, target) : target;
-  if (isPlainObject(target) && isPlainObject(source)) {
-    Object.keys(source).forEach(function (key) {
-      if (/*#__PURE__*/React__namespace.isValidElement(source[key])) {
-        output[key] = source[key];
-      } else if (isPlainObject(source[key]) &&
-      // Avoid prototype pollution
-      Object.prototype.hasOwnProperty.call(target, key) && isPlainObject(target[key])) {
-        // Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.
-        output[key] = deepmerge(target[key], source[key], options);
-      } else if (options.clone) {
-        output[key] = isPlainObject(source[key]) ? deepClone(source[key]) : source[key];
-      } else {
-        output[key] = source[key];
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+          ar[i] = from[i];
       }
-    });
   }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+
+function memoize$2(fn) {
+  var cache = Object.create(null);
+  return function (arg) {
+    if (cache[arg] === undefined) cache[arg] = fn(arg);
+    return cache[arg];
+  };
+}
+
+var reactPropsRegex$1 = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
+
+var isPropValid$1 = /* #__PURE__ */memoize$2(function (prop) {
+  return reactPropsRegex$1.test(prop) || prop.charCodeAt(0) === 111
+  /* o */ && prop.charCodeAt(1) === 110
+  /* n */ && prop.charCodeAt(2) < 91;
+}
+/* Z+1 */);
+
+var MS$1 = '-ms-';
+var MOZ$1 = '-moz-';
+var WEBKIT$1 = '-webkit-';
+var COMMENT$1 = 'comm';
+var RULESET$1 = 'rule';
+var DECLARATION$1 = 'decl';
+var IMPORT$1 = '@import';
+var KEYFRAMES$1 = '@keyframes';
+var LAYER$1 = '@layer';
+
+/**
+ * @param {number}
+ * @return {number}
+ */
+var abs$1 = Math.abs;
+
+/**
+ * @param {number}
+ * @return {string}
+ */
+var from$1 = String.fromCharCode;
+
+/**
+ * @param {object}
+ * @return {object}
+ */
+var assign$1 = Object.assign;
+
+/**
+ * @param {string} value
+ * @param {number} length
+ * @return {number}
+ */
+function hash$1(value, length) {
+  return charat$1(value, 0) ^ 45 ? (((length << 2 ^ charat$1(value, 0)) << 2 ^ charat$1(value, 1)) << 2 ^ charat$1(value, 2)) << 2 ^ charat$1(value, 3) : 0;
+}
+
+/**
+ * @param {string} value
+ * @return {string}
+ */
+function trim$1(value) {
+  return value.trim();
+}
+
+/**
+ * @param {string} value
+ * @param {RegExp} pattern
+ * @return {string?}
+ */
+function match$1(value, pattern) {
+  return (value = pattern.exec(value)) ? value[0] : value;
+}
+
+/**
+ * @param {string} value
+ * @param {(string|RegExp)} pattern
+ * @param {string} replacement
+ * @return {string}
+ */
+function replace$1(value, pattern, replacement) {
+  return value.replace(pattern, replacement);
+}
+
+/**
+ * @param {string} value
+ * @param {string} search
+ * @param {number} position
+ * @return {number}
+ */
+function indexof$1(value, search, position) {
+  return value.indexOf(search, position);
+}
+
+/**
+ * @param {string} value
+ * @param {number} index
+ * @return {number}
+ */
+function charat$1(value, index) {
+  return value.charCodeAt(index) | 0;
+}
+
+/**
+ * @param {string} value
+ * @param {number} begin
+ * @param {number} end
+ * @return {string}
+ */
+function substr$1(value, begin, end) {
+  return value.slice(begin, end);
+}
+
+/**
+ * @param {string} value
+ * @return {number}
+ */
+function strlen$1(value) {
+  return value.length;
+}
+
+/**
+ * @param {any[]} value
+ * @return {number}
+ */
+function sizeof$1(value) {
+  return value.length;
+}
+
+/**
+ * @param {any} value
+ * @param {any[]} array
+ * @return {any}
+ */
+function append$1(value, array) {
+  return array.push(value), value;
+}
+
+/**
+ * @param {string[]} array
+ * @param {function} callback
+ * @return {string}
+ */
+function combine$1(array, callback) {
+  return array.map(callback).join('');
+}
+
+/**
+ * @param {string[]} array
+ * @param {RegExp} pattern
+ * @return {string[]}
+ */
+function filter(array, pattern) {
+  return array.filter(function (value) {
+    return !match$1(value, pattern);
+  });
+}
+
+var line$1 = 1;
+var column$1 = 1;
+var length$1 = 0;
+var position$1 = 0;
+var character$1 = 0;
+var characters$1 = '';
+
+/**
+ * @param {string} value
+ * @param {object | null} root
+ * @param {object | null} parent
+ * @param {string} type
+ * @param {string[] | string} props
+ * @param {object[] | string} children
+ * @param {object[]} siblings
+ * @param {number} length
+ */
+function node$1(value, root, parent, type, props, children, length, siblings) {
+  return {
+    value: value,
+    root: root,
+    parent: parent,
+    type: type,
+    props: props,
+    children: children,
+    line: line$1,
+    column: column$1,
+    length: length,
+    "return": '',
+    siblings: siblings
+  };
+}
+
+/**
+ * @param {object} root
+ * @param {object} props
+ * @return {object}
+ */
+function copy$1(root, props) {
+  return assign$1(node$1('', null, null, '', null, null, 0, root.siblings), root, {
+    length: -root.length
+  }, props);
+}
+
+/**
+ * @param {object} root
+ */
+function lift(root) {
+  while (root.root) root = copy$1(root.root, {
+    children: [root]
+  });
+  append$1(root, root.siblings);
+}
+
+/**
+ * @return {number}
+ */
+function _char$1() {
+  return character$1;
+}
+function prev$1() {
+  character$1 = position$1 > 0 ? charat$1(characters$1, --position$1) : 0;
+  if (column$1--, character$1 === 10) column$1 = 1, line$1--;
+  return character$1;
+}
+
+/**
+ * @return {number}
+ */
+function next$1() {
+  character$1 = position$1 < length$1 ? charat$1(characters$1, position$1++) : 0;
+  if (column$1++, character$1 === 10) column$1 = 1, line$1++;
+  return character$1;
+}
+
+/**
+ * @return {number}
+ */
+function peek$1() {
+  return charat$1(characters$1, position$1);
+}
+
+/**
+ * @return {number}
+ */
+function caret$1() {
+  return position$1;
+}
+
+/**
+ * @param {number} begin
+ * @param {number} end
+ * @return {string}
+ */
+function slice$1(begin, end) {
+  return substr$1(characters$1, begin, end);
+}
+
+/**
+ * @param {number} type
+ * @return {number}
+ */
+function token$1(type) {
+  switch (type) {
+    // \0 \t \n \r \s whitespace token
+    case 0:
+    case 9:
+    case 10:
+    case 13:
+    case 32:
+      return 5;
+    // ! + , / > @ ~ isolate token
+    case 33:
+    case 43:
+    case 44:
+    case 47:
+    case 62:
+    case 64:
+    case 126:
+    // ; { } breakpoint token
+    case 59:
+    case 123:
+    case 125:
+      return 4;
+    // : accompanied token
+    case 58:
+      return 3;
+    // " ' ( [ opening delimit token
+    case 34:
+    case 39:
+    case 40:
+    case 91:
+      return 2;
+    // ) ] closing delimit token
+    case 41:
+    case 93:
+      return 1;
+  }
+  return 0;
+}
+
+/**
+ * @param {string} value
+ * @return {any[]}
+ */
+function alloc$1(value) {
+  return line$1 = column$1 = 1, length$1 = strlen$1(characters$1 = value), position$1 = 0, [];
+}
+
+/**
+ * @param {any} value
+ * @return {any}
+ */
+function dealloc$1(value) {
+  return characters$1 = '', value;
+}
+
+/**
+ * @param {number} type
+ * @return {string}
+ */
+function delimit$1(type) {
+  return trim$1(slice$1(position$1 - 1, delimiter$1(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
+}
+
+/**
+ * @param {number} type
+ * @return {string}
+ */
+function whitespace$1(type) {
+  while (character$1 = peek$1()) if (character$1 < 33) next$1();else break;
+  return token$1(type) > 2 || token$1(character$1) > 3 ? '' : ' ';
+}
+
+/**
+ * @param {number} index
+ * @param {number} count
+ * @return {string}
+ */
+function escaping$1(index, count) {
+  while (--count && next$1())
+  // not 0-9 A-F a-f
+  if (character$1 < 48 || character$1 > 102 || character$1 > 57 && character$1 < 65 || character$1 > 70 && character$1 < 97) break;
+  return slice$1(index, caret$1() + (count < 6 && peek$1() == 32 && next$1() == 32));
+}
+
+/**
+ * @param {number} type
+ * @return {number}
+ */
+function delimiter$1(type) {
+  while (next$1()) switch (character$1) {
+    // ] ) " '
+    case type:
+      return position$1;
+    // " '
+    case 34:
+    case 39:
+      if (type !== 34 && type !== 39) delimiter$1(character$1);
+      break;
+    // (
+    case 40:
+      if (type === 41) delimiter$1(type);
+      break;
+    // \
+    case 92:
+      next$1();
+      break;
+  }
+  return position$1;
+}
+
+/**
+ * @param {number} type
+ * @param {number} index
+ * @return {number}
+ */
+function commenter$1(type, index) {
+  while (next$1())
+  // //
+  if (type + character$1 === 47 + 10) break;
+  // /*
+  else if (type + character$1 === 42 + 42 && peek$1() === 47) break;
+  return '/*' + slice$1(index, position$1 - 1) + '*' + from$1(type === 47 ? type : next$1());
+}
+
+/**
+ * @param {number} index
+ * @return {string}
+ */
+function identifier$1(index) {
+  while (!token$1(peek$1())) next$1();
+  return slice$1(index, position$1);
+}
+
+/**
+ * @param {string} value
+ * @return {object[]}
+ */
+function compile$1(value) {
+  return dealloc$1(parse$1('', null, null, null, [''], value = alloc$1(value), 0, [0], value));
+}
+
+/**
+ * @param {string} value
+ * @param {object} root
+ * @param {object?} parent
+ * @param {string[]} rule
+ * @param {string[]} rules
+ * @param {string[]} rulesets
+ * @param {number[]} pseudo
+ * @param {number[]} points
+ * @param {string[]} declarations
+ * @return {object}
+ */
+function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
+  var index = 0;
+  var offset = 0;
+  var length = pseudo;
+  var atrule = 0;
+  var property = 0;
+  var previous = 0;
+  var variable = 1;
+  var scanning = 1;
+  var ampersand = 1;
+  var character = 0;
+  var type = '';
+  var props = rules;
+  var children = rulesets;
+  var reference = rule;
+  var characters = type;
+  while (scanning) switch (previous = character, character = next$1()) {
+    // (
+    case 40:
+      if (previous != 108 && charat$1(characters, length - 1) == 58) {
+        if (indexof$1(characters += replace$1(delimit$1(character), '&', '&\f'), '&\f', abs$1(index ? points[index - 1] : 0)) != -1) ampersand = -1;
+        break;
+      }
+    // " ' [
+    case 34:
+    case 39:
+    case 91:
+      characters += delimit$1(character);
+      break;
+    // \t \n \r \s
+    case 9:
+    case 10:
+    case 13:
+    case 32:
+      characters += whitespace$1(previous);
+      break;
+    // \
+    case 92:
+      characters += escaping$1(caret$1() - 1, 7);
+      continue;
+    // /
+    case 47:
+      switch (peek$1()) {
+        case 42:
+        case 47:
+          append$1(comment$1(commenter$1(next$1(), caret$1()), root, parent, declarations), declarations);
+          break;
+        default:
+          characters += '/';
+      }
+      break;
+    // {
+    case 123 * variable:
+      points[index++] = strlen$1(characters) * ampersand;
+    // } ; \0
+    case 125 * variable:
+    case 59:
+    case 0:
+      switch (character) {
+        // \0 }
+        case 0:
+        case 125:
+          scanning = 0;
+        // ;
+        case 59 + offset:
+          if (ampersand == -1) characters = replace$1(characters, /\f/g, '');
+          if (property > 0 && strlen$1(characters) - length) append$1(property > 32 ? declaration$1(characters + ';', rule, parent, length - 1, declarations) : declaration$1(replace$1(characters, ' ', '') + ';', rule, parent, length - 2, declarations), declarations);
+          break;
+        // @ ;
+        case 59:
+          characters += ';';
+        // { rule/at-rule
+        default:
+          append$1(reference = ruleset$1(characters, root, parent, index, offset, rules, points, type, props = [], children = [], length, rulesets), rulesets);
+          if (character === 123) if (offset === 0) parse$1(characters, root, reference, reference, props, rulesets, length, points, children);else switch (atrule === 99 && charat$1(characters, 3) === 110 ? 100 : atrule) {
+            // d l m s
+            case 100:
+            case 108:
+            case 109:
+            case 115:
+              parse$1(value, reference, reference, rule && append$1(ruleset$1(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length, children), children), rules, children, length, points, rule ? props : children);
+              break;
+            default:
+              parse$1(characters, reference, reference, reference, [''], children, 0, points, children);
+          }
+      }
+      index = offset = property = 0, variable = ampersand = 1, type = characters = '', length = pseudo;
+      break;
+    // :
+    case 58:
+      length = 1 + strlen$1(characters), property = previous;
+    default:
+      if (variable < 1) if (character == 123) --variable;else if (character == 125 && variable++ == 0 && prev$1() == 125) continue;
+      switch (characters += from$1(character), character * variable) {
+        // &
+        case 38:
+          ampersand = offset > 0 ? 1 : (characters += '\f', -1);
+          break;
+        // ,
+        case 44:
+          points[index++] = (strlen$1(characters) - 1) * ampersand, ampersand = 1;
+          break;
+        // @
+        case 64:
+          // -
+          if (peek$1() === 45) characters += delimit$1(next$1());
+          atrule = peek$1(), offset = length = strlen$1(type = characters += identifier$1(caret$1())), character++;
+          break;
+        // -
+        case 45:
+          if (previous === 45 && strlen$1(characters) == 2) variable = 0;
+      }
+  }
+  return rulesets;
+}
+
+/**
+ * @param {string} value
+ * @param {object} root
+ * @param {object?} parent
+ * @param {number} index
+ * @param {number} offset
+ * @param {string[]} rules
+ * @param {number[]} points
+ * @param {string} type
+ * @param {string[]} props
+ * @param {string[]} children
+ * @param {number} length
+ * @param {object[]} siblings
+ * @return {object}
+ */
+function ruleset$1(value, root, parent, index, offset, rules, points, type, props, children, length, siblings) {
+  var post = offset - 1;
+  var rule = offset === 0 ? rules : [''];
+  var size = sizeof$1(rule);
+  for (var i = 0, j = 0, k = 0; i < index; ++i) for (var x = 0, y = substr$1(value, post + 1, post = abs$1(j = points[i])), z = value; x < size; ++x) if (z = trim$1(j > 0 ? rule[x] + ' ' + y : replace$1(y, /&\f/g, rule[x]))) props[k++] = z;
+  return node$1(value, root, parent, offset === 0 ? RULESET$1 : type, props, children, length, siblings);
+}
+
+/**
+ * @param {number} value
+ * @param {object} root
+ * @param {object?} parent
+ * @param {object[]} siblings
+ * @return {object}
+ */
+function comment$1(value, root, parent, siblings) {
+  return node$1(value, root, parent, COMMENT$1, from$1(_char$1()), substr$1(value, 2, -2), 0, siblings);
+}
+
+/**
+ * @param {string} value
+ * @param {object} root
+ * @param {object?} parent
+ * @param {number} length
+ * @param {object[]} siblings
+ * @return {object}
+ */
+function declaration$1(value, root, parent, length, siblings) {
+  return node$1(value, root, parent, DECLARATION$1, substr$1(value, 0, length), substr$1(value, length + 1, -1), length, siblings);
+}
+
+/**
+ * @param {string} value
+ * @param {number} length
+ * @param {object[]} children
+ * @return {string}
+ */
+function prefix$1(value, length, children) {
+  switch (hash$1(value, length)) {
+    // color-adjust
+    case 5103:
+      return WEBKIT$1 + 'print-' + value + value;
+    // animation, animation-(delay|direction|duration|fill-mode|iteration-count|name|play-state|timing-function)
+    case 5737:
+    case 4201:
+    case 3177:
+    case 3433:
+    case 1641:
+    case 4457:
+    case 2921:
+    // text-decoration, filter, clip-path, backface-visibility, column, box-decoration-break
+    case 5572:
+    case 6356:
+    case 5844:
+    case 3191:
+    case 6645:
+    case 3005:
+    // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite,
+    case 6391:
+    case 5879:
+    case 5623:
+    case 6135:
+    case 4599:
+    case 4855:
+    // background-clip, columns, column-(count|fill|gap|rule|rule-color|rule-style|rule-width|span|width)
+    case 4215:
+    case 6389:
+    case 5109:
+    case 5365:
+    case 5621:
+    case 3829:
+      return WEBKIT$1 + value + value;
+    // tab-size
+    case 4789:
+      return MOZ$1 + value + value;
+    // appearance, user-select, transform, hyphens, text-size-adjust
+    case 5349:
+    case 4246:
+    case 4810:
+    case 6968:
+    case 2756:
+      return WEBKIT$1 + value + MOZ$1 + value + MS$1 + value + value;
+    // writing-mode
+    case 5936:
+      switch (charat$1(value, length + 11)) {
+        // vertical-l(r)
+        case 114:
+          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'tb') + value;
+        // vertical-r(l)
+        case 108:
+          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'tb-rl') + value;
+        // horizontal(-)tb
+        case 45:
+          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'lr') + value;
+        // default: fallthrough to below
+      }
+    // flex, flex-direction, scroll-snap-type, writing-mode
+    case 6828:
+    case 4268:
+    case 2903:
+      return WEBKIT$1 + value + MS$1 + value + value;
+    // order
+    case 6165:
+      return WEBKIT$1 + value + MS$1 + 'flex-' + value + value;
+    // align-items
+    case 5187:
+      return WEBKIT$1 + value + replace$1(value, /(\w+).+(:[^]+)/, WEBKIT$1 + 'box-$1$2' + MS$1 + 'flex-$1$2') + value;
+    // align-self
+    case 5443:
+      return WEBKIT$1 + value + MS$1 + 'flex-item-' + replace$1(value, /flex-|-self/g, '') + (!match$1(value, /flex-|baseline/) ? MS$1 + 'grid-row-' + replace$1(value, /flex-|-self/g, '') : '') + value;
+    // align-content
+    case 4675:
+      return WEBKIT$1 + value + MS$1 + 'flex-line-pack' + replace$1(value, /align-content|flex-|-self/g, '') + value;
+    // flex-shrink
+    case 5548:
+      return WEBKIT$1 + value + MS$1 + replace$1(value, 'shrink', 'negative') + value;
+    // flex-basis
+    case 5292:
+      return WEBKIT$1 + value + MS$1 + replace$1(value, 'basis', 'preferred-size') + value;
+    // flex-grow
+    case 6060:
+      return WEBKIT$1 + 'box-' + replace$1(value, '-grow', '') + WEBKIT$1 + value + MS$1 + replace$1(value, 'grow', 'positive') + value;
+    // transition
+    case 4554:
+      return WEBKIT$1 + replace$1(value, /([^-])(transform)/g, '$1' + WEBKIT$1 + '$2') + value;
+    // cursor
+    case 6187:
+      return replace$1(replace$1(replace$1(value, /(zoom-|grab)/, WEBKIT$1 + '$1'), /(image-set)/, WEBKIT$1 + '$1'), value, '') + value;
+    // background, background-image
+    case 5495:
+    case 3959:
+      return replace$1(value, /(image-set\([^]*)/, WEBKIT$1 + '$1' + '$`$1');
+    // justify-content
+    case 4968:
+      return replace$1(replace$1(value, /(.+:)(flex-)?(.*)/, WEBKIT$1 + 'box-pack:$3' + MS$1 + 'flex-pack:$3'), /s.+-b[^;]+/, 'justify') + WEBKIT$1 + value + value;
+    // justify-self
+    case 4200:
+      if (!match$1(value, /flex-|baseline/)) return MS$1 + 'grid-column-align' + substr$1(value, length) + value;
+      break;
+    // grid-template-(columns|rows)
+    case 2592:
+    case 3360:
+      return MS$1 + replace$1(value, 'template-', '') + value;
+    // grid-(row|column)-start
+    case 4384:
+    case 3616:
+      if (children && children.some(function (element, index) {
+        return length = index, match$1(element.props, /grid-\w+-end/);
+      })) {
+        return ~indexof$1(value + (children = children[length].value), 'span', 0) ? value : MS$1 + replace$1(value, '-start', '') + value + MS$1 + 'grid-row-span:' + (~indexof$1(children, 'span', 0) ? match$1(children, /\d+/) : +match$1(children, /\d+/) - +match$1(value, /\d+/)) + ';';
+      }
+      return MS$1 + replace$1(value, '-start', '') + value;
+    // grid-(row|column)-end
+    case 4896:
+    case 4128:
+      return children && children.some(function (element) {
+        return match$1(element.props, /grid-\w+-start/);
+      }) ? value : MS$1 + replace$1(replace$1(value, '-end', '-span'), 'span ', '') + value;
+    // (margin|padding)-inline-(start|end)
+    case 4095:
+    case 3583:
+    case 4068:
+    case 2532:
+      return replace$1(value, /(.+)-inline(.+)/, WEBKIT$1 + '$1$2') + value;
+    // (min|max)?(width|height|inline-size|block-size)
+    case 8116:
+    case 7059:
+    case 5753:
+    case 5535:
+    case 5445:
+    case 5701:
+    case 4933:
+    case 4677:
+    case 5533:
+    case 5789:
+    case 5021:
+    case 4765:
+      // stretch, max-content, min-content, fill-available
+      if (strlen$1(value) - 1 - length > 6) switch (charat$1(value, length + 1)) {
+        // (m)ax-content, (m)in-content
+        case 109:
+          // -
+          if (charat$1(value, length + 4) !== 45) break;
+        // (f)ill-available, (f)it-content
+        case 102:
+          return replace$1(value, /(.+:)(.+)-([^]+)/, '$1' + WEBKIT$1 + '$2-$3' + '$1' + MOZ$1 + (charat$1(value, length + 3) == 108 ? '$3' : '$2-$3')) + value;
+        // (s)tretch
+        case 115:
+          return ~indexof$1(value, 'stretch', 0) ? prefix$1(replace$1(value, 'stretch', 'fill-available'), length, children) + value : value;
+      }
+      break;
+    // grid-(column|row)
+    case 5152:
+    case 5920:
+      return replace$1(value, /(.+?):(\d+)(\s*\/\s*(span)?\s*(\d+))?(.*)/, function (_, a, b, c, d, e, f) {
+        return MS$1 + a + ':' + b + f + (c ? MS$1 + a + '-span:' + (d ? e : +e - +b) + f : '') + value;
+      });
+    // position: sticky
+    case 4949:
+      // stick(y)?
+      if (charat$1(value, length + 6) === 121) return replace$1(value, ':', ':' + WEBKIT$1) + value;
+      break;
+    // display: (flex|inline-flex|grid|inline-grid)
+    case 6444:
+      switch (charat$1(value, charat$1(value, 14) === 45 ? 18 : 11)) {
+        // (inline-)?fle(x)
+        case 120:
+          return replace$1(value, /(.+:)([^;\s!]+)(;|(\s+)?!.+)?/, '$1' + WEBKIT$1 + (charat$1(value, 14) === 45 ? 'inline-' : '') + 'box$3' + '$1' + WEBKIT$1 + '$2$3' + '$1' + MS$1 + '$2box$3') + value;
+        // (inline-)?gri(d)
+        case 100:
+          return replace$1(value, ':', ':' + MS$1) + value;
+      }
+      break;
+    // scroll-margin, scroll-margin-(top|right|bottom|left)
+    case 5719:
+    case 2647:
+    case 2135:
+    case 3927:
+    case 2391:
+      return replace$1(value, 'scroll-', 'scroll-snap-') + value;
+  }
+  return value;
+}
+
+/**
+ * @param {object[]} children
+ * @param {function} callback
+ * @return {string}
+ */
+function serialize$1(children, callback) {
+  var output = '';
+  for (var i = 0; i < children.length; i++) output += callback(children[i], i, children, callback) || '';
   return output;
 }
 
 /**
- * WARNING: Don't import this directly. It's imported by the code generated by
- * `@mui/interal-babel-plugin-minify-errors`. Make sure to always use string literals in `Error`
- * constructors to ensure the plugin works as expected. Supported patterns include:
- *   throw new Error('My message');
- *   throw new Error(`My message: ${foo}`);
- *   throw new Error(`My message: ${foo}` + 'another string');
- *   ...
- * @param {number} code
+ * @param {object} element
+ * @param {number} index
+ * @param {object[]} children
+ * @param {function} callback
+ * @return {string}
  */
-function formatMuiErrorMessage(code) {
-  var url = new URL("https://mui.com/production-error/?code=".concat(code));
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
+function stringify$1(element, index, children, callback) {
+  switch (element.type) {
+    case LAYER$1:
+      if (element.children.length) break;
+    case IMPORT$1:
+    case DECLARATION$1:
+      return element["return"] = element["return"] || element.value;
+    case COMMENT$1:
+      return '';
+    case KEYFRAMES$1:
+      return element["return"] = element.value + '{' + serialize$1(element.children, callback) + '}';
+    case RULESET$1:
+      if (!strlen$1(element.value = element.props.join(','))) return '';
   }
-  args.forEach(function (arg) {
-    return url.searchParams.append('args[]', arg);
-  });
-  return "Minified MUI error #".concat(code, "; visit ").concat(url, " for the full message.");
+  return strlen$1(children = serialize$1(element.children, callback)) ? element["return"] = element.value + '{' + children + '}' : '';
 }
+
+/**
+ * @param {function[]} collection
+ * @return {function}
+ */
+function middleware$1(collection) {
+  var length = sizeof$1(collection);
+  return function (element, index, children, callback) {
+    var output = '';
+    for (var i = 0; i < length; i++) output += collection[i](element, index, children, callback) || '';
+    return output;
+  };
+}
+
+/**
+ * @param {function} callback
+ * @return {function}
+ */
+function rulesheet$1(callback) {
+  return function (element) {
+    if (!element.root) if (element = element["return"]) callback(element);
+  };
+}
+
+/**
+ * @param {object} element
+ * @param {number} index
+ * @param {object[]} children
+ * @param {function} callback
+ */
+function prefixer$1(element, index, children, callback) {
+  if (element.length > -1) if (!element["return"]) switch (element.type) {
+    case DECLARATION$1:
+      element["return"] = prefix$1(element.value, element.length, children);
+      return;
+    case KEYFRAMES$1:
+      return serialize$1([copy$1(element, {
+        value: replace$1(element.value, '@', '@' + WEBKIT$1)
+      })], callback);
+    case RULESET$1:
+      if (element.length) return combine$1(children = element.props, function (value) {
+        switch (match$1(value, callback = /(::plac\w+|:read-\w+)/)) {
+          // :read-(only|write)
+          case ':read-only':
+          case ':read-write':
+            lift(copy$1(element, {
+              props: [replace$1(value, /:(read-\w+)/, ':' + MOZ$1 + '$1')]
+            }));
+            lift(copy$1(element, {
+              props: [value]
+            }));
+            assign$1(element, {
+              props: filter(children, callback)
+            });
+            break;
+          // :placeholder
+          case '::placeholder':
+            lift(copy$1(element, {
+              props: [replace$1(value, /:(plac\w+)/, ':' + WEBKIT$1 + 'input-$1')]
+            }));
+            lift(copy$1(element, {
+              props: [replace$1(value, /:(plac\w+)/, ':' + MOZ$1 + '$1')]
+            }));
+            lift(copy$1(element, {
+              props: [replace$1(value, /:(plac\w+)/, MS$1 + 'input-$1')]
+            }));
+            lift(copy$1(element, {
+              props: [value]
+            }));
+            assign$1(element, {
+              props: filter(children, callback)
+            });
+            break;
+        }
+        return '';
+      });
+  }
+}
+
+var unitlessKeys$1 = {
+  animationIterationCount: 1,
+  aspectRatio: 1,
+  borderImageOutset: 1,
+  borderImageSlice: 1,
+  borderImageWidth: 1,
+  boxFlex: 1,
+  boxFlexGroup: 1,
+  boxOrdinalGroup: 1,
+  columnCount: 1,
+  columns: 1,
+  flex: 1,
+  flexGrow: 1,
+  flexPositive: 1,
+  flexShrink: 1,
+  flexNegative: 1,
+  flexOrder: 1,
+  gridRow: 1,
+  gridRowEnd: 1,
+  gridRowSpan: 1,
+  gridRowStart: 1,
+  gridColumn: 1,
+  gridColumnEnd: 1,
+  gridColumnSpan: 1,
+  gridColumnStart: 1,
+  msGridRow: 1,
+  msGridRowSpan: 1,
+  msGridColumn: 1,
+  msGridColumnSpan: 1,
+  fontWeight: 1,
+  lineHeight: 1,
+  opacity: 1,
+  order: 1,
+  orphans: 1,
+  tabSize: 1,
+  widows: 1,
+  zIndex: 1,
+  zoom: 1,
+  WebkitLineClamp: 1,
+  // SVG-related properties
+  fillOpacity: 1,
+  floodOpacity: 1,
+  stopOpacity: 1,
+  strokeDasharray: 1,
+  strokeDashoffset: 1,
+  strokeMiterlimit: 1,
+  strokeOpacity: 1,
+  strokeWidth: 1
+};
+
+var f = "undefined" != typeof process && undefined !== process.env && (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR) || "data-styled",
+  m = "active",
+  y = "data-styled-version",
+  v = "6.1.14",
+  g = "/*!sc*/\n",
+  S = "undefined" != typeof window && "HTMLElement" in window,
+  w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.REACT_APP_SC_DISABLE_SPEEDY && "" !== process.env.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== process.env.REACT_APP_SC_DISABLE_SPEEDY && process.env.REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.SC_DISABLE_SPEEDY && "" !== process.env.SC_DISABLE_SPEEDY ? "false" !== process.env.SC_DISABLE_SPEEDY && process.env.SC_DISABLE_SPEEDY : "production" !== process.env.NODE_ENV),
+  b = {},
+  E = /invalid hook call/i,
+  N = new Set(),
+  P = function P(t, n) {
+    if ("production" !== process.env.NODE_ENV) {
+      var r = n ? ' with the id of "'.concat(n, '"') : "",
+        s = "The component ".concat(t).concat(r, " has been created dynamically.\n") + "You may see this warning because you've called styled inside another component.\nTo resolve this only create new StyledComponents outside of any render method and function component.",
+        i = console.error;
+      try {
+        var a = !0;
+        console.error = function (t) {
+          for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
+          E.test(t) ? (a = !1, N["delete"](s)) : i.apply(void 0, __spreadArray([t], n, !1));
+        }, React.useRef(), a && !N.has(s) && (console.warn(s), N.add(s));
+      } catch (e) {
+        E.test(e.message) && N["delete"](s);
+      } finally {
+        console.error = i;
+      }
+    }
+  },
+  _ = Object.freeze([]),
+  C = Object.freeze({});
+function I(e, t, n) {
+  return undefined === n && (n = C), e.theme !== n.theme && e.theme || t || n.theme;
+}
+var A = new Set(["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "u", "ul", "use", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"]),
+  O = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g,
+  D = /(^-|-$)/g;
+function R(e) {
+  return e.replace(O, "-").replace(D, "");
+}
+var T = /(a)(d)/gi,
+  k = 52,
+  j = function j(e) {
+    return String.fromCharCode(e + (e > 25 ? 39 : 97));
+  };
+function x(e) {
+  var t,
+    n = "";
+  for (t = Math.abs(e); t > k; t = t / k | 0) n = j(t % k) + n;
+  return (j(t % k) + n).replace(T, "$1-$2");
+}
+var V,
+  F = 5381,
+  M = function M(e, t) {
+    for (var n = t.length; n;) e = 33 * e ^ t.charCodeAt(--n);
+    return e;
+  },
+  z = function z(e) {
+    return M(F, e);
+  };
+function $(e) {
+  return x(z(e) >>> 0);
+}
+function B(e) {
+  return "production" !== process.env.NODE_ENV && "string" == typeof e && e || e.displayName || e.name || "Component";
+}
+function L(e) {
+  return "string" == typeof e && ("production" === process.env.NODE_ENV || e.charAt(0) === e.charAt(0).toLowerCase());
+}
+var G = "function" == typeof Symbol && Symbol["for"],
+  Y = G ? Symbol["for"]("react.memo") : 60115,
+  q = G ? Symbol["for"]("react.forward_ref") : 60112,
+  W = {
+    childContextTypes: true,
+    contextType: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromError: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+  },
+  H = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+  },
+  U = {
+    $$typeof: true,
+    compare: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true,
+    type: true
+  },
+  J = ((V = {})[q] = {
+    $$typeof: true,
+    render: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true
+  }, V[Y] = U, V);
+function X(e) {
+  return ("type" in (t = e) && t.type.$$typeof) === Y ? U : "$$typeof" in e ? J[e.$$typeof] : W;
+  var t;
+}
+var Z = Object.defineProperty,
+  K = Object.getOwnPropertyNames,
+  Q = Object.getOwnPropertySymbols,
+  ee = Object.getOwnPropertyDescriptor,
+  te = Object.getPrototypeOf,
+  ne = Object.prototype;
+function re(e, t, n) {
+  if ("string" != typeof t) {
+    if (ne) {
+      var r = te(t);
+      r && r !== ne && re(e, r, n);
+    }
+    var o = K(t);
+    Q && (o = o.concat(Q(t)));
+    for (var s = X(e), i = X(t), a = 0; a < o.length; ++a) {
+      var c = o[a];
+      if (!(c in H || n && n[c] || i && c in i || s && c in s)) {
+        var l = ee(t, c);
+        try {
+          Z(e, c, l);
+        } catch (e) {}
+      }
+    }
+  }
+  return e;
+}
+function oe(e) {
+  return "function" == typeof e;
+}
+function se(e) {
+  return "object" == _typeof(e) && "styledComponentId" in e;
+}
+function ie(e, t) {
+  return e && t ? "".concat(e, " ").concat(t) : e || t || "";
+}
+function ae(e, t) {
+  if (0 === e.length) return "";
+  for (var n = e[0], r = 1; r < e.length; r++) n += e[r];
+  return n;
+}
+function ce(e) {
+  return null !== e && "object" == _typeof(e) && e.constructor.name === Object.name && !("props" in e && e.$$typeof);
+}
+function le(e, t, n) {
+  if (undefined === n && (n = false), !n && !ce(e) && !Array.isArray(e)) return t;
+  if (Array.isArray(t)) for (var r = 0; r < t.length; r++) e[r] = le(e[r], t[r]);else if (ce(t)) for (var r in t) e[r] = le(e[r], t[r]);
+  return e;
+}
+function ue(e, t) {
+  Object.defineProperty(e, "toString", {
+    value: t
+  });
+}
+var pe = "production" !== process.env.NODE_ENV ? {
+  1: "Cannot create styled-component for component: %s.\n\n",
+  2: "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n\n",
+  3: "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n",
+  4: "The `StyleSheetManager` expects a valid target or sheet prop!\n\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n\n",
+  5: "The clone method cannot be used on the client!\n\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n\n",
+  6: "Trying to insert a new style tag, but the given Node is unmounted!\n\n- Are you using a custom target that isn't mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n\n",
+  7: 'ThemeProvider: Please return an object from your "theme" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n',
+  8: 'ThemeProvider: Please make your "theme" prop an object.\n\n',
+  9: "Missing document `<head>`\n\n",
+  10: "Cannot find a StyleSheet instance. Usually this happens if there are multiple copies of styled-components loaded at once. Check out this issue for how to troubleshoot and fix the common cases where this situation can happen: https://github.com/styled-components/styled-components/issues/1941#issuecomment-417862021\n\n",
+  11: "_This error was replaced with a dev-time warning, it will be deleted for v4 final._ [createGlobalStyle] received children which will not be rendered. Please use the component without passing children elements.\n\n",
+  12: "It seems you are interpolating a keyframe declaration (%s) into an untagged string. This was supported in styled-components v3, but is not longer supported in v4 as keyframes are now injected on-demand. Please wrap your string in the css\\`\\` helper which ensures the styles are injected correctly. See https://www.styled-components.com/docs/api#css\n\n",
+  13: "%s is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.\n\n",
+  14: 'ThemeProvider: "theme" prop is required.\n\n',
+  15: "A stylis plugin has been supplied that is not named. We need a name for each plugin to be able to prevent styling collisions between different stylis configurations within the same app. Before you pass your plugin to `<StyleSheetManager stylisPlugins={[]}>`, please make sure each plugin is uniquely-named, e.g.\n\n```js\nObject.defineProperty(importedPlugin, 'name', { value: 'some-unique-name' });\n```\n\n",
+  16: "Reached the limit of how many styled components may be created at group %s.\nYou may only create up to 1,073,741,824 components. If you're creating components dynamically,\nas for instance in your render method then you may be running into this limitation.\n\n",
+  17: "CSSStyleSheet could not be found on HTMLStyleElement.\nHas styled-components' style tag been unmounted or altered by another script?\n",
+  18: "ThemeProvider: Please make sure your useTheme hook is within a `<ThemeProvider>`"
+} : {};
+function de() {
+  for (var e = [], t = 0; t < arguments.length; t++) e[t] = arguments[t];
+  for (var n = e[0], r = [], o = 1, s = e.length; o < s; o += 1) r.push(e[o]);
+  return r.forEach(function (e) {
+    n = n.replace(/%[a-z]/, e);
+  }), n;
+}
+function he(t) {
+  for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
+  return "production" === process.env.NODE_ENV ? new Error("An error occurred. See https://github.com/styled-components/styled-components/blob/main/packages/styled-components/src/utils/errors.md#".concat(t, " for more information.").concat(n.length > 0 ? " Args: ".concat(n.join(", ")) : "")) : new Error(de.apply(undefined, __spreadArray([pe[t]], n, false)).trim());
+}
+var fe = function () {
+    function e(e) {
+      this.groupSizes = new Uint32Array(512), this.length = 512, this.tag = e;
+    }
+    return e.prototype.indexOfGroup = function (e) {
+      for (var t = 0, n = 0; n < e; n++) t += this.groupSizes[n];
+      return t;
+    }, e.prototype.insertRules = function (e, t) {
+      if (e >= this.groupSizes.length) {
+        for (var n = this.groupSizes, r = n.length, o = r; e >= o;) if ((o <<= 1) < 0) throw he(16, "".concat(e));
+        this.groupSizes = new Uint32Array(o), this.groupSizes.set(n), this.length = o;
+        for (var s = r; s < o; s++) this.groupSizes[s] = 0;
+      }
+      for (var i = this.indexOfGroup(e + 1), a = (s = 0, t.length); s < a; s++) this.tag.insertRule(i, t[s]) && (this.groupSizes[e]++, i++);
+    }, e.prototype.clearGroup = function (e) {
+      if (e < this.length) {
+        var t = this.groupSizes[e],
+          n = this.indexOfGroup(e),
+          r = n + t;
+        this.groupSizes[e] = 0;
+        for (var o = n; o < r; o++) this.tag.deleteRule(n);
+      }
+    }, e.prototype.getGroup = function (e) {
+      var t = "";
+      if (e >= this.length || 0 === this.groupSizes[e]) return t;
+      for (var n = this.groupSizes[e], r = this.indexOfGroup(e), o = r + n, s = r; s < o; s++) t += "".concat(this.tag.getRule(s)).concat(g);
+      return t;
+    }, e;
+  }(),
+  me = 1 << 30,
+  ye = new Map(),
+  ve = new Map(),
+  ge = 1,
+  Se = function Se(e) {
+    if (ye.has(e)) return ye.get(e);
+    for (; ve.has(ge);) ge++;
+    var t = ge++;
+    if ("production" !== process.env.NODE_ENV && ((0 | t) < 0 || t > me)) throw he(16, "".concat(t));
+    return ye.set(e, t), ve.set(t, e), t;
+  },
+  we = function we(e, t) {
+    ge = t + 1, ye.set(e, t), ve.set(t, e);
+  },
+  be = "style[".concat(f, "][").concat(y, '="').concat(v, '"]'),
+  Ee = new RegExp("^".concat(f, '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)')),
+  Ne = function Ne(e, t, n) {
+    for (var r, o = n.split(","), s = 0, i = o.length; s < i; s++) (r = o[s]) && e.registerName(t, r);
+  },
+  Pe = function Pe(e, t) {
+    for (var n, r = (null !== (n = t.textContent) && undefined !== n ? n : "").split(g), o = [], s = 0, i = r.length; s < i; s++) {
+      var a = r[s].trim();
+      if (a) {
+        var c = a.match(Ee);
+        if (c) {
+          var l = 0 | parseInt(c[1], 10),
+            u = c[2];
+          0 !== l && (we(u, l), Ne(e, u, c[3]), e.getTag().insertRules(l, o)), o.length = 0;
+        } else o.push(a);
+      }
+    }
+  },
+  _e = function _e(e) {
+    for (var t = document.querySelectorAll(be), n = 0, r = t.length; n < r; n++) {
+      var o = t[n];
+      o && o.getAttribute(f) !== m && (Pe(e, o), o.parentNode && o.parentNode.removeChild(o));
+    }
+  };
+function Ce() {
+  return "undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : null;
+}
+var Ie = function Ie(e) {
+    var t = document.head,
+      n = e || t,
+      r = document.createElement("style"),
+      o = function (e) {
+        var t = Array.from(e.querySelectorAll("style[".concat(f, "]")));
+        return t[t.length - 1];
+      }(n),
+      s = undefined !== o ? o.nextSibling : null;
+    r.setAttribute(f, m), r.setAttribute(y, v);
+    var i = Ce();
+    return i && r.setAttribute("nonce", i), n.insertBefore(r, s), r;
+  },
+  Ae = function () {
+    function e(e) {
+      this.element = Ie(e), this.element.appendChild(document.createTextNode("")), this.sheet = function (e) {
+        if (e.sheet) return e.sheet;
+        for (var t = document.styleSheets, n = 0, r = t.length; n < r; n++) {
+          var o = t[n];
+          if (o.ownerNode === e) return o;
+        }
+        throw he(17);
+      }(this.element), this.length = 0;
+    }
+    return e.prototype.insertRule = function (e, t) {
+      try {
+        return this.sheet.insertRule(t, e), this.length++, !0;
+      } catch (e) {
+        return false;
+      }
+    }, e.prototype.deleteRule = function (e) {
+      this.sheet.deleteRule(e), this.length--;
+    }, e.prototype.getRule = function (e) {
+      var t = this.sheet.cssRules[e];
+      return t && t.cssText ? t.cssText : "";
+    }, e;
+  }(),
+  Oe = function () {
+    function e(e) {
+      this.element = Ie(e), this.nodes = this.element.childNodes, this.length = 0;
+    }
+    return e.prototype.insertRule = function (e, t) {
+      if (e <= this.length && e >= 0) {
+        var n = document.createTextNode(t);
+        return this.element.insertBefore(n, this.nodes[e] || null), this.length++, true;
+      }
+      return false;
+    }, e.prototype.deleteRule = function (e) {
+      this.element.removeChild(this.nodes[e]), this.length--;
+    }, e.prototype.getRule = function (e) {
+      return e < this.length ? this.nodes[e].textContent : "";
+    }, e;
+  }(),
+  De = function () {
+    function e(e) {
+      this.rules = [], this.length = 0;
+    }
+    return e.prototype.insertRule = function (e, t) {
+      return e <= this.length && (this.rules.splice(e, 0, t), this.length++, true);
+    }, e.prototype.deleteRule = function (e) {
+      this.rules.splice(e, 1), this.length--;
+    }, e.prototype.getRule = function (e) {
+      return e < this.length ? this.rules[e] : "";
+    }, e;
+  }(),
+  Re = S,
+  Te = {
+    isServer: !S,
+    useCSSOMInjection: !w
+  },
+  ke = function () {
+    function e(e, n, r) {
+      undefined === e && (e = C), undefined === n && (n = {});
+      var o = this;
+      this.options = __assign(__assign({}, Te), e), this.gs = n, this.names = new Map(r), this.server = !!e.isServer, !this.server && S && Re && (Re = false, _e(this)), ue(this, function () {
+        return function (e) {
+          for (var t = e.getTag(), n = t.length, r = "", o = function o(n) {
+              var o = function (e) {
+                return ve.get(e);
+              }(n);
+              if (undefined === o) return "continue";
+              var s = e.names.get(o),
+                i = t.getGroup(n);
+              if (undefined === s || !s.size || 0 === i.length) return "continue";
+              var a = "".concat(f, ".g").concat(n, '[id="').concat(o, '"]'),
+                c = "";
+              undefined !== s && s.forEach(function (e) {
+                e.length > 0 && (c += "".concat(e, ","));
+              }), r += "".concat(i).concat(a, '{content:"').concat(c, '"}').concat(g);
+            }, s = 0; s < n; s++) o(s);
+          return r;
+        }(o);
+      });
+    }
+    return e.registerId = function (e) {
+      return Se(e);
+    }, e.prototype.rehydrate = function () {
+      !this.server && S && _e(this);
+    }, e.prototype.reconstructWithOptions = function (n, r) {
+      return undefined === r && (r = true), new e(__assign(__assign({}, this.options), n), this.gs, r && this.names || undefined);
+    }, e.prototype.allocateGSInstance = function (e) {
+      return this.gs[e] = (this.gs[e] || 0) + 1;
+    }, e.prototype.getTag = function () {
+      return this.tag || (this.tag = (e = function (e) {
+        var t = e.useCSSOMInjection,
+          n = e.target;
+        return e.isServer ? new De(n) : t ? new Ae(n) : new Oe(n);
+      }(this.options), new fe(e)));
+      var e;
+    }, e.prototype.hasNameForId = function (e, t) {
+      return this.names.has(e) && this.names.get(e).has(t);
+    }, e.prototype.registerName = function (e, t) {
+      if (Se(e), this.names.has(e)) this.names.get(e).add(t);else {
+        var n = new Set();
+        n.add(t), this.names.set(e, n);
+      }
+    }, e.prototype.insertRules = function (e, t, n) {
+      this.registerName(e, t), this.getTag().insertRules(Se(e), n);
+    }, e.prototype.clearNames = function (e) {
+      this.names.has(e) && this.names.get(e).clear();
+    }, e.prototype.clearRules = function (e) {
+      this.getTag().clearGroup(Se(e)), this.clearNames(e);
+    }, e.prototype.clearTag = function () {
+      this.tag = undefined;
+    }, e;
+  }(),
+  je = /&/g,
+  xe = /^\s*\/\/.*$/gm;
+function Ve(e, t) {
+  return e.map(function (e) {
+    return "rule" === e.type && (e.value = "".concat(t, " ").concat(e.value), e.value = e.value.replaceAll(",", ",".concat(t, " ")), e.props = e.props.map(function (e) {
+      return "".concat(t, " ").concat(e);
+    })), Array.isArray(e.children) && "@keyframes" !== e.type && (e.children = Ve(e.children, t)), e;
+  });
+}
+function Fe(e) {
+  var t,
+    n,
+    r,
+    o = C ,
+    s = o.options,
+    i = undefined === s ? C : s,
+    a = o.plugins,
+    c = undefined === a ? _ : a,
+    l = function l(e, r, o) {
+      return o.startsWith(n) && o.endsWith(n) && o.replaceAll(n, "").length > 0 ? ".".concat(t) : e;
+    },
+    u = c.slice();
+  u.push(function (e) {
+    e.type === RULESET$1 && e.value.includes("&") && (e.props[0] = e.props[0].replace(je, n).replace(r, l));
+  }), i.prefix && u.push(prefixer$1), u.push(stringify$1);
+  var p = function p(e, o, s, a) {
+    undefined === o && (o = ""), undefined === s && (s = ""), undefined === a && (a = "&"), t = a, n = o, r = new RegExp("\\".concat(n, "\\b"), "g");
+    var c = e.replace(xe, ""),
+      l = compile$1(s || o ? "".concat(s, " ").concat(o, " { ").concat(c, " }") : c);
+    i.namespace && (l = Ve(l, i.namespace));
+    var p = [];
+    return serialize$1(l, middleware$1(u.concat(rulesheet$1(function (e) {
+      return p.push(e);
+    })))), p;
+  };
+  return p.hash = c.length ? c.reduce(function (e, t) {
+    return t.name || he(15), M(e, t.name);
+  }, F).toString() : "", p;
+}
+var Me = new ke(),
+  ze = Fe(),
+  $e = /*#__PURE__*/React.createContext({
+    shouldForwardProp: undefined,
+    styleSheet: Me,
+    stylis: ze
+  });
+  $e.Consumer;
+function Ge() {
+  return React.useContext($e);
+}
+var qe = function () {
+    function e(e, t) {
+      var n = this;
+      this.inject = function (e, t) {
+        undefined === t && (t = ze);
+        var r = n.name + t.hash;
+        e.hasNameForId(n.id, r) || e.insertRules(n.id, r, t(n.rules, r, "@keyframes"));
+      }, this.name = e, this.id = "sc-keyframes-".concat(e), this.rules = t, ue(this, function () {
+        throw he(12, String(n.name));
+      });
+    }
+    return e.prototype.getName = function (e) {
+      return undefined === e && (e = ze), this.name + e.hash;
+    }, e;
+  }(),
+  We = function We(e) {
+    return e >= "A" && e <= "Z";
+  };
+function He(e) {
+  for (var t = "", n = 0; n < e.length; n++) {
+    var r = e[n];
+    if (1 === n && "-" === r && "-" === e[0]) return e;
+    We(r) ? t += "-" + r.toLowerCase() : t += r;
+  }
+  return t.startsWith("ms-") ? "-" + t : t;
+}
+var Ue = function Ue(e) {
+    return null == e || false === e || "" === e;
+  },
+  _Je = function Je(t) {
+    var n,
+      r,
+      o = [];
+    for (var s in t) {
+      var i = t[s];
+      t.hasOwnProperty(s) && !Ue(i) && (Array.isArray(i) && i.isCss || oe(i) ? o.push("".concat(He(s), ":"), i, ";") : ce(i) ? o.push.apply(o, __spreadArray(__spreadArray(["".concat(s, " {")], _Je(i), false), ["}"], false)) : o.push("".concat(He(s), ": ").concat((n = s, null == (r = i) || "boolean" == typeof r || "" === r ? "" : "number" != typeof r || 0 === r || n in unitlessKeys$1 || n.startsWith("--") ? String(r).trim() : "".concat(r, "px")), ";")));
+    }
+    return o;
+  };
+function Xe(e, t, n, r) {
+  if (Ue(e)) return [];
+  if (se(e)) return [".".concat(e.styledComponentId)];
+  if (oe(e)) {
+    if (!oe(s = e) || s.prototype && s.prototype.isReactComponent || !t) return [e];
+    var o = e(t);
+    return "production" === process.env.NODE_ENV || "object" != _typeof(o) || Array.isArray(o) || o instanceof qe || ce(o) || null === o || console.error("".concat(B(e), " is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.")), Xe(o, t, n, r);
+  }
+  var s;
+  return e instanceof qe ? n ? (e.inject(n, r), [e.getName(r)]) : [e] : ce(e) ? _Je(e) : Array.isArray(e) ? Array.prototype.concat.apply(_, e.map(function (e) {
+    return Xe(e, t, n, r);
+  })) : [e.toString()];
+}
+function Ze(e) {
+  for (var t = 0; t < e.length; t += 1) {
+    var n = e[t];
+    if (oe(n) && !se(n)) return false;
+  }
+  return true;
+}
+var Ke = z(v),
+  Qe = function () {
+    function e(e, t, n) {
+      this.rules = e, this.staticRulesId = "", this.isStatic = "production" === process.env.NODE_ENV && (undefined === n || n.isStatic) && Ze(e), this.componentId = t, this.baseHash = M(Ke, t), this.baseStyle = n, ke.registerId(t);
+    }
+    return e.prototype.generateAndInjectStyles = function (e, t, n) {
+      var r = this.baseStyle ? this.baseStyle.generateAndInjectStyles(e, t, n) : "";
+      if (this.isStatic && !n.hash) {
+        if (this.staticRulesId && t.hasNameForId(this.componentId, this.staticRulesId)) r = ie(r, this.staticRulesId);else {
+          var o = ae(Xe(this.rules, e, t, n)),
+            s = x(M(this.baseHash, o) >>> 0);
+          if (!t.hasNameForId(this.componentId, s)) {
+            var i = n(o, ".".concat(s), undefined, this.componentId);
+            t.insertRules(this.componentId, s, i);
+          }
+          r = ie(r, s), this.staticRulesId = s;
+        }
+      } else {
+        for (var a = M(this.baseHash, n.hash), c = "", l = 0; l < this.rules.length; l++) {
+          var u = this.rules[l];
+          if ("string" == typeof u) c += u, "production" !== process.env.NODE_ENV && (a = M(a, u));else if (u) {
+            var p = ae(Xe(u, e, t, n));
+            a = M(a, p + l), c += p;
+          }
+        }
+        if (c) {
+          var d = x(a >>> 0);
+          t.hasNameForId(this.componentId, d) || t.insertRules(this.componentId, d, n(c, ".".concat(d), undefined, this.componentId)), r = ie(r, d);
+        }
+      }
+      return r;
+    }, e;
+  }(),
+  et = /*#__PURE__*/React.createContext(undefined);
+  et.Consumer;
+function rt(e) {
+  var n = React.useContext(et),
+    o = React.useMemo(function () {
+      return function (e, n) {
+        if (!e) throw he(14);
+        if (oe(e)) {
+          var r = e(n);
+          if ("production" !== process.env.NODE_ENV && (null === r || Array.isArray(r) || "object" != _typeof(r))) throw he(7);
+          return r;
+        }
+        if (Array.isArray(e) || "object" != _typeof(e)) throw he(8);
+        return n ? __assign(__assign({}, n), e) : e;
+      }(e.theme, n);
+    }, [e.theme, n]);
+  return e.children ? /*#__PURE__*/React.createElement(et.Provider, {
+    value: o
+  }, e.children) : null;
+}
+var ot = {},
+  st = new Set();
+function it(e, o, s) {
+  var i = se(e),
+    a = e,
+    c = !L(e),
+    p = o.attrs,
+    d = undefined === p ? _ : p,
+    h = o.componentId,
+    f = undefined === h ? function (e, t) {
+      var n = "string" != typeof e ? "sc" : R(e);
+      ot[n] = (ot[n] || 0) + 1;
+      var r = "".concat(n, "-").concat($(v + n + ot[n]));
+      return t ? "".concat(t, "-").concat(r) : r;
+    }(o.displayName, o.parentComponentId) : h,
+    m = o.displayName,
+    y = undefined === m ? function (e) {
+      return L(e) ? "styled.".concat(e) : "Styled(".concat(B(e), ")");
+    }(e) : m,
+    g = o.displayName && o.componentId ? "".concat(R(o.displayName), "-").concat(o.componentId) : o.componentId || f,
+    S = i && a.attrs ? a.attrs.concat(d).filter(Boolean) : d,
+    w = o.shouldForwardProp;
+  if (i && a.shouldForwardProp) {
+    var b = a.shouldForwardProp;
+    if (o.shouldForwardProp) {
+      var E = o.shouldForwardProp;
+      w = function w(e, t) {
+        return b(e, t) && E(e, t);
+      };
+    } else w = b;
+  }
+  var N = new Qe(s, g, i ? a.componentStyle : undefined);
+  function O(e, o) {
+    return function (e, o, s) {
+      var i = e.attrs,
+        a = e.componentStyle,
+        c = e.defaultProps,
+        p = e.foldedComponentIds,
+        d = e.styledComponentId,
+        h = e.target,
+        f = React.useContext(et),
+        m = Ge(),
+        y = e.shouldForwardProp || m.shouldForwardProp;
+      "production" !== process.env.NODE_ENV && React.useDebugValue(d);
+      var v = I(o, f, c) || C,
+        g = function (e, n, r) {
+          for (var o, s = __assign(__assign({}, n), {
+              className: undefined,
+              theme: r
+            }), i = 0; i < e.length; i += 1) {
+            var a = oe(o = e[i]) ? o(s) : o;
+            for (var c in a) s[c] = "className" === c ? ie(s[c], a[c]) : "style" === c ? __assign(__assign({}, s[c]), a[c]) : a[c];
+          }
+          return n.className && (s.className = ie(s.className, n.className)), s;
+        }(i, o, v),
+        S = g.as || h,
+        w = {};
+      for (var b in g) undefined === g[b] || "$" === b[0] || "as" === b || "theme" === b && g.theme === v || ("forwardedAs" === b ? w.as = g.forwardedAs : y && !y(b, S) || (w[b] = g[b], y || "development" !== process.env.NODE_ENV || isPropValid$1(b) || st.has(b) || !A.has(S) || (st.add(b), console.warn('styled-components: it looks like an unknown prop "'.concat(b, '" is being sent through to the DOM, which will likely trigger a React console error. If you would like automatic filtering of unknown props, you can opt-into that behavior via `<StyleSheetManager shouldForwardProp={...}>` (connect an API like `@emotion/is-prop-valid`) or consider using transient props (`$` prefix for automatic filtering.)')))));
+      var E = function (e, t) {
+        var n = Ge(),
+          r = e.generateAndInjectStyles(t, n.styleSheet, n.stylis);
+        return "production" !== process.env.NODE_ENV && React.useDebugValue(r), r;
+      }(a, g);
+      "production" !== process.env.NODE_ENV && e.warnTooManyClasses && e.warnTooManyClasses(E);
+      var N = ie(p, d);
+      return E && (N += " " + E), g.className && (N += " " + g.className), w[L(S) && !A.has(S) ? "class" : "className"] = N, s && (w.ref = s), /*#__PURE__*/React.createElement(S, w);
+    }(D, e, o);
+  }
+  O.displayName = y;
+  var D = /*#__PURE__*/React.forwardRef(O);
+  return D.attrs = S, D.componentStyle = N, D.displayName = y, D.shouldForwardProp = w, D.foldedComponentIds = i ? ie(a.foldedComponentIds, a.styledComponentId) : "", D.styledComponentId = g, D.target = i ? a.target : e, Object.defineProperty(D, "defaultProps", {
+    get: function get() {
+      return this._foldedDefaultProps;
+    },
+    set: function set(e) {
+      this._foldedDefaultProps = i ? function (e) {
+        for (var t = [], n = 1; n < arguments.length; n++) t[n - 1] = arguments[n];
+        for (var r = 0, o = t; r < o.length; r++) le(e, o[r], true);
+        return e;
+      }({}, a.defaultProps, e) : e;
+    }
+  }), "production" !== process.env.NODE_ENV && (P(y, g), D.warnTooManyClasses = function (e, t) {
+    var n = {},
+      r = false;
+    return function (o) {
+      if (!r && (n[o] = true, Object.keys(n).length >= 200)) {
+        var s = t ? ' with the id of "'.concat(t, '"') : "";
+        console.warn("Over ".concat(200, " classes were generated for component ").concat(e).concat(s, ".\n") + "Consider using the attrs method, together with a style object for frequently changed styles.\nExample:\n  const Component = styled.div.attrs(props => ({\n    style: {\n      background: props.background,\n    },\n  }))`width: 100%;`\n\n  <Component />"), r = true, n = {};
+      }
+    };
+  }(y, g)), ue(D, function () {
+    return ".".concat(D.styledComponentId);
+  }), c && re(D, e, {
+    attrs: true,
+    componentStyle: true,
+    displayName: true,
+    foldedComponentIds: true,
+    shouldForwardProp: true,
+    styledComponentId: true,
+    target: true
+  }), D;
+}
+function at(e, t) {
+  for (var n = [e[0]], r = 0, o = t.length; r < o; r += 1) n.push(t[r], e[r + 1]);
+  return n;
+}
+var ct = function ct(e) {
+  return Object.assign(e, {
+    isCss: true
+  });
+};
+function lt(t) {
+  for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
+  if (oe(t) || ce(t)) return ct(Xe(at(_, __spreadArray([t], n, true))));
+  var o = t;
+  return 0 === n.length && 1 === o.length && "string" == typeof o[0] ? Xe(o) : ct(Xe(at(o, n)));
+}
+function ut(n, r, o) {
+  if (undefined === o && (o = C), !r) throw he(1, r);
+  var s = function s(t) {
+    for (var s = [], i = 1; i < arguments.length; i++) s[i - 1] = arguments[i];
+    return n(r, o, lt.apply(undefined, __spreadArray([t], s, false)));
+  };
+  return s.attrs = function (e) {
+    return ut(n, r, __assign(__assign({}, o), {
+      attrs: Array.prototype.concat(o.attrs, e).filter(Boolean)
+    }));
+  }, s.withConfig = function (e) {
+    return ut(n, r, __assign(__assign({}, o), e));
+  }, s;
+}
+var pt = function pt(e) {
+    return ut(it, e);
+  },
+  dt = pt;
+A.forEach(function (e) {
+  dt[e] = pt(e);
+});
+var ht = function () {
+  function e(e, t) {
+    this.rules = e, this.componentId = t, this.isStatic = Ze(e), ke.registerId(this.componentId + 1);
+  }
+  return e.prototype.createStyles = function (e, t, n, r) {
+    var o = r(ae(Xe(this.rules, t, n, r)), ""),
+      s = this.componentId + e;
+    n.insertRules(s, s, o);
+  }, e.prototype.removeStyles = function (e, t) {
+    t.clearRules(this.componentId + e);
+  }, e.prototype.renderStyles = function (e, t, n, r) {
+    e > 2 && ke.registerId(this.componentId + e), this.removeStyles(e, n), this.createStyles(e, t, n, r);
+  }, e;
+}();
+function ft(n) {
+  for (var o = [], s = 1; s < arguments.length; s++) o[s - 1] = arguments[s];
+  var i = lt.apply(undefined, __spreadArray([n], o, false)),
+    a = "sc-global-".concat($(JSON.stringify(i))),
+    c = new ht(i, a);
+  "production" !== process.env.NODE_ENV && P(a);
+  var _l = function l(e) {
+    var n = Ge(),
+      o = React.useContext(et),
+      s = React.useRef(n.styleSheet.allocateGSInstance(a)).current;
+    return "production" !== process.env.NODE_ENV && React.Children.count(e.children) && console.warn("The global style component ".concat(a, " was given child JSX. createGlobalStyle does not render children.")), "production" !== process.env.NODE_ENV && i.some(function (e) {
+      return "string" == typeof e && -1 !== e.indexOf("@import");
+    }) && console.warn("Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app."), n.styleSheet.server && function (e, n, r, o, s) {
+      if (c.isStatic) c.renderStyles(e, b, r, s);else {
+        var i = __assign(__assign({}, n), {
+          theme: I(n, o, _l.defaultProps)
+        });
+        c.renderStyles(e, i, r, s);
+      }
+    }(s, e, n.styleSheet, o, n.stylis), null;
+  };
+  return /*#__PURE__*/React.memo(_l);
+}
+"production" !== process.env.NODE_ENV && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://www.styled-components.com/docs/basics#react-native");
+var wt = "__sc-".concat(f, "__");
+"production" !== process.env.NODE_ENV && "test" !== process.env.NODE_ENV && "undefined" != typeof window && (window[wt] || (window[wt] = 0), 1 === window[wt] && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://s-c.sh/2BAXzed for more info."), window[wt] += 1);
+
+var _templateObject$1, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
+var Nav = dt.nav(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: ", ";\n  height: 100vh;\n  background-color: ", ";\n  display: flex;\n  flex-direction: column;\n  padding: 0;\n  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);\n  transition: width 0.3s ease;\n  z-index: 1000;\n  border-top-right-radius: 20px;\n  border-bottom-right-radius: 20px;\n"])), function (_ref) {
+  var $isCollapsed = _ref.$isCollapsed;
+  return $isCollapsed ? '60px' : '250px';
+}, function (_ref2) {
+  var theme = _ref2.theme;
+  return theme.colors.primary;
+});
+var Ul = dt.ul(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  display: flex;\n  flex-direction: column;\n  gap: ", ";\n  background-color: ", ";\n  border-radius: ", ";\n"])), function (_ref3) {
+  var theme = _ref3.theme;
+  return theme.spacing.small;
+}, function (_ref4) {
+  var theme = _ref4.theme;
+  return theme.colors.secondaryBackground || '#f7f7f7';
+}, function (_ref5) {
+  var theme = _ref5.theme;
+  return theme.borderRadius.small || '10px';
+});
+var Li = dt.li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: ", ";\n  color: ", ";\n  &:hover {\n    background-color: ", ";\n    cursor: pointer;\n  }\n"])), function (_ref6) {
+  var theme = _ref6.theme;
+  return theme.spacing.small;
+}, function (_ref7) {
+  var theme = _ref7.theme;
+  return theme.colors.secondary;
+}, function (_ref8) {
+  var theme = _ref8.theme;
+  return theme.colors.hover;
+});
+var HamburgerButton = dt.button(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  gap: 4px;\n\n  span {\n    width: 24px;\n    height: 2px;\n    background-color: ", ";\n  }\n"])), function (_ref9) {
+  var theme = _ref9.theme;
+  return theme.colors.secondary;
+});
+var StyledLink = dt.a(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  text-decoration: none;\n  color: inherit;\n  display: flex;\n  align-items: center;\n\n  &:hover {\n    color: ", ";\n  }\n"])), function (_ref10) {
+  var theme = _ref10.theme;
+  return theme.colors.hoverLight || '#d3d3d3';
+});
+var Icon = dt.span(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  font-size: ", ";\n  margin-right: ", ";\n"])), function (_ref11) {
+  var theme = _ref11.theme;
+  return theme.icons.size;
+}, function (_ref12) {
+  var theme = _ref12.theme;
+  return theme.spacing.small;
+});
+var Divider = dt.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  width: 90%;\n  height: 1px;\n  background-color: ", ";\n  margin: ", " auto;\n"])), function (_ref13) {
+  var theme = _ref13.theme;
+  return theme.colors.secondary;
+}, function (_ref14) {
+  var theme = _ref14.theme;
+  return theme.spacing.small;
+});
+var Header = dt.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: ", ";\n  margin-bottom: ", ";\n"])), function (_ref15) {
+  var theme = _ref15.theme;
+  return theme.spacing.small;
+}, function (_ref16) {
+  var theme = _ref16.theme;
+  return theme.spacing.small;
+});
+var Logo = dt.img(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  max-height: 40px;\n  margin-right: auto;\n  display: ", ";\n  transition:\n    display 0.3s ease,\n    opacity 0.3s ease;\n  opacity: ", ";\n"])), function (_ref17) {
+  var $isCollapsed = _ref17.$isCollapsed;
+  return $isCollapsed ? 'none' : 'block';
+}, function (_ref18) {
+  var $isCollapsed = _ref18.$isCollapsed;
+  return $isCollapsed ? 0 : 1;
+});
+var SubUl = dt.ul(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  list-style: none;\n  padding: 0 16px;\n  margin: 0;\n  display: flex;\n  flex-direction: column;\n  gap: ", ";\n"])), function (_ref19) {
+  var theme = _ref19.theme;
+  return theme.spacing.xsmall;
+});
+var SubLi = dt.li(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  padding: ", " 0;\n  color: ", ";\n  font-size: ", ";\n"])), function (_ref20) {
+  var theme = _ref20.theme;
+  return theme.spacing.xsmall;
+}, function (_ref21) {
+  var theme = _ref21.theme;
+  return theme.colors.secondary;
+}, function (_ref22) {
+  var theme = _ref22.theme;
+  return theme.fonts.size.small;
+});
+var ToggleButton = dt.button(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  margin-left: auto;\n  color: ", ";\n\n  &:hover {\n    color: ", ";\n  }\n"])), function (_ref23) {
+  var theme = _ref23.theme;
+  return theme.colors.secondary;
+}, function (_ref24) {
+  var theme = _ref24.theme;
+  return theme.colors.hover;
+});
 
 var reactIs = {exports: {}};
 
@@ -1644,6 +3319,88 @@ function requireReactIs() {
 }
 
 var reactIsExports = /*@__PURE__*/ requireReactIs();
+
+// https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
+function isPlainObject(item) {
+  if (_typeof(item) !== 'object' || item === null) {
+    return false;
+  }
+  var prototype = Object.getPrototypeOf(item);
+  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
+}
+function deepClone(source) {
+  if (/*#__PURE__*/ /*#__PURE__*/React__namespace.isValidElement(source) || reactIsExports.isValidElementType(source) || !isPlainObject(source)) {
+    return source;
+  }
+  var output = {};
+  Object.keys(source).forEach(function (key) {
+    output[key] = deepClone(source[key]);
+  });
+  return output;
+}
+
+/**
+ * Merge objects deeply.
+ * It will shallow copy React elements.
+ *
+ * If `options.clone` is set to `false` the source object will be merged directly into the target object.
+ *
+ * @example
+ * ```ts
+ * deepmerge({ a: { b: 1 }, d: 2 }, { a: { c: 2 }, d: 4 });
+ * // => { a: { b: 1, c: 2 }, d: 4 }
+ * ````
+ *
+ * @param target The target object.
+ * @param source The source object.
+ * @param options The merge options.
+ * @param options.clone Set to `false` to merge the source object directly into the target object.
+ * @returns The merged object.
+ */
+function deepmerge(target, source) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    clone: true
+  };
+  var output = options.clone ? _objectSpread2({}, target) : target;
+  if (isPlainObject(target) && isPlainObject(source)) {
+    Object.keys(source).forEach(function (key) {
+      if (/*#__PURE__*/ /*#__PURE__*/React__namespace.isValidElement(source[key]) || reactIsExports.isValidElementType(source[key])) {
+        output[key] = source[key];
+      } else if (isPlainObject(source[key]) &&
+      // Avoid prototype pollution
+      Object.prototype.hasOwnProperty.call(target, key) && isPlainObject(target[key])) {
+        // Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.
+        output[key] = deepmerge(target[key], source[key], options);
+      } else if (options.clone) {
+        output[key] = isPlainObject(source[key]) ? deepClone(source[key]) : source[key];
+      } else {
+        output[key] = source[key];
+      }
+    });
+  }
+  return output;
+}
+
+/**
+ * WARNING: Don't import this directly. It's imported by the code generated by
+ * `@mui/interal-babel-plugin-minify-errors`. Make sure to always use string literals in `Error`
+ * constructors to ensure the plugin works as expected. Supported patterns include:
+ *   throw new Error('My message');
+ *   throw new Error(`My message: ${foo}`);
+ *   throw new Error(`My message: ${foo}` + 'another string');
+ *   ...
+ * @param {number} code
+ */
+function formatMuiErrorMessage(code) {
+  var url = new URL("https://mui.com/production-error/?code=".concat(code));
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+  args.forEach(function (arg) {
+    return url.searchParams.append('args[]', arg);
+  });
+  return "Minified MUI error #".concat(code, "; visit ").concat(url, " for the full message.");
+}
 
 function getFunctionComponentName(Component) {
   var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
@@ -2074,7 +3831,7 @@ function style$1(options) {
     transform = options.transform;
 
   // false positive
-   
+  // eslint-disable-next-line react/function-component-definition
   var fn = function fn(props) {
     if (props[prop] == null) {
       return null;
@@ -2100,7 +3857,7 @@ function style$1(options) {
   return fn;
 }
 
-function memoize$2(fn) {
+function memoize$1(fn) {
   var cache = {};
   return function (arg) {
     if (cache[arg] === undefined) {
@@ -2132,7 +3889,7 @@ var aliases = {
 // memoize() impact:
 // From 300,000 ops/sec
 // To 350,000 ops/sec
-var getCssProperties = memoize$2(function (prop) {
+var getCssProperties = memoize$1(function (prop) {
   // It's not a shorthand notation.
   if (prop.length > 2) {
     if (aliases[prop]) {
@@ -2273,7 +4030,7 @@ function compose() {
   }, {});
 
   // false positive
-   
+  // eslint-disable-next-line react/function-component-definition
   var fn = function fn(props) {
     return Object.keys(props).reduce(function (acc, prop) {
       if (handlers[prop]) {
@@ -2318,7 +4075,7 @@ var outline = createBorderStyle('outline', borderTransform);
 var outlineColor = createBorderStyle('outlineColor');
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var borderRadius = function borderRadius(props) {
   if (props.borderRadius !== undefined && props.borderRadius !== null) {
     var transformer = createUnaryUnit(props.theme, 'shape.borderRadius', 4, 'borderRadius');
@@ -2338,7 +4095,7 @@ borderRadius.filterProps = ['borderRadius'];
 compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius, outline, outlineColor);
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var gap = function gap(props) {
   if (props.gap !== undefined && props.gap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'gap');
@@ -2357,7 +4114,7 @@ gap.propTypes = process.env.NODE_ENV !== 'production' ? {
 gap.filterProps = ['gap'];
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var columnGap = function columnGap(props) {
   if (props.columnGap !== undefined && props.columnGap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'columnGap');
@@ -2376,7 +4133,7 @@ columnGap.propTypes = process.env.NODE_ENV !== 'production' ? {
 columnGap.filterProps = ['columnGap'];
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var rowGap = function rowGap(props) {
   if (props.rowGap !== undefined && props.rowGap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'rowGap');
@@ -3043,48 +4800,48 @@ var StyleSheet = /*#__PURE__*/function () {
   return StyleSheet;
 }();
 
-var MS$1 = '-ms-';
-var MOZ$1 = '-moz-';
-var WEBKIT$1 = '-webkit-';
-var COMMENT$1 = 'comm';
-var RULESET$1 = 'rule';
-var DECLARATION$1 = 'decl';
-var IMPORT$1 = '@import';
-var KEYFRAMES$1 = '@keyframes';
-var LAYER$1 = '@layer';
+var MS = '-ms-';
+var MOZ = '-moz-';
+var WEBKIT = '-webkit-';
+var COMMENT = 'comm';
+var RULESET = 'rule';
+var DECLARATION = 'decl';
+var IMPORT = '@import';
+var KEYFRAMES = '@keyframes';
+var LAYER = '@layer';
 
 /**
  * @param {number}
  * @return {number}
  */
-var abs$1 = Math.abs;
+var abs = Math.abs;
 
 /**
  * @param {number}
  * @return {string}
  */
-var from$1 = String.fromCharCode;
+var from = String.fromCharCode;
 
 /**
  * @param {object}
  * @return {object}
  */
-var assign$1 = Object.assign;
+var assign = Object.assign;
 
 /**
  * @param {string} value
  * @param {number} length
  * @return {number}
  */
-function hash$1(value, length) {
-  return charat$1(value, 0) ^ 45 ? (((length << 2 ^ charat$1(value, 0)) << 2 ^ charat$1(value, 1)) << 2 ^ charat$1(value, 2)) << 2 ^ charat$1(value, 3) : 0;
+function hash(value, length) {
+  return charat(value, 0) ^ 45 ? (((length << 2 ^ charat(value, 0)) << 2 ^ charat(value, 1)) << 2 ^ charat(value, 2)) << 2 ^ charat(value, 3) : 0;
 }
 
 /**
  * @param {string} value
  * @return {string}
  */
-function trim$1(value) {
+function trim(value) {
   return value.trim();
 }
 
@@ -3093,7 +4850,7 @@ function trim$1(value) {
  * @param {RegExp} pattern
  * @return {string?}
  */
-function match$1(value, pattern) {
+function match(value, pattern) {
   return (value = pattern.exec(value)) ? value[0] : value;
 }
 
@@ -3103,7 +4860,7 @@ function match$1(value, pattern) {
  * @param {string} replacement
  * @return {string}
  */
-function replace$1(value, pattern, replacement) {
+function replace(value, pattern, replacement) {
   return value.replace(pattern, replacement);
 }
 
@@ -3112,7 +4869,7 @@ function replace$1(value, pattern, replacement) {
  * @param {string} search
  * @return {number}
  */
-function indexof$1(value, search) {
+function indexof(value, search) {
   return value.indexOf(search);
 }
 
@@ -3121,7 +4878,7 @@ function indexof$1(value, search) {
  * @param {number} index
  * @return {number}
  */
-function charat$1(value, index) {
+function charat(value, index) {
   return value.charCodeAt(index) | 0;
 }
 
@@ -3131,7 +4888,7 @@ function charat$1(value, index) {
  * @param {number} end
  * @return {string}
  */
-function substr$1(value, begin, end) {
+function substr(value, begin, end) {
   return value.slice(begin, end);
 }
 
@@ -3139,7 +4896,7 @@ function substr$1(value, begin, end) {
  * @param {string} value
  * @return {number}
  */
-function strlen$1(value) {
+function strlen(value) {
   return value.length;
 }
 
@@ -3147,7 +4904,7 @@ function strlen$1(value) {
  * @param {any[]} value
  * @return {number}
  */
-function sizeof$1(value) {
+function sizeof(value) {
   return value.length;
 }
 
@@ -3156,7 +4913,7 @@ function sizeof$1(value) {
  * @param {any[]} array
  * @return {any}
  */
-function append$1(value, array) {
+function append(value, array) {
   return array.push(value), value;
 }
 
@@ -3165,16 +4922,16 @@ function append$1(value, array) {
  * @param {function} callback
  * @return {string}
  */
-function combine$1(array, callback) {
+function combine(array, callback) {
   return array.map(callback).join('');
 }
 
-var line$1 = 1;
-var column$1 = 1;
-var length$1 = 0;
-var position$1 = 0;
-var character$1 = 0;
-var characters$1 = '';
+var line = 1;
+var column = 1;
+var length = 0;
+var position = 0;
+var character = 0;
+var characters = '';
 
 /**
  * @param {string} value
@@ -3185,7 +4942,7 @@ var characters$1 = '';
  * @param {object[] | string} children
  * @param {number} length
  */
-function node$1(value, root, parent, type, props, children, length) {
+function node(value, root, parent, type, props, children, length) {
   return {
     value: value,
     root: root,
@@ -3193,8 +4950,8 @@ function node$1(value, root, parent, type, props, children, length) {
     type: type,
     props: props,
     children: children,
-    line: line$1,
-    column: column$1,
+    line: line,
+    column: column,
     length: length,
     "return": ''
   };
@@ -3205,8 +4962,8 @@ function node$1(value, root, parent, type, props, children, length) {
  * @param {object} props
  * @return {object}
  */
-function copy$1(root, props) {
-  return assign$1(node$1('', null, null, '', null, null, 0), root, {
+function copy(root, props) {
+  return assign(node('', null, null, '', null, null, 0), root, {
     length: -root.length
   }, props);
 }
@@ -3214,36 +4971,36 @@ function copy$1(root, props) {
 /**
  * @return {number}
  */
-function _char$1() {
-  return character$1;
+function _char() {
+  return character;
 }
-function prev$1() {
-  character$1 = position$1 > 0 ? charat$1(characters$1, --position$1) : 0;
-  if (column$1--, character$1 === 10) column$1 = 1, line$1--;
-  return character$1;
-}
-
-/**
- * @return {number}
- */
-function next$1() {
-  character$1 = position$1 < length$1 ? charat$1(characters$1, position$1++) : 0;
-  if (column$1++, character$1 === 10) column$1 = 1, line$1++;
-  return character$1;
+function prev() {
+  character = position > 0 ? charat(characters, --position) : 0;
+  if (column--, character === 10) column = 1, line--;
+  return character;
 }
 
 /**
  * @return {number}
  */
-function peek$1() {
-  return charat$1(characters$1, position$1);
+function next() {
+  character = position < length ? charat(characters, position++) : 0;
+  if (column++, character === 10) column = 1, line++;
+  return character;
 }
 
 /**
  * @return {number}
  */
-function caret$1() {
-  return position$1;
+function peek() {
+  return charat(characters, position);
+}
+
+/**
+ * @return {number}
+ */
+function caret() {
+  return position;
 }
 
 /**
@@ -3251,15 +5008,15 @@ function caret$1() {
  * @param {number} end
  * @return {string}
  */
-function slice$1(begin, end) {
-  return substr$1(characters$1, begin, end);
+function slice(begin, end) {
+  return substr(characters, begin, end);
 }
 
 /**
  * @param {number} type
  * @return {number}
  */
-function token$1(type) {
+function token(type) {
   switch (type) {
     // \0 \t \n \r \s whitespace token
     case 0:
@@ -3302,33 +5059,33 @@ function token$1(type) {
  * @param {string} value
  * @return {any[]}
  */
-function alloc$1(value) {
-  return line$1 = column$1 = 1, length$1 = strlen$1(characters$1 = value), position$1 = 0, [];
+function alloc(value) {
+  return line = column = 1, length = strlen(characters = value), position = 0, [];
 }
 
 /**
  * @param {any} value
  * @return {any}
  */
-function dealloc$1(value) {
-  return characters$1 = '', value;
+function dealloc(value) {
+  return characters = '', value;
 }
 
 /**
  * @param {number} type
  * @return {string}
  */
-function delimit$1(type) {
-  return trim$1(slice$1(position$1 - 1, delimiter$1(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
+function delimit(type) {
+  return trim(slice(position - 1, delimiter(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
 }
 
 /**
  * @param {number} type
  * @return {string}
  */
-function whitespace$1(type) {
-  while (character$1 = peek$1()) if (character$1 < 33) next$1();else break;
-  return token$1(type) > 2 || token$1(character$1) > 3 ? '' : ' ';
+function whitespace(type) {
+  while (character = peek()) if (character < 33) next();else break;
+  return token(type) > 2 || token(character) > 3 ? '' : ' ';
 }
 
 /**
@@ -3336,37 +5093,37 @@ function whitespace$1(type) {
  * @param {number} count
  * @return {string}
  */
-function escaping$1(index, count) {
-  while (--count && next$1())
+function escaping(index, count) {
+  while (--count && next())
   // not 0-9 A-F a-f
-  if (character$1 < 48 || character$1 > 102 || character$1 > 57 && character$1 < 65 || character$1 > 70 && character$1 < 97) break;
-  return slice$1(index, caret$1() + (count < 6 && peek$1() == 32 && next$1() == 32));
+  if (character < 48 || character > 102 || character > 57 && character < 65 || character > 70 && character < 97) break;
+  return slice(index, caret() + (count < 6 && peek() == 32 && next() == 32));
 }
 
 /**
  * @param {number} type
  * @return {number}
  */
-function delimiter$1(type) {
-  while (next$1()) switch (character$1) {
+function delimiter(type) {
+  while (next()) switch (character) {
     // ] ) " '
     case type:
-      return position$1;
+      return position;
     // " '
     case 34:
     case 39:
-      if (type !== 34 && type !== 39) delimiter$1(character$1);
+      if (type !== 34 && type !== 39) delimiter(character);
       break;
     // (
     case 40:
-      if (type === 41) delimiter$1(type);
+      if (type === 41) delimiter(type);
       break;
     // \
     case 92:
-      next$1();
+      next();
       break;
   }
-  return position$1;
+  return position;
 }
 
 /**
@@ -3374,30 +5131,30 @@ function delimiter$1(type) {
  * @param {number} index
  * @return {number}
  */
-function commenter$1(type, index) {
-  while (next$1())
+function commenter(type, index) {
+  while (next())
   // //
-  if (type + character$1 === 47 + 10) break;
+  if (type + character === 47 + 10) break;
   // /*
-  else if (type + character$1 === 42 + 42 && peek$1() === 47) break;
-  return '/*' + slice$1(index, position$1 - 1) + '*' + from$1(type === 47 ? type : next$1());
+  else if (type + character === 42 + 42 && peek() === 47) break;
+  return '/*' + slice(index, position - 1) + '*' + from(type === 47 ? type : next());
 }
 
 /**
  * @param {number} index
  * @return {string}
  */
-function identifier$1(index) {
-  while (!token$1(peek$1())) next$1();
-  return slice$1(index, position$1);
+function identifier(index) {
+  while (!token(peek())) next();
+  return slice(index, position);
 }
 
 /**
  * @param {string} value
  * @return {object[]}
  */
-function compile$1(value) {
-  return dealloc$1(parse$1('', null, null, null, [''], value = alloc$1(value), 0, [0], value));
+function compile(value) {
+  return dealloc(parse('', null, null, null, [''], value = alloc(value), 0, [0], value));
 }
 
 /**
@@ -3412,7 +5169,7 @@ function compile$1(value) {
  * @param {string[]} declarations
  * @return {object}
  */
-function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
+function parse(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
   var index = 0;
   var offset = 0;
   var length = pseudo;
@@ -3428,36 +5185,36 @@ function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, dec
   var children = rulesets;
   var reference = rule;
   var characters = type;
-  while (scanning) switch (previous = character, character = next$1()) {
+  while (scanning) switch (previous = character, character = next()) {
     // (
     case 40:
-      if (previous != 108 && charat$1(characters, length - 1) == 58) {
-        if (indexof$1(characters += replace$1(delimit$1(character), '&', '&\f'), '&\f') != -1) ampersand = -1;
+      if (previous != 108 && charat(characters, length - 1) == 58) {
+        if (indexof(characters += replace(delimit(character), '&', '&\f'), '&\f') != -1) ampersand = -1;
         break;
       }
     // " ' [
     case 34:
     case 39:
     case 91:
-      characters += delimit$1(character);
+      characters += delimit(character);
       break;
     // \t \n \r \s
     case 9:
     case 10:
     case 13:
     case 32:
-      characters += whitespace$1(previous);
+      characters += whitespace(previous);
       break;
     // \
     case 92:
-      characters += escaping$1(caret$1() - 1, 7);
+      characters += escaping(caret() - 1, 7);
       continue;
     // /
     case 47:
-      switch (peek$1()) {
+      switch (peek()) {
         case 42:
         case 47:
-          append$1(comment$1(commenter$1(next$1(), caret$1()), root, parent), declarations);
+          append(comment(commenter(next(), caret()), root, parent), declarations);
           break;
         default:
           characters += '/';
@@ -3465,7 +5222,7 @@ function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, dec
       break;
     // {
     case 123 * variable:
-      points[index++] = strlen$1(characters) * ampersand;
+      points[index++] = strlen(characters) * ampersand;
     // } ; \0
     case 125 * variable:
     case 59:
@@ -3477,52 +5234,52 @@ function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, dec
           scanning = 0;
         // ;
         case 59 + offset:
-          if (ampersand == -1) characters = replace$1(characters, /\f/g, '');
-          if (property > 0 && strlen$1(characters) - length) append$1(property > 32 ? declaration$1(characters + ';', rule, parent, length - 1) : declaration$1(replace$1(characters, ' ', '') + ';', rule, parent, length - 2), declarations);
+          if (ampersand == -1) characters = replace(characters, /\f/g, '');
+          if (property > 0 && strlen(characters) - length) append(property > 32 ? declaration(characters + ';', rule, parent, length - 1) : declaration(replace(characters, ' ', '') + ';', rule, parent, length - 2), declarations);
           break;
         // @ ;
         case 59:
           characters += ';';
         // { rule/at-rule
         default:
-          append$1(reference = ruleset$1(characters, root, parent, index, offset, rules, points, type, props = [], children = [], length), rulesets);
-          if (character === 123) if (offset === 0) parse$1(characters, root, reference, reference, props, rulesets, length, points, children);else switch (atrule === 99 && charat$1(characters, 3) === 110 ? 100 : atrule) {
+          append(reference = ruleset(characters, root, parent, index, offset, rules, points, type, props = [], children = [], length), rulesets);
+          if (character === 123) if (offset === 0) parse(characters, root, reference, reference, props, rulesets, length, points, children);else switch (atrule === 99 && charat(characters, 3) === 110 ? 100 : atrule) {
             // d l m s
             case 100:
             case 108:
             case 109:
             case 115:
-              parse$1(value, reference, reference, rule && append$1(ruleset$1(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length), children), rules, children, length, points, rule ? props : children);
+              parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length), children), rules, children, length, points, rule ? props : children);
               break;
             default:
-              parse$1(characters, reference, reference, reference, [''], children, 0, points, children);
+              parse(characters, reference, reference, reference, [''], children, 0, points, children);
           }
       }
       index = offset = property = 0, variable = ampersand = 1, type = characters = '', length = pseudo;
       break;
     // :
     case 58:
-      length = 1 + strlen$1(characters), property = previous;
+      length = 1 + strlen(characters), property = previous;
     default:
-      if (variable < 1) if (character == 123) --variable;else if (character == 125 && variable++ == 0 && prev$1() == 125) continue;
-      switch (characters += from$1(character), character * variable) {
+      if (variable < 1) if (character == 123) --variable;else if (character == 125 && variable++ == 0 && prev() == 125) continue;
+      switch (characters += from(character), character * variable) {
         // &
         case 38:
           ampersand = offset > 0 ? 1 : (characters += '\f', -1);
           break;
         // ,
         case 44:
-          points[index++] = (strlen$1(characters) - 1) * ampersand, ampersand = 1;
+          points[index++] = (strlen(characters) - 1) * ampersand, ampersand = 1;
           break;
         // @
         case 64:
           // -
-          if (peek$1() === 45) characters += delimit$1(next$1());
-          atrule = peek$1(), offset = length = strlen$1(type = characters += identifier$1(caret$1())), character++;
+          if (peek() === 45) characters += delimit(next());
+          atrule = peek(), offset = length = strlen(type = characters += identifier(caret())), character++;
           break;
         // -
         case 45:
-          if (previous === 45 && strlen$1(characters) == 2) variable = 0;
+          if (previous === 45 && strlen(characters) == 2) variable = 0;
       }
   }
   return rulesets;
@@ -3542,12 +5299,12 @@ function parse$1(value, root, parent, rule, rules, rulesets, pseudo, points, dec
  * @param {number} length
  * @return {object}
  */
-function ruleset$1(value, root, parent, index, offset, rules, points, type, props, children, length) {
+function ruleset(value, root, parent, index, offset, rules, points, type, props, children, length) {
   var post = offset - 1;
   var rule = offset === 0 ? rules : [''];
-  var size = sizeof$1(rule);
-  for (var i = 0, j = 0, k = 0; i < index; ++i) for (var x = 0, y = substr$1(value, post + 1, post = abs$1(j = points[i])), z = value; x < size; ++x) if (z = trim$1(j > 0 ? rule[x] + ' ' + y : replace$1(y, /&\f/g, rule[x]))) props[k++] = z;
-  return node$1(value, root, parent, offset === 0 ? RULESET$1 : type, props, children, length);
+  var size = sizeof(rule);
+  for (var i = 0, j = 0, k = 0; i < index; ++i) for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size; ++x) if (z = trim(j > 0 ? rule[x] + ' ' + y : replace(y, /&\f/g, rule[x]))) props[k++] = z;
+  return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length);
 }
 
 /**
@@ -3556,8 +5313,8 @@ function ruleset$1(value, root, parent, index, offset, rules, points, type, prop
  * @param {object?} parent
  * @return {object}
  */
-function comment$1(value, root, parent) {
-  return node$1(value, root, parent, COMMENT$1, from$1(_char$1()), substr$1(value, 2, -2), 0);
+function comment(value, root, parent) {
+  return node(value, root, parent, COMMENT, from(_char()), substr(value, 2, -2), 0);
 }
 
 /**
@@ -3567,8 +5324,8 @@ function comment$1(value, root, parent) {
  * @param {number} length
  * @return {object}
  */
-function declaration$1(value, root, parent, length) {
-  return node$1(value, root, parent, DECLARATION$1, substr$1(value, 0, length), substr$1(value, length + 1, -1), length);
+function declaration(value, root, parent, length) {
+  return node(value, root, parent, DECLARATION, substr(value, 0, length), substr(value, length + 1, -1), length);
 }
 
 /**
@@ -3576,9 +5333,9 @@ function declaration$1(value, root, parent, length) {
  * @param {function} callback
  * @return {string}
  */
-function serialize$1(children, callback) {
+function serialize(children, callback) {
   var output = '';
-  var length = sizeof$1(children);
+  var length = sizeof(children);
   for (var i = 0; i < length; i++) output += callback(children[i], i, children, callback) || '';
   return output;
 }
@@ -3590,29 +5347,29 @@ function serialize$1(children, callback) {
  * @param {function} callback
  * @return {string}
  */
-function stringify$1(element, index, children, callback) {
+function stringify(element, index, children, callback) {
   switch (element.type) {
-    case LAYER$1:
+    case LAYER:
       if (element.children.length) break;
-    case IMPORT$1:
-    case DECLARATION$1:
+    case IMPORT:
+    case DECLARATION:
       return element["return"] = element["return"] || element.value;
-    case COMMENT$1:
+    case COMMENT:
       return '';
-    case KEYFRAMES$1:
-      return element["return"] = element.value + '{' + serialize$1(element.children, callback) + '}';
-    case RULESET$1:
+    case KEYFRAMES:
+      return element["return"] = element.value + '{' + serialize(element.children, callback) + '}';
+    case RULESET:
       element.value = element.props.join(',');
   }
-  return strlen$1(children = serialize$1(element.children, callback)) ? element["return"] = element.value + '{' + children + '}' : '';
+  return strlen(children = serialize(element.children, callback)) ? element["return"] = element.value + '{' + children + '}' : '';
 }
 
 /**
  * @param {function[]} collection
  * @return {function}
  */
-function middleware$1(collection) {
-  var length = sizeof$1(collection);
+function middleware(collection) {
+  var length = sizeof(collection);
   return function (element, index, children, callback) {
     var output = '';
     for (var i = 0; i < length; i++) output += collection[i](element, index, children, callback) || '';
@@ -3624,7 +5381,7 @@ function middleware$1(collection) {
  * @param {function} callback
  * @return {function}
  */
-function rulesheet$1(callback) {
+function rulesheet(callback) {
   return function (element) {
     if (!element.root) if (element = element["return"]) callback(element);
   };
@@ -3644,7 +5401,7 @@ var weakMemoize = function weakMemoize(func) {
   };
 };
 
-function memoize$1(fn) {
+function memoize(fn) {
   var cache = Object.create(null);
   return function (arg) {
     if (cache[arg] === undefined) cache[arg] = fn(arg);
@@ -3658,43 +5415,43 @@ var identifierWithPointTracking = function identifierWithPointTracking(begin, po
   var character = 0;
   while (true) {
     previous = character;
-    character = peek$1(); // &\f
+    character = peek(); // &\f
 
     if (previous === 38 && character === 12) {
       points[index] = 1;
     }
-    if (token$1(character)) {
+    if (token(character)) {
       break;
     }
-    next$1();
+    next();
   }
-  return slice$1(begin, position$1);
+  return slice(begin, position);
 };
 var toRules = function toRules(parsed, points) {
   // pretend we've started with a comma
   var index = -1;
   var character = 44;
   do {
-    switch (token$1(character)) {
+    switch (token(character)) {
       case 0:
         // &\f
-        if (character === 38 && peek$1() === 12) {
+        if (character === 38 && peek() === 12) {
           // this is not 100% correct, we don't account for literal sequences here - like for example quoted strings
           // stylis inserts \f after & to know when & where it should replace this sequence with the context selector
           // and when it should just concatenate the outer and inner selectors
           // it's very unlikely for this sequence to actually appear in a different context, so we just leverage this fact here
           points[index] = 1;
         }
-        parsed[index] += identifierWithPointTracking(position$1 - 1, points, index);
+        parsed[index] += identifierWithPointTracking(position - 1, points, index);
         break;
       case 2:
-        parsed[index] += delimit$1(character);
+        parsed[index] += delimit(character);
         break;
       case 4:
         // comma
         if (character === 44) {
           // colon
-          parsed[++index] = peek$1() === 58 ? '&\f' : '';
+          parsed[++index] = peek() === 58 ? '&\f' : '';
           points[index] = parsed[index].length;
           break;
         }
@@ -3702,13 +5459,13 @@ var toRules = function toRules(parsed, points) {
       // fallthrough
 
       default:
-        parsed[index] += from$1(character);
+        parsed[index] += from(character);
     }
-  } while (character = next$1());
+  } while (character = next());
   return parsed;
 };
 var getRules = function getRules(value, points) {
-  return dealloc$1(toRules(alloc$1(value), points));
+  return dealloc(toRules(alloc(value), points));
 }; // WeakSet would be more appropriate, but only WeakMap is supported in IE11
 
 var fixedElements = /* #__PURE__ */new WeakMap();
@@ -3761,13 +5518,13 @@ var removeLabel = function removeLabel(element) {
   }
 };
 
- 
+/* eslint-disable no-fallthrough */
 
-function prefix$1(value, length) {
-  switch (hash$1(value, length)) {
+function prefix(value, length) {
+  switch (hash(value, length)) {
     // color-adjust
     case 5103:
-      return WEBKIT$1 + 'print-' + value + value;
+      return WEBKIT + 'print-' + value + value;
     // animation, animation-(delay|direction|duration|fill-mode|iteration-count|name|play-state|timing-function)
 
     case 5737:
@@ -3798,7 +5555,7 @@ function prefix$1(value, length) {
     case 5365:
     case 5621:
     case 3829:
-      return WEBKIT$1 + value + value;
+      return WEBKIT + value + value;
     // appearance, user-select, transform, hyphens, text-size-adjust
 
     case 5349:
@@ -3806,64 +5563,64 @@ function prefix$1(value, length) {
     case 4810:
     case 6968:
     case 2756:
-      return WEBKIT$1 + value + MOZ$1 + value + MS$1 + value + value;
+      return WEBKIT + value + MOZ + value + MS + value + value;
     // flex, flex-direction
 
     case 6828:
     case 4268:
-      return WEBKIT$1 + value + MS$1 + value + value;
+      return WEBKIT + value + MS + value + value;
     // order
 
     case 6165:
-      return WEBKIT$1 + value + MS$1 + 'flex-' + value + value;
+      return WEBKIT + value + MS + 'flex-' + value + value;
     // align-items
 
     case 5187:
-      return WEBKIT$1 + value + replace$1(value, /(\w+).+(:[^]+)/, WEBKIT$1 + 'box-$1$2' + MS$1 + 'flex-$1$2') + value;
+      return WEBKIT + value + replace(value, /(\w+).+(:[^]+)/, WEBKIT + 'box-$1$2' + MS + 'flex-$1$2') + value;
     // align-self
 
     case 5443:
-      return WEBKIT$1 + value + MS$1 + 'flex-item-' + replace$1(value, /flex-|-self/, '') + value;
+      return WEBKIT + value + MS + 'flex-item-' + replace(value, /flex-|-self/, '') + value;
     // align-content
 
     case 4675:
-      return WEBKIT$1 + value + MS$1 + 'flex-line-pack' + replace$1(value, /align-content|flex-|-self/, '') + value;
+      return WEBKIT + value + MS + 'flex-line-pack' + replace(value, /align-content|flex-|-self/, '') + value;
     // flex-shrink
 
     case 5548:
-      return WEBKIT$1 + value + MS$1 + replace$1(value, 'shrink', 'negative') + value;
+      return WEBKIT + value + MS + replace(value, 'shrink', 'negative') + value;
     // flex-basis
 
     case 5292:
-      return WEBKIT$1 + value + MS$1 + replace$1(value, 'basis', 'preferred-size') + value;
+      return WEBKIT + value + MS + replace(value, 'basis', 'preferred-size') + value;
     // flex-grow
 
     case 6060:
-      return WEBKIT$1 + 'box-' + replace$1(value, '-grow', '') + WEBKIT$1 + value + MS$1 + replace$1(value, 'grow', 'positive') + value;
+      return WEBKIT + 'box-' + replace(value, '-grow', '') + WEBKIT + value + MS + replace(value, 'grow', 'positive') + value;
     // transition
 
     case 4554:
-      return WEBKIT$1 + replace$1(value, /([^-])(transform)/g, '$1' + WEBKIT$1 + '$2') + value;
+      return WEBKIT + replace(value, /([^-])(transform)/g, '$1' + WEBKIT + '$2') + value;
     // cursor
 
     case 6187:
-      return replace$1(replace$1(replace$1(value, /(zoom-|grab)/, WEBKIT$1 + '$1'), /(image-set)/, WEBKIT$1 + '$1'), value, '') + value;
+      return replace(replace(replace(value, /(zoom-|grab)/, WEBKIT + '$1'), /(image-set)/, WEBKIT + '$1'), value, '') + value;
     // background, background-image
 
     case 5495:
     case 3959:
-      return replace$1(value, /(image-set\([^]*)/, WEBKIT$1 + '$1' + '$`$1');
+      return replace(value, /(image-set\([^]*)/, WEBKIT + '$1' + '$`$1');
     // justify-content
 
     case 4968:
-      return replace$1(replace$1(value, /(.+:)(flex-)?(.*)/, WEBKIT$1 + 'box-pack:$3' + MS$1 + 'flex-pack:$3'), /s.+-b[^;]+/, 'justify') + WEBKIT$1 + value + value;
+      return replace(replace(value, /(.+:)(flex-)?(.*)/, WEBKIT + 'box-pack:$3' + MS + 'flex-pack:$3'), /s.+-b[^;]+/, 'justify') + WEBKIT + value + value;
     // (margin|padding)-inline-(start|end)
 
     case 4095:
     case 3583:
     case 4068:
     case 2532:
-      return replace$1(value, /(.+)-inline(.+)/, WEBKIT$1 + '$1$2') + value;
+      return replace(value, /(.+)-inline(.+)/, WEBKIT + '$1$2') + value;
     // (min|max)?(width|height|inline-size|block-size)
 
     case 8116:
@@ -3879,86 +5636,86 @@ function prefix$1(value, length) {
     case 5021:
     case 4765:
       // stretch, max-content, min-content, fill-available
-      if (strlen$1(value) - 1 - length > 6) switch (charat$1(value, length + 1)) {
+      if (strlen(value) - 1 - length > 6) switch (charat(value, length + 1)) {
         // (m)ax-content, (m)in-content
         case 109:
           // -
-          if (charat$1(value, length + 4) !== 45) break;
+          if (charat(value, length + 4) !== 45) break;
         // (f)ill-available, (f)it-content
 
         case 102:
-          return replace$1(value, /(.+:)(.+)-([^]+)/, '$1' + WEBKIT$1 + '$2-$3' + '$1' + MOZ$1 + (charat$1(value, length + 3) == 108 ? '$3' : '$2-$3')) + value;
+          return replace(value, /(.+:)(.+)-([^]+)/, '$1' + WEBKIT + '$2-$3' + '$1' + MOZ + (charat(value, length + 3) == 108 ? '$3' : '$2-$3')) + value;
         // (s)tretch
 
         case 115:
-          return ~indexof$1(value, 'stretch') ? prefix$1(replace$1(value, 'stretch', 'fill-available'), length) + value : value;
+          return ~indexof(value, 'stretch') ? prefix(replace(value, 'stretch', 'fill-available'), length) + value : value;
       }
       break;
     // position: sticky
 
     case 4949:
       // (s)ticky?
-      if (charat$1(value, length + 1) !== 115) break;
+      if (charat(value, length + 1) !== 115) break;
     // display: (flex|inline-flex)
 
     case 6444:
-      switch (charat$1(value, strlen$1(value) - 3 - (~indexof$1(value, '!important') && 10))) {
+      switch (charat(value, strlen(value) - 3 - (~indexof(value, '!important') && 10))) {
         // stic(k)y
         case 107:
-          return replace$1(value, ':', ':' + WEBKIT$1) + value;
+          return replace(value, ':', ':' + WEBKIT) + value;
         // (inline-)?fl(e)x
 
         case 101:
-          return replace$1(value, /(.+:)([^;!]+)(;|!.+)?/, '$1' + WEBKIT$1 + (charat$1(value, 14) === 45 ? 'inline-' : '') + 'box$3' + '$1' + WEBKIT$1 + '$2$3' + '$1' + MS$1 + '$2box$3') + value;
+          return replace(value, /(.+:)([^;!]+)(;|!.+)?/, '$1' + WEBKIT + (charat(value, 14) === 45 ? 'inline-' : '') + 'box$3' + '$1' + WEBKIT + '$2$3' + '$1' + MS + '$2box$3') + value;
       }
       break;
     // writing-mode
 
     case 5936:
-      switch (charat$1(value, length + 11)) {
+      switch (charat(value, length + 11)) {
         // vertical-l(r)
         case 114:
-          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'tb') + value;
+          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'tb') + value;
         // vertical-r(l)
 
         case 108:
-          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'tb-rl') + value;
+          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'tb-rl') + value;
         // horizontal(-)tb
 
         case 45:
-          return WEBKIT$1 + value + MS$1 + replace$1(value, /[svh]\w+-[tblr]{2}/, 'lr') + value;
+          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'lr') + value;
       }
-      return WEBKIT$1 + value + MS$1 + value + value;
+      return WEBKIT + value + MS + value + value;
   }
   return value;
 }
-var prefixer$1 = function prefixer(element, index, children, callback) {
+var prefixer = function prefixer(element, index, children, callback) {
   if (element.length > -1) if (!element["return"]) switch (element.type) {
-    case DECLARATION$1:
-      element["return"] = prefix$1(element.value, element.length);
+    case DECLARATION:
+      element["return"] = prefix(element.value, element.length);
       break;
-    case KEYFRAMES$1:
-      return serialize$1([copy$1(element, {
-        value: replace$1(element.value, '@', '@' + WEBKIT$1)
+    case KEYFRAMES:
+      return serialize([copy(element, {
+        value: replace(element.value, '@', '@' + WEBKIT)
       })], callback);
-    case RULESET$1:
-      if (element.length) return combine$1(element.props, function (value) {
-        switch (match$1(value, /(::plac\w+|:read-\w+)/)) {
+    case RULESET:
+      if (element.length) return combine(element.props, function (value) {
+        switch (match(value, /(::plac\w+|:read-\w+)/)) {
           // :read-(only|write)
           case ':read-only':
           case ':read-write':
-            return serialize$1([copy$1(element, {
-              props: [replace$1(value, /:(read-\w+)/, ':' + MOZ$1 + '$1')]
+            return serialize([copy(element, {
+              props: [replace(value, /:(read-\w+)/, ':' + MOZ + '$1')]
             })], callback);
           // :placeholder
 
           case '::placeholder':
-            return serialize$1([copy$1(element, {
-              props: [replace$1(value, /:(plac\w+)/, ':' + WEBKIT$1 + 'input-$1')]
-            }), copy$1(element, {
-              props: [replace$1(value, /:(plac\w+)/, ':' + MOZ$1 + '$1')]
-            }), copy$1(element, {
-              props: [replace$1(value, /:(plac\w+)/, MS$1 + 'input-$1')]
+            return serialize([copy(element, {
+              props: [replace(value, /:(plac\w+)/, ':' + WEBKIT + 'input-$1')]
+            }), copy(element, {
+              props: [replace(value, /:(plac\w+)/, ':' + MOZ + '$1')]
+            }), copy(element, {
+              props: [replace(value, /:(plac\w+)/, MS + 'input-$1')]
             })], callback);
         }
         return '';
@@ -3966,11 +5723,11 @@ var prefixer$1 = function prefixer(element, index, children, callback) {
   }
 };
 var getServerStylisCache = isBrowser$4 ? undefined : weakMemoize(function () {
-  return memoize$1(function () {
+  return memoize(function () {
     return {};
   });
 });
-var defaultStylisPlugins = [prefixer$1];
+var defaultStylisPlugins = [prefixer];
 var createCache = function createCache(options) {
   var key = options.key;
   if (isBrowser$4 && key === 'css') {
@@ -4015,12 +5772,12 @@ var createCache = function createCache(options) {
   var omnipresentPlugins = [compat, removeLabel];
   if (!getServerStylisCache) {
     var currentSheet;
-    var finalizingPlugins = [stringify$1, rulesheet$1(function (rule) {
+    var finalizingPlugins = [stringify, rulesheet(function (rule) {
       currentSheet.insert(rule);
     })];
-    var serializer = middleware$1(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
+    var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
     var stylis = function stylis(styles) {
-      return serialize$1(compile$1(styles), serializer);
+      return serialize(compile(styles), serializer);
     };
     _insert = function insert(selector, serialized, sheet, shouldCache) {
       currentSheet = sheet;
@@ -4030,10 +5787,10 @@ var createCache = function createCache(options) {
       }
     };
   } else {
-    var _finalizingPlugins = [stringify$1];
-    var _serializer = middleware$1(omnipresentPlugins.concat(stylisPlugins, _finalizingPlugins));
+    var _finalizingPlugins = [stringify];
+    var _serializer = middleware(omnipresentPlugins.concat(stylisPlugins, _finalizingPlugins));
     var _stylis = function _stylis(styles) {
-      return serialize$1(compile$1(styles), _serializer);
+      return serialize(compile(styles), _serializer);
     };
     var serverStylisCache = getServerStylisCache(stylisPlugins)(key);
     var getRules = function getRules(selector, serialized) {
@@ -4180,7 +5937,7 @@ function murmur2(str) {
   return ((h ^ h >>> 15) >>> 0).toString(36);
 }
 
-var unitlessKeys$1 = {
+var unitlessKeys = {
   animationIterationCount: 1,
   aspectRatio: 1,
   borderImageOutset: 1,
@@ -4239,7 +5996,7 @@ var isCustomProperty = function isCustomProperty(property) {
 var isProcessableValue = function isProcessableValue(value) {
   return value != null && typeof value !== 'boolean';
 };
-var processStyleName = /* #__PURE__ */memoize$1(function (styleName) {
+var processStyleName = /* #__PURE__ */memoize(function (styleName) {
   return isCustomProperty(styleName) ? styleName : styleName.replace(hyphenateRegex, '-$&').toLowerCase();
 });
 var processStyleValue = function processStyleValue(key, value) {
@@ -4259,7 +6016,7 @@ var processStyleValue = function processStyleValue(key, value) {
         }
       }
   }
-  if (unitlessKeys$1[key] !== 1 && !isCustomProperty(key) && typeof value === 'number' && value !== 0) {
+  if (unitlessKeys[key] !== 1 && !isCustomProperty(key) && typeof value === 'number' && value !== 0) {
     return value + 'px';
   }
   return value;
@@ -4463,18 +6220,18 @@ if (!isBrowser$1) {
 }
 var ThemeContext = /* #__PURE__ */React__namespace.createContext({});
 
- 
-var reactPropsRegex$1 = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
+// eslint-disable-next-line no-undef
+var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
 
-var isPropValid$1 = /* #__PURE__ */memoize$1(function (prop) {
-  return reactPropsRegex$1.test(prop) || prop.charCodeAt(0) === 111
+var isPropValid = /* #__PURE__ */memoize(function (prop) {
+  return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111
   /* o */ && prop.charCodeAt(1) === 110
   /* n */ && prop.charCodeAt(2) < 91;
 }
 /* Z+1 */);
 
 var isBrowser = typeof document !== 'undefined';
-var testOmitPropsOnStringTag = isPropValid$1;
+var testOmitPropsOnStringTag = isPropValid;
 var testOmitPropsOnComponent = function testOmitPropsOnComponent(key) {
   return key !== 'theme';
 };
@@ -4533,14 +6290,14 @@ var createStyled$1 = function createStyled(tag, options) {
   var defaultShouldForwardProp = shouldForwardProp || getDefaultShouldForwardProp(baseTag);
   var shouldUseAs = !defaultShouldForwardProp('as');
   return function () {
-     
+    // eslint-disable-next-line prefer-rest-params
     var args = arguments;
     var styles = isReal && tag.__emotion_styles !== undefined ? tag.__emotion_styles.slice(0) : [];
     if (identifierName !== undefined) {
       styles.push("label:" + identifierName + ";");
     }
     if (args[0] == null || args[0].raw === undefined) {
-       
+      // eslint-disable-next-line prefer-spread
       styles.push.apply(styles, args);
     } else {
       var templateStringsArr = args[0];
@@ -5101,13 +6858,13 @@ function requireJsxRuntime() {
 var jsxRuntimeExports = requireJsxRuntime();
 
 /**
- * @mui/styled-engine v6.4.0
+ * @mui/styled-engine v6.4.3
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
- 
+/* eslint-disable no-underscore-dangle */
 function styled$1(tag, options) {
   var stylesFactory = newStyled(tag, options);
   if (process.env.NODE_ENV !== 'production') {
@@ -5416,9 +7173,9 @@ function preprocessStyles(input) {
 var _excluded$j = ["variants"],
   _excluded2$3 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 
- 
- 
- 
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-labels */
+/* eslint-disable no-lone-blocks */
 
 var systemDefaultTheme = createTheme$1();
 
@@ -5595,7 +7352,7 @@ function createStyled() {
           var resolvedStyleOverrides = {};
 
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
-           
+          // eslint-disable-next-line guard-for-in
           for (var slotKey in styleOverrides) {
             resolvedStyleOverrides[slotKey] = processStyle(props, styleOverrides[slotKey]);
           }
@@ -5671,7 +7428,7 @@ function generateStyledLabel(componentName, componentSlot) {
   return label;
 }
 function isObjectEmpty(object) {
-   
+  // eslint-disable-next-line
   for (var _ in object) {
     return false;
   }
@@ -6155,7 +7912,7 @@ var walkObjectDeep = function walkObjectDeep(obj, callback, shouldSkipPaths) {
       var _ref2 = _slicedToArray(_ref, 2),
         key = _ref2[0],
         value = _ref2[1];
-      if (!shouldSkipPaths || !shouldSkipPaths([].concat(_toConsumableArray(parentKeys), [key]))) {
+      if (!shouldSkipPaths || shouldSkipPaths && !shouldSkipPaths([].concat(_toConsumableArray(parentKeys), [key]))) {
         if (value !== undefined && value !== null) {
           if (_typeof(value) === 'object' && Object.keys(value).length > 0) {
             recurse(value, [].concat(_toConsumableArray(parentKeys), [key]), Array.isArray(value) ? [].concat(_toConsumableArray(arrayKeys), [key]) : arrayKeys);
@@ -6418,105 +8175,47 @@ var grey = {
 
 var purple = {
   50: '#f3e5f5',
-  100: '#e1bee7',
   200: '#ce93d8',
   300: '#ba68c8',
   400: '#ab47bc',
   500: '#9c27b0',
-  600: '#8e24aa',
-  700: '#7b1fa2',
-  800: '#6a1b9a',
-  900: '#4a148c',
-  A100: '#ea80fc',
-  A200: '#e040fb',
-  A400: '#d500f9',
-  A700: '#aa00ff'
-};
+  700: '#7b1fa2'};
 
 var red = {
-  50: '#ffebee',
-  100: '#ffcdd2',
-  200: '#ef9a9a',
   300: '#e57373',
   400: '#ef5350',
   500: '#f44336',
-  600: '#e53935',
   700: '#d32f2f',
-  800: '#c62828',
-  900: '#b71c1c',
-  A100: '#ff8a80',
-  A200: '#ff5252',
-  A400: '#ff1744',
-  A700: '#d50000'
-};
+  800: '#c62828'};
 
 var orange = {
-  50: '#fff3e0',
-  100: '#ffe0b2',
-  200: '#ffcc80',
   300: '#ffb74d',
   400: '#ffa726',
   500: '#ff9800',
-  600: '#fb8c00',
   700: '#f57c00',
-  800: '#ef6c00',
-  900: '#e65100',
-  A100: '#ffd180',
-  A200: '#ffab40',
-  A400: '#ff9100',
-  A700: '#ff6d00'
-};
+  900: '#e65100'};
 
 var blue = {
   50: '#e3f2fd',
-  100: '#bbdefb',
   200: '#90caf9',
-  300: '#64b5f6',
   400: '#42a5f5',
-  500: '#2196f3',
-  600: '#1e88e5',
   700: '#1976d2',
-  800: '#1565c0',
-  900: '#0d47a1',
-  A100: '#82b1ff',
-  A200: '#448aff',
-  A400: '#2979ff',
-  A700: '#2962ff'
-};
+  800: '#1565c0'};
 
 var lightBlue = {
-  50: '#e1f5fe',
-  100: '#b3e5fc',
-  200: '#81d4fa',
   300: '#4fc3f7',
   400: '#29b6f6',
   500: '#03a9f4',
-  600: '#039be5',
   700: '#0288d1',
-  800: '#0277bd',
-  900: '#01579b',
-  A100: '#80d8ff',
-  A200: '#40c4ff',
-  A400: '#00b0ff',
-  A700: '#0091ea'
-};
+  900: '#01579b'};
 
 var green = {
-  50: '#e8f5e9',
-  100: '#c8e6c9',
-  200: '#a5d6a7',
   300: '#81c784',
   400: '#66bb6a',
   500: '#4caf50',
-  600: '#43a047',
   700: '#388e3c',
   800: '#2e7d32',
-  900: '#1b5e20',
-  A100: '#b9f6ca',
-  A200: '#69f0ae',
-  A400: '#00e676',
-  A700: '#00c853'
-};
+  900: '#1b5e20'};
 
 var _excluded$h = ["mode", "contrastThreshold", "tonalOffset"];
 function getLight() {
@@ -7079,7 +8778,7 @@ function stringifyTheme() {
   var serializableTheme = _objectSpread2({}, baseTheme);
   function serializeTheme(object) {
     var array = Object.entries(object);
-     
+    // eslint-disable-next-line no-plusplus
     for (var index = 0; index < array.length; index++) {
       var _array$index = _slicedToArray(array[index], 2),
         key = _array$index[0],
@@ -7138,7 +8837,7 @@ function createThemeNoVars() {
     var traverse = function traverse(node, component) {
       var key;
 
-       
+      // eslint-disable-next-line guard-for-in
       for (key in node) {
         var child = node[key];
         if (stateClasses.includes(key) && Object.keys(child).length > 0) {
@@ -7675,7 +9374,7 @@ function createThemeWithVars() {
 }
 
 var _excluded$b = ["palette", "cssVariables", "colorSchemes", "defaultColorScheme"];
- 
+// eslint-disable-next-line consistent-return
 function attachColorScheme(theme, scheme, colorScheme) {
   if (!theme.colorSchemes) {
     return undefined;
@@ -8053,1814 +9752,6 @@ function createSvgIcon(path, displayName) {
   return /*#__PURE__*/React__namespace.memo(/*#__PURE__*/React__namespace.forwardRef(Component));
 }
 
-var HomeIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path", {
-  d: "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
-}), 'Home');
-
-var SettingsIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path", {
-  d: "M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6"
-}), 'Settings');
-
-var MailIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path", {
-  d: "M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
-}), 'Mail');
-
-var iconMap = {
-  HomeIcon: HomeIcon,
-  SettingsIcon: SettingsIcon,
-  MailIcon: MailIcon
-};
-
-/******************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
-
-
-var __assign = function() {
-  __assign = Object.assign || function __assign(t) {
-      for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-      return t;
-  };
-  return __assign.apply(this, arguments);
-};
-
-function __spreadArray(to, from, pack) {
-  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-          ar[i] = from[i];
-      }
-  }
-  return to.concat(ar || Array.prototype.slice.call(from));
-}
-
-typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
-  var e = new Error(message);
-  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};
-
-function memoize(fn) {
-  var cache = Object.create(null);
-  return function (arg) {
-    if (cache[arg] === undefined) cache[arg] = fn(arg);
-    return cache[arg];
-  };
-}
-
-var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
-
-var isPropValid = /* #__PURE__ */memoize(function (prop) {
-  return reactPropsRegex.test(prop) || prop.charCodeAt(0) === 111
-  /* o */ && prop.charCodeAt(1) === 110
-  /* n */ && prop.charCodeAt(2) < 91;
-}
-/* Z+1 */);
-
-var MS = '-ms-';
-var MOZ = '-moz-';
-var WEBKIT = '-webkit-';
-var COMMENT = 'comm';
-var RULESET = 'rule';
-var DECLARATION = 'decl';
-var IMPORT = '@import';
-var KEYFRAMES = '@keyframes';
-var LAYER = '@layer';
-
-/**
- * @param {number}
- * @return {number}
- */
-var abs = Math.abs;
-
-/**
- * @param {number}
- * @return {string}
- */
-var from = String.fromCharCode;
-
-/**
- * @param {object}
- * @return {object}
- */
-var assign = Object.assign;
-
-/**
- * @param {string} value
- * @param {number} length
- * @return {number}
- */
-function hash(value, length) {
-  return charat(value, 0) ^ 45 ? (((length << 2 ^ charat(value, 0)) << 2 ^ charat(value, 1)) << 2 ^ charat(value, 2)) << 2 ^ charat(value, 3) : 0;
-}
-
-/**
- * @param {string} value
- * @return {string}
- */
-function trim(value) {
-  return value.trim();
-}
-
-/**
- * @param {string} value
- * @param {RegExp} pattern
- * @return {string?}
- */
-function match(value, pattern) {
-  return (value = pattern.exec(value)) ? value[0] : value;
-}
-
-/**
- * @param {string} value
- * @param {(string|RegExp)} pattern
- * @param {string} replacement
- * @return {string}
- */
-function replace(value, pattern, replacement) {
-  return value.replace(pattern, replacement);
-}
-
-/**
- * @param {string} value
- * @param {string} search
- * @param {number} position
- * @return {number}
- */
-function indexof(value, search, position) {
-  return value.indexOf(search, position);
-}
-
-/**
- * @param {string} value
- * @param {number} index
- * @return {number}
- */
-function charat(value, index) {
-  return value.charCodeAt(index) | 0;
-}
-
-/**
- * @param {string} value
- * @param {number} begin
- * @param {number} end
- * @return {string}
- */
-function substr(value, begin, end) {
-  return value.slice(begin, end);
-}
-
-/**
- * @param {string} value
- * @return {number}
- */
-function strlen(value) {
-  return value.length;
-}
-
-/**
- * @param {any[]} value
- * @return {number}
- */
-function sizeof(value) {
-  return value.length;
-}
-
-/**
- * @param {any} value
- * @param {any[]} array
- * @return {any}
- */
-function append(value, array) {
-  return array.push(value), value;
-}
-
-/**
- * @param {string[]} array
- * @param {function} callback
- * @return {string}
- */
-function combine(array, callback) {
-  return array.map(callback).join('');
-}
-
-/**
- * @param {string[]} array
- * @param {RegExp} pattern
- * @return {string[]}
- */
-function filter(array, pattern) {
-  return array.filter(function (value) {
-    return !match(value, pattern);
-  });
-}
-
-var line = 1;
-var column = 1;
-var length = 0;
-var position = 0;
-var character = 0;
-var characters = '';
-
-/**
- * @param {string} value
- * @param {object | null} root
- * @param {object | null} parent
- * @param {string} type
- * @param {string[] | string} props
- * @param {object[] | string} children
- * @param {object[]} siblings
- * @param {number} length
- */
-function node(value, root, parent, type, props, children, length, siblings) {
-  return {
-    value: value,
-    root: root,
-    parent: parent,
-    type: type,
-    props: props,
-    children: children,
-    line: line,
-    column: column,
-    length: length,
-    "return": '',
-    siblings: siblings
-  };
-}
-
-/**
- * @param {object} root
- * @param {object} props
- * @return {object}
- */
-function copy(root, props) {
-  return assign(node('', null, null, '', null, null, 0, root.siblings), root, {
-    length: -root.length
-  }, props);
-}
-
-/**
- * @param {object} root
- */
-function lift(root) {
-  while (root.root) root = copy(root.root, {
-    children: [root]
-  });
-  append(root, root.siblings);
-}
-
-/**
- * @return {number}
- */
-function _char() {
-  return character;
-}
-function prev() {
-  character = position > 0 ? charat(characters, --position) : 0;
-  if (column--, character === 10) column = 1, line--;
-  return character;
-}
-
-/**
- * @return {number}
- */
-function next() {
-  character = position < length ? charat(characters, position++) : 0;
-  if (column++, character === 10) column = 1, line++;
-  return character;
-}
-
-/**
- * @return {number}
- */
-function peek() {
-  return charat(characters, position);
-}
-
-/**
- * @return {number}
- */
-function caret() {
-  return position;
-}
-
-/**
- * @param {number} begin
- * @param {number} end
- * @return {string}
- */
-function slice(begin, end) {
-  return substr(characters, begin, end);
-}
-
-/**
- * @param {number} type
- * @return {number}
- */
-function token(type) {
-  switch (type) {
-    // \0 \t \n \r \s whitespace token
-    case 0:
-    case 9:
-    case 10:
-    case 13:
-    case 32:
-      return 5;
-    // ! + , / > @ ~ isolate token
-    case 33:
-    case 43:
-    case 44:
-    case 47:
-    case 62:
-    case 64:
-    case 126:
-    // ; { } breakpoint token
-    case 59:
-    case 123:
-    case 125:
-      return 4;
-    // : accompanied token
-    case 58:
-      return 3;
-    // " ' ( [ opening delimit token
-    case 34:
-    case 39:
-    case 40:
-    case 91:
-      return 2;
-    // ) ] closing delimit token
-    case 41:
-    case 93:
-      return 1;
-  }
-  return 0;
-}
-
-/**
- * @param {string} value
- * @return {any[]}
- */
-function alloc(value) {
-  return line = column = 1, length = strlen(characters = value), position = 0, [];
-}
-
-/**
- * @param {any} value
- * @return {any}
- */
-function dealloc(value) {
-  return characters = '', value;
-}
-
-/**
- * @param {number} type
- * @return {string}
- */
-function delimit(type) {
-  return trim(slice(position - 1, delimiter(type === 91 ? type + 2 : type === 40 ? type + 1 : type)));
-}
-
-/**
- * @param {number} type
- * @return {string}
- */
-function whitespace(type) {
-  while (character = peek()) if (character < 33) next();else break;
-  return token(type) > 2 || token(character) > 3 ? '' : ' ';
-}
-
-/**
- * @param {number} index
- * @param {number} count
- * @return {string}
- */
-function escaping(index, count) {
-  while (--count && next())
-  // not 0-9 A-F a-f
-  if (character < 48 || character > 102 || character > 57 && character < 65 || character > 70 && character < 97) break;
-  return slice(index, caret() + (count < 6 && peek() == 32 && next() == 32));
-}
-
-/**
- * @param {number} type
- * @return {number}
- */
-function delimiter(type) {
-  while (next()) switch (character) {
-    // ] ) " '
-    case type:
-      return position;
-    // " '
-    case 34:
-    case 39:
-      if (type !== 34 && type !== 39) delimiter(character);
-      break;
-    // (
-    case 40:
-      if (type === 41) delimiter(type);
-      break;
-    // \
-    case 92:
-      next();
-      break;
-  }
-  return position;
-}
-
-/**
- * @param {number} type
- * @param {number} index
- * @return {number}
- */
-function commenter(type, index) {
-  while (next())
-  // //
-  if (type + character === 47 + 10) break;
-  // /*
-  else if (type + character === 42 + 42 && peek() === 47) break;
-  return '/*' + slice(index, position - 1) + '*' + from(type === 47 ? type : next());
-}
-
-/**
- * @param {number} index
- * @return {string}
- */
-function identifier(index) {
-  while (!token(peek())) next();
-  return slice(index, position);
-}
-
-/**
- * @param {string} value
- * @return {object[]}
- */
-function compile(value) {
-  return dealloc(parse('', null, null, null, [''], value = alloc(value), 0, [0], value));
-}
-
-/**
- * @param {string} value
- * @param {object} root
- * @param {object?} parent
- * @param {string[]} rule
- * @param {string[]} rules
- * @param {string[]} rulesets
- * @param {number[]} pseudo
- * @param {number[]} points
- * @param {string[]} declarations
- * @return {object}
- */
-function parse(value, root, parent, rule, rules, rulesets, pseudo, points, declarations) {
-  var index = 0;
-  var offset = 0;
-  var length = pseudo;
-  var atrule = 0;
-  var property = 0;
-  var previous = 0;
-  var variable = 1;
-  var scanning = 1;
-  var ampersand = 1;
-  var character = 0;
-  var type = '';
-  var props = rules;
-  var children = rulesets;
-  var reference = rule;
-  var characters = type;
-  while (scanning) switch (previous = character, character = next()) {
-    // (
-    case 40:
-      if (previous != 108 && charat(characters, length - 1) == 58) {
-        if (indexof(characters += replace(delimit(character), '&', '&\f'), '&\f', abs(index ? points[index - 1] : 0)) != -1) ampersand = -1;
-        break;
-      }
-    // " ' [
-    case 34:
-    case 39:
-    case 91:
-      characters += delimit(character);
-      break;
-    // \t \n \r \s
-    case 9:
-    case 10:
-    case 13:
-    case 32:
-      characters += whitespace(previous);
-      break;
-    // \
-    case 92:
-      characters += escaping(caret() - 1, 7);
-      continue;
-    // /
-    case 47:
-      switch (peek()) {
-        case 42:
-        case 47:
-          append(comment(commenter(next(), caret()), root, parent, declarations), declarations);
-          break;
-        default:
-          characters += '/';
-      }
-      break;
-    // {
-    case 123 * variable:
-      points[index++] = strlen(characters) * ampersand;
-    // } ; \0
-    case 125 * variable:
-    case 59:
-    case 0:
-      switch (character) {
-        // \0 }
-        case 0:
-        case 125:
-          scanning = 0;
-        // ;
-        case 59 + offset:
-          if (ampersand == -1) characters = replace(characters, /\f/g, '');
-          if (property > 0 && strlen(characters) - length) append(property > 32 ? declaration(characters + ';', rule, parent, length - 1, declarations) : declaration(replace(characters, ' ', '') + ';', rule, parent, length - 2, declarations), declarations);
-          break;
-        // @ ;
-        case 59:
-          characters += ';';
-        // { rule/at-rule
-        default:
-          append(reference = ruleset(characters, root, parent, index, offset, rules, points, type, props = [], children = [], length, rulesets), rulesets);
-          if (character === 123) if (offset === 0) parse(characters, root, reference, reference, props, rulesets, length, points, children);else switch (atrule === 99 && charat(characters, 3) === 110 ? 100 : atrule) {
-            // d l m s
-            case 100:
-            case 108:
-            case 109:
-            case 115:
-              parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length, children), children), rules, children, length, points, rule ? props : children);
-              break;
-            default:
-              parse(characters, reference, reference, reference, [''], children, 0, points, children);
-          }
-      }
-      index = offset = property = 0, variable = ampersand = 1, type = characters = '', length = pseudo;
-      break;
-    // :
-    case 58:
-      length = 1 + strlen(characters), property = previous;
-    default:
-      if (variable < 1) if (character == 123) --variable;else if (character == 125 && variable++ == 0 && prev() == 125) continue;
-      switch (characters += from(character), character * variable) {
-        // &
-        case 38:
-          ampersand = offset > 0 ? 1 : (characters += '\f', -1);
-          break;
-        // ,
-        case 44:
-          points[index++] = (strlen(characters) - 1) * ampersand, ampersand = 1;
-          break;
-        // @
-        case 64:
-          // -
-          if (peek() === 45) characters += delimit(next());
-          atrule = peek(), offset = length = strlen(type = characters += identifier(caret())), character++;
-          break;
-        // -
-        case 45:
-          if (previous === 45 && strlen(characters) == 2) variable = 0;
-      }
-  }
-  return rulesets;
-}
-
-/**
- * @param {string} value
- * @param {object} root
- * @param {object?} parent
- * @param {number} index
- * @param {number} offset
- * @param {string[]} rules
- * @param {number[]} points
- * @param {string} type
- * @param {string[]} props
- * @param {string[]} children
- * @param {number} length
- * @param {object[]} siblings
- * @return {object}
- */
-function ruleset(value, root, parent, index, offset, rules, points, type, props, children, length, siblings) {
-  var post = offset - 1;
-  var rule = offset === 0 ? rules : [''];
-  var size = sizeof(rule);
-  for (var i = 0, j = 0, k = 0; i < index; ++i) for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size; ++x) if (z = trim(j > 0 ? rule[x] + ' ' + y : replace(y, /&\f/g, rule[x]))) props[k++] = z;
-  return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length, siblings);
-}
-
-/**
- * @param {number} value
- * @param {object} root
- * @param {object?} parent
- * @param {object[]} siblings
- * @return {object}
- */
-function comment(value, root, parent, siblings) {
-  return node(value, root, parent, COMMENT, from(_char()), substr(value, 2, -2), 0, siblings);
-}
-
-/**
- * @param {string} value
- * @param {object} root
- * @param {object?} parent
- * @param {number} length
- * @param {object[]} siblings
- * @return {object}
- */
-function declaration(value, root, parent, length, siblings) {
-  return node(value, root, parent, DECLARATION, substr(value, 0, length), substr(value, length + 1, -1), length, siblings);
-}
-
-/**
- * @param {string} value
- * @param {number} length
- * @param {object[]} children
- * @return {string}
- */
-function prefix(value, length, children) {
-  switch (hash(value, length)) {
-    // color-adjust
-    case 5103:
-      return WEBKIT + 'print-' + value + value;
-    // animation, animation-(delay|direction|duration|fill-mode|iteration-count|name|play-state|timing-function)
-    case 5737:
-    case 4201:
-    case 3177:
-    case 3433:
-    case 1641:
-    case 4457:
-    case 2921:
-    // text-decoration, filter, clip-path, backface-visibility, column, box-decoration-break
-    case 5572:
-    case 6356:
-    case 5844:
-    case 3191:
-    case 6645:
-    case 3005:
-    // mask, mask-image, mask-(mode|clip|size), mask-(repeat|origin), mask-position, mask-composite,
-    case 6391:
-    case 5879:
-    case 5623:
-    case 6135:
-    case 4599:
-    case 4855:
-    // background-clip, columns, column-(count|fill|gap|rule|rule-color|rule-style|rule-width|span|width)
-    case 4215:
-    case 6389:
-    case 5109:
-    case 5365:
-    case 5621:
-    case 3829:
-      return WEBKIT + value + value;
-    // tab-size
-    case 4789:
-      return MOZ + value + value;
-    // appearance, user-select, transform, hyphens, text-size-adjust
-    case 5349:
-    case 4246:
-    case 4810:
-    case 6968:
-    case 2756:
-      return WEBKIT + value + MOZ + value + MS + value + value;
-    // writing-mode
-    case 5936:
-      switch (charat(value, length + 11)) {
-        // vertical-l(r)
-        case 114:
-          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'tb') + value;
-        // vertical-r(l)
-        case 108:
-          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'tb-rl') + value;
-        // horizontal(-)tb
-        case 45:
-          return WEBKIT + value + MS + replace(value, /[svh]\w+-[tblr]{2}/, 'lr') + value;
-        // default: fallthrough to below
-      }
-    // flex, flex-direction, scroll-snap-type, writing-mode
-    case 6828:
-    case 4268:
-    case 2903:
-      return WEBKIT + value + MS + value + value;
-    // order
-    case 6165:
-      return WEBKIT + value + MS + 'flex-' + value + value;
-    // align-items
-    case 5187:
-      return WEBKIT + value + replace(value, /(\w+).+(:[^]+)/, WEBKIT + 'box-$1$2' + MS + 'flex-$1$2') + value;
-    // align-self
-    case 5443:
-      return WEBKIT + value + MS + 'flex-item-' + replace(value, /flex-|-self/g, '') + (!match(value, /flex-|baseline/) ? MS + 'grid-row-' + replace(value, /flex-|-self/g, '') : '') + value;
-    // align-content
-    case 4675:
-      return WEBKIT + value + MS + 'flex-line-pack' + replace(value, /align-content|flex-|-self/g, '') + value;
-    // flex-shrink
-    case 5548:
-      return WEBKIT + value + MS + replace(value, 'shrink', 'negative') + value;
-    // flex-basis
-    case 5292:
-      return WEBKIT + value + MS + replace(value, 'basis', 'preferred-size') + value;
-    // flex-grow
-    case 6060:
-      return WEBKIT + 'box-' + replace(value, '-grow', '') + WEBKIT + value + MS + replace(value, 'grow', 'positive') + value;
-    // transition
-    case 4554:
-      return WEBKIT + replace(value, /([^-])(transform)/g, '$1' + WEBKIT + '$2') + value;
-    // cursor
-    case 6187:
-      return replace(replace(replace(value, /(zoom-|grab)/, WEBKIT + '$1'), /(image-set)/, WEBKIT + '$1'), value, '') + value;
-    // background, background-image
-    case 5495:
-    case 3959:
-      return replace(value, /(image-set\([^]*)/, WEBKIT + '$1' + '$`$1');
-    // justify-content
-    case 4968:
-      return replace(replace(value, /(.+:)(flex-)?(.*)/, WEBKIT + 'box-pack:$3' + MS + 'flex-pack:$3'), /s.+-b[^;]+/, 'justify') + WEBKIT + value + value;
-    // justify-self
-    case 4200:
-      if (!match(value, /flex-|baseline/)) return MS + 'grid-column-align' + substr(value, length) + value;
-      break;
-    // grid-template-(columns|rows)
-    case 2592:
-    case 3360:
-      return MS + replace(value, 'template-', '') + value;
-    // grid-(row|column)-start
-    case 4384:
-    case 3616:
-      if (children && children.some(function (element, index) {
-        return length = index, match(element.props, /grid-\w+-end/);
-      })) {
-        return ~indexof(value + (children = children[length].value), 'span', 0) ? value : MS + replace(value, '-start', '') + value + MS + 'grid-row-span:' + (~indexof(children, 'span', 0) ? match(children, /\d+/) : +match(children, /\d+/) - +match(value, /\d+/)) + ';';
-      }
-      return MS + replace(value, '-start', '') + value;
-    // grid-(row|column)-end
-    case 4896:
-    case 4128:
-      return children && children.some(function (element) {
-        return match(element.props, /grid-\w+-start/);
-      }) ? value : MS + replace(replace(value, '-end', '-span'), 'span ', '') + value;
-    // (margin|padding)-inline-(start|end)
-    case 4095:
-    case 3583:
-    case 4068:
-    case 2532:
-      return replace(value, /(.+)-inline(.+)/, WEBKIT + '$1$2') + value;
-    // (min|max)?(width|height|inline-size|block-size)
-    case 8116:
-    case 7059:
-    case 5753:
-    case 5535:
-    case 5445:
-    case 5701:
-    case 4933:
-    case 4677:
-    case 5533:
-    case 5789:
-    case 5021:
-    case 4765:
-      // stretch, max-content, min-content, fill-available
-      if (strlen(value) - 1 - length > 6) switch (charat(value, length + 1)) {
-        // (m)ax-content, (m)in-content
-        case 109:
-          // -
-          if (charat(value, length + 4) !== 45) break;
-        // (f)ill-available, (f)it-content
-        case 102:
-          return replace(value, /(.+:)(.+)-([^]+)/, '$1' + WEBKIT + '$2-$3' + '$1' + MOZ + (charat(value, length + 3) == 108 ? '$3' : '$2-$3')) + value;
-        // (s)tretch
-        case 115:
-          return ~indexof(value, 'stretch', 0) ? prefix(replace(value, 'stretch', 'fill-available'), length, children) + value : value;
-      }
-      break;
-    // grid-(column|row)
-    case 5152:
-    case 5920:
-      return replace(value, /(.+?):(\d+)(\s*\/\s*(span)?\s*(\d+))?(.*)/, function (_, a, b, c, d, e, f) {
-        return MS + a + ':' + b + f + (c ? MS + a + '-span:' + (d ? e : +e - +b) + f : '') + value;
-      });
-    // position: sticky
-    case 4949:
-      // stick(y)?
-      if (charat(value, length + 6) === 121) return replace(value, ':', ':' + WEBKIT) + value;
-      break;
-    // display: (flex|inline-flex|grid|inline-grid)
-    case 6444:
-      switch (charat(value, charat(value, 14) === 45 ? 18 : 11)) {
-        // (inline-)?fle(x)
-        case 120:
-          return replace(value, /(.+:)([^;\s!]+)(;|(\s+)?!.+)?/, '$1' + WEBKIT + (charat(value, 14) === 45 ? 'inline-' : '') + 'box$3' + '$1' + WEBKIT + '$2$3' + '$1' + MS + '$2box$3') + value;
-        // (inline-)?gri(d)
-        case 100:
-          return replace(value, ':', ':' + MS) + value;
-      }
-      break;
-    // scroll-margin, scroll-margin-(top|right|bottom|left)
-    case 5719:
-    case 2647:
-    case 2135:
-    case 3927:
-    case 2391:
-      return replace(value, 'scroll-', 'scroll-snap-') + value;
-  }
-  return value;
-}
-
-/**
- * @param {object[]} children
- * @param {function} callback
- * @return {string}
- */
-function serialize(children, callback) {
-  var output = '';
-  for (var i = 0; i < children.length; i++) output += callback(children[i], i, children, callback) || '';
-  return output;
-}
-
-/**
- * @param {object} element
- * @param {number} index
- * @param {object[]} children
- * @param {function} callback
- * @return {string}
- */
-function stringify(element, index, children, callback) {
-  switch (element.type) {
-    case LAYER:
-      if (element.children.length) break;
-    case IMPORT:
-    case DECLARATION:
-      return element["return"] = element["return"] || element.value;
-    case COMMENT:
-      return '';
-    case KEYFRAMES:
-      return element["return"] = element.value + '{' + serialize(element.children, callback) + '}';
-    case RULESET:
-      if (!strlen(element.value = element.props.join(','))) return '';
-  }
-  return strlen(children = serialize(element.children, callback)) ? element["return"] = element.value + '{' + children + '}' : '';
-}
-
-/**
- * @param {function[]} collection
- * @return {function}
- */
-function middleware(collection) {
-  var length = sizeof(collection);
-  return function (element, index, children, callback) {
-    var output = '';
-    for (var i = 0; i < length; i++) output += collection[i](element, index, children, callback) || '';
-    return output;
-  };
-}
-
-/**
- * @param {function} callback
- * @return {function}
- */
-function rulesheet(callback) {
-  return function (element) {
-    if (!element.root) if (element = element["return"]) callback(element);
-  };
-}
-
-/**
- * @param {object} element
- * @param {number} index
- * @param {object[]} children
- * @param {function} callback
- */
-function prefixer(element, index, children, callback) {
-  if (element.length > -1) if (!element["return"]) switch (element.type) {
-    case DECLARATION:
-      element["return"] = prefix(element.value, element.length, children);
-      return;
-    case KEYFRAMES:
-      return serialize([copy(element, {
-        value: replace(element.value, '@', '@' + WEBKIT)
-      })], callback);
-    case RULESET:
-      if (element.length) return combine(children = element.props, function (value) {
-        switch (match(value, callback = /(::plac\w+|:read-\w+)/)) {
-          // :read-(only|write)
-          case ':read-only':
-          case ':read-write':
-            lift(copy(element, {
-              props: [replace(value, /:(read-\w+)/, ':' + MOZ + '$1')]
-            }));
-            lift(copy(element, {
-              props: [value]
-            }));
-            assign(element, {
-              props: filter(children, callback)
-            });
-            break;
-          // :placeholder
-          case '::placeholder':
-            lift(copy(element, {
-              props: [replace(value, /:(plac\w+)/, ':' + WEBKIT + 'input-$1')]
-            }));
-            lift(copy(element, {
-              props: [replace(value, /:(plac\w+)/, ':' + MOZ + '$1')]
-            }));
-            lift(copy(element, {
-              props: [replace(value, /:(plac\w+)/, MS + 'input-$1')]
-            }));
-            lift(copy(element, {
-              props: [value]
-            }));
-            assign(element, {
-              props: filter(children, callback)
-            });
-            break;
-        }
-        return '';
-      });
-  }
-}
-
-var unitlessKeys = {
-  animationIterationCount: 1,
-  aspectRatio: 1,
-  borderImageOutset: 1,
-  borderImageSlice: 1,
-  borderImageWidth: 1,
-  boxFlex: 1,
-  boxFlexGroup: 1,
-  boxOrdinalGroup: 1,
-  columnCount: 1,
-  columns: 1,
-  flex: 1,
-  flexGrow: 1,
-  flexPositive: 1,
-  flexShrink: 1,
-  flexNegative: 1,
-  flexOrder: 1,
-  gridRow: 1,
-  gridRowEnd: 1,
-  gridRowSpan: 1,
-  gridRowStart: 1,
-  gridColumn: 1,
-  gridColumnEnd: 1,
-  gridColumnSpan: 1,
-  gridColumnStart: 1,
-  msGridRow: 1,
-  msGridRowSpan: 1,
-  msGridColumn: 1,
-  msGridColumnSpan: 1,
-  fontWeight: 1,
-  lineHeight: 1,
-  opacity: 1,
-  order: 1,
-  orphans: 1,
-  tabSize: 1,
-  widows: 1,
-  zIndex: 1,
-  zoom: 1,
-  WebkitLineClamp: 1,
-  // SVG-related properties
-  fillOpacity: 1,
-  floodOpacity: 1,
-  stopOpacity: 1,
-  strokeDasharray: 1,
-  strokeDashoffset: 1,
-  strokeMiterlimit: 1,
-  strokeOpacity: 1,
-  strokeWidth: 1
-};
-
-var f = "undefined" != typeof process && undefined !== process.env && (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR) || "data-styled",
-  m = "active",
-  y = "data-styled-version",
-  v = "6.1.14",
-  g = "/*!sc*/\n",
-  S = "undefined" != typeof window && "HTMLElement" in window,
-  w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.REACT_APP_SC_DISABLE_SPEEDY && "" !== process.env.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== process.env.REACT_APP_SC_DISABLE_SPEEDY && process.env.REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.SC_DISABLE_SPEEDY && "" !== process.env.SC_DISABLE_SPEEDY ? "false" !== process.env.SC_DISABLE_SPEEDY && process.env.SC_DISABLE_SPEEDY : "production" !== process.env.NODE_ENV),
-  b = {},
-  E = /invalid hook call/i,
-  N = new Set(),
-  P = function P(t, n) {
-    if ("production" !== process.env.NODE_ENV) {
-      var r = n ? ' with the id of "'.concat(n, '"') : "",
-        s = "The component ".concat(t).concat(r, " has been created dynamically.\n") + "You may see this warning because you've called styled inside another component.\nTo resolve this only create new StyledComponents outside of any render method and function component.",
-        i = console.error;
-      try {
-        var a = !0;
-        console.error = function (t) {
-          for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
-          E.test(t) ? (a = !1, N["delete"](s)) : i.apply(void 0, __spreadArray([t], n, !1));
-        }, React.useRef(), a && !N.has(s) && (console.warn(s), N.add(s));
-      } catch (e) {
-        E.test(e.message) && N["delete"](s);
-      } finally {
-        console.error = i;
-      }
-    }
-  },
-  _ = Object.freeze([]),
-  C = Object.freeze({});
-function I(e, t, n) {
-  return undefined === n && (n = C), e.theme !== n.theme && e.theme || t || n.theme;
-}
-var A = new Set(["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "u", "ul", "use", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"]),
-  O = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g,
-  D = /(^-|-$)/g;
-function R(e) {
-  return e.replace(O, "-").replace(D, "");
-}
-var T = /(a)(d)/gi,
-  k = 52,
-  j = function j(e) {
-    return String.fromCharCode(e + (e > 25 ? 39 : 97));
-  };
-function x(e) {
-  var t,
-    n = "";
-  for (t = Math.abs(e); t > k; t = t / k | 0) n = j(t % k) + n;
-  return (j(t % k) + n).replace(T, "$1-$2");
-}
-var V,
-  F = 5381,
-  M = function M(e, t) {
-    for (var n = t.length; n;) e = 33 * e ^ t.charCodeAt(--n);
-    return e;
-  },
-  z = function z(e) {
-    return M(F, e);
-  };
-function $(e) {
-  return x(z(e) >>> 0);
-}
-function B(e) {
-  return "production" !== process.env.NODE_ENV && "string" == typeof e && e || e.displayName || e.name || "Component";
-}
-function L(e) {
-  return "string" == typeof e && ("production" === process.env.NODE_ENV || e.charAt(0) === e.charAt(0).toLowerCase());
-}
-var G = "function" == typeof Symbol && Symbol["for"],
-  Y = G ? Symbol["for"]("react.memo") : 60115,
-  q = G ? Symbol["for"]("react.forward_ref") : 60112,
-  W = {
-    childContextTypes: true,
-    contextType: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    getDerivedStateFromError: true,
-    getDerivedStateFromProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-  },
-  H = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-  },
-  U = {
-    $$typeof: true,
-    compare: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true,
-    type: true
-  },
-  J = ((V = {})[q] = {
-    $$typeof: true,
-    render: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true
-  }, V[Y] = U, V);
-function X(e) {
-  return ("type" in (t = e) && t.type.$$typeof) === Y ? U : "$$typeof" in e ? J[e.$$typeof] : W;
-  var t;
-}
-var Z = Object.defineProperty,
-  K = Object.getOwnPropertyNames,
-  Q = Object.getOwnPropertySymbols,
-  ee = Object.getOwnPropertyDescriptor,
-  te = Object.getPrototypeOf,
-  ne = Object.prototype;
-function re(e, t, n) {
-  if ("string" != typeof t) {
-    if (ne) {
-      var r = te(t);
-      r && r !== ne && re(e, r, n);
-    }
-    var o = K(t);
-    Q && (o = o.concat(Q(t)));
-    for (var s = X(e), i = X(t), a = 0; a < o.length; ++a) {
-      var c = o[a];
-      if (!(c in H || n && n[c] || i && c in i || s && c in s)) {
-        var l = ee(t, c);
-        try {
-          Z(e, c, l);
-        } catch (e) {}
-      }
-    }
-  }
-  return e;
-}
-function oe(e) {
-  return "function" == typeof e;
-}
-function se(e) {
-  return "object" == _typeof(e) && "styledComponentId" in e;
-}
-function ie(e, t) {
-  return e && t ? "".concat(e, " ").concat(t) : e || t || "";
-}
-function ae(e, t) {
-  if (0 === e.length) return "";
-  for (var n = e[0], r = 1; r < e.length; r++) n += e[r];
-  return n;
-}
-function ce(e) {
-  return null !== e && "object" == _typeof(e) && e.constructor.name === Object.name && !("props" in e && e.$$typeof);
-}
-function le(e, t, n) {
-  if (undefined === n && (n = false), !n && !ce(e) && !Array.isArray(e)) return t;
-  if (Array.isArray(t)) for (var r = 0; r < t.length; r++) e[r] = le(e[r], t[r]);else if (ce(t)) for (var r in t) e[r] = le(e[r], t[r]);
-  return e;
-}
-function ue(e, t) {
-  Object.defineProperty(e, "toString", {
-    value: t
-  });
-}
-var pe = "production" !== process.env.NODE_ENV ? {
-  1: "Cannot create styled-component for component: %s.\n\n",
-  2: "Can't collect styles once you've consumed a `ServerStyleSheet`'s styles! `ServerStyleSheet` is a one off instance for each server-side render cycle.\n\n- Are you trying to reuse it across renders?\n- Are you accidentally calling collectStyles twice?\n\n",
-  3: "Streaming SSR is only supported in a Node.js environment; Please do not try to call this method in the browser.\n\n",
-  4: "The `StyleSheetManager` expects a valid target or sheet prop!\n\n- Does this error occur on the client and is your target falsy?\n- Does this error occur on the server and is the sheet falsy?\n\n",
-  5: "The clone method cannot be used on the client!\n\n- Are you running in a client-like environment on the server?\n- Are you trying to run SSR on the client?\n\n",
-  6: "Trying to insert a new style tag, but the given Node is unmounted!\n\n- Are you using a custom target that isn't mounted?\n- Does your document not have a valid head element?\n- Have you accidentally removed a style tag manually?\n\n",
-  7: 'ThemeProvider: Please return an object from your "theme" prop function, e.g.\n\n```js\ntheme={() => ({})}\n```\n\n',
-  8: 'ThemeProvider: Please make your "theme" prop an object.\n\n',
-  9: "Missing document `<head>`\n\n",
-  10: "Cannot find a StyleSheet instance. Usually this happens if there are multiple copies of styled-components loaded at once. Check out this issue for how to troubleshoot and fix the common cases where this situation can happen: https://github.com/styled-components/styled-components/issues/1941#issuecomment-417862021\n\n",
-  11: "_This error was replaced with a dev-time warning, it will be deleted for v4 final._ [createGlobalStyle] received children which will not be rendered. Please use the component without passing children elements.\n\n",
-  12: "It seems you are interpolating a keyframe declaration (%s) into an untagged string. This was supported in styled-components v3, but is not longer supported in v4 as keyframes are now injected on-demand. Please wrap your string in the css\\`\\` helper which ensures the styles are injected correctly. See https://www.styled-components.com/docs/api#css\n\n",
-  13: "%s is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.\n\n",
-  14: 'ThemeProvider: "theme" prop is required.\n\n',
-  15: "A stylis plugin has been supplied that is not named. We need a name for each plugin to be able to prevent styling collisions between different stylis configurations within the same app. Before you pass your plugin to `<StyleSheetManager stylisPlugins={[]}>`, please make sure each plugin is uniquely-named, e.g.\n\n```js\nObject.defineProperty(importedPlugin, 'name', { value: 'some-unique-name' });\n```\n\n",
-  16: "Reached the limit of how many styled components may be created at group %s.\nYou may only create up to 1,073,741,824 components. If you're creating components dynamically,\nas for instance in your render method then you may be running into this limitation.\n\n",
-  17: "CSSStyleSheet could not be found on HTMLStyleElement.\nHas styled-components' style tag been unmounted or altered by another script?\n",
-  18: "ThemeProvider: Please make sure your useTheme hook is within a `<ThemeProvider>`"
-} : {};
-function de() {
-  for (var e = [], t = 0; t < arguments.length; t++) e[t] = arguments[t];
-  for (var n = e[0], r = [], o = 1, s = e.length; o < s; o += 1) r.push(e[o]);
-  return r.forEach(function (e) {
-    n = n.replace(/%[a-z]/, e);
-  }), n;
-}
-function he(t) {
-  for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
-  return "production" === process.env.NODE_ENV ? new Error("An error occurred. See https://github.com/styled-components/styled-components/blob/main/packages/styled-components/src/utils/errors.md#".concat(t, " for more information.").concat(n.length > 0 ? " Args: ".concat(n.join(", ")) : "")) : new Error(de.apply(undefined, __spreadArray([pe[t]], n, false)).trim());
-}
-var fe = function () {
-    function e(e) {
-      this.groupSizes = new Uint32Array(512), this.length = 512, this.tag = e;
-    }
-    return e.prototype.indexOfGroup = function (e) {
-      for (var t = 0, n = 0; n < e; n++) t += this.groupSizes[n];
-      return t;
-    }, e.prototype.insertRules = function (e, t) {
-      if (e >= this.groupSizes.length) {
-        for (var n = this.groupSizes, r = n.length, o = r; e >= o;) if ((o <<= 1) < 0) throw he(16, "".concat(e));
-        this.groupSizes = new Uint32Array(o), this.groupSizes.set(n), this.length = o;
-        for (var s = r; s < o; s++) this.groupSizes[s] = 0;
-      }
-      for (var i = this.indexOfGroup(e + 1), a = (s = 0, t.length); s < a; s++) this.tag.insertRule(i, t[s]) && (this.groupSizes[e]++, i++);
-    }, e.prototype.clearGroup = function (e) {
-      if (e < this.length) {
-        var t = this.groupSizes[e],
-          n = this.indexOfGroup(e),
-          r = n + t;
-        this.groupSizes[e] = 0;
-        for (var o = n; o < r; o++) this.tag.deleteRule(n);
-      }
-    }, e.prototype.getGroup = function (e) {
-      var t = "";
-      if (e >= this.length || 0 === this.groupSizes[e]) return t;
-      for (var n = this.groupSizes[e], r = this.indexOfGroup(e), o = r + n, s = r; s < o; s++) t += "".concat(this.tag.getRule(s)).concat(g);
-      return t;
-    }, e;
-  }(),
-  me = 1 << 30,
-  ye = new Map(),
-  ve = new Map(),
-  ge = 1,
-  Se = function Se(e) {
-    if (ye.has(e)) return ye.get(e);
-    for (; ve.has(ge);) ge++;
-    var t = ge++;
-    if ("production" !== process.env.NODE_ENV && ((0 | t) < 0 || t > me)) throw he(16, "".concat(t));
-    return ye.set(e, t), ve.set(t, e), t;
-  },
-  we = function we(e, t) {
-    ge = t + 1, ye.set(e, t), ve.set(t, e);
-  },
-  be = "style[".concat(f, "][").concat(y, '="').concat(v, '"]'),
-  Ee = new RegExp("^".concat(f, '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)')),
-  Ne = function Ne(e, t, n) {
-    for (var r, o = n.split(","), s = 0, i = o.length; s < i; s++) (r = o[s]) && e.registerName(t, r);
-  },
-  Pe = function Pe(e, t) {
-    for (var n, r = (null !== (n = t.textContent) && undefined !== n ? n : "").split(g), o = [], s = 0, i = r.length; s < i; s++) {
-      var a = r[s].trim();
-      if (a) {
-        var c = a.match(Ee);
-        if (c) {
-          var l = 0 | parseInt(c[1], 10),
-            u = c[2];
-          0 !== l && (we(u, l), Ne(e, u, c[3]), e.getTag().insertRules(l, o)), o.length = 0;
-        } else o.push(a);
-      }
-    }
-  },
-  _e = function _e(e) {
-    for (var t = document.querySelectorAll(be), n = 0, r = t.length; n < r; n++) {
-      var o = t[n];
-      o && o.getAttribute(f) !== m && (Pe(e, o), o.parentNode && o.parentNode.removeChild(o));
-    }
-  };
-function Ce() {
-  return "undefined" != typeof __webpack_nonce__ ? __webpack_nonce__ : null;
-}
-var Ie = function Ie(e) {
-    var t = document.head,
-      n = e || t,
-      r = document.createElement("style"),
-      o = function (e) {
-        var t = Array.from(e.querySelectorAll("style[".concat(f, "]")));
-        return t[t.length - 1];
-      }(n),
-      s = undefined !== o ? o.nextSibling : null;
-    r.setAttribute(f, m), r.setAttribute(y, v);
-    var i = Ce();
-    return i && r.setAttribute("nonce", i), n.insertBefore(r, s), r;
-  },
-  Ae = function () {
-    function e(e) {
-      this.element = Ie(e), this.element.appendChild(document.createTextNode("")), this.sheet = function (e) {
-        if (e.sheet) return e.sheet;
-        for (var t = document.styleSheets, n = 0, r = t.length; n < r; n++) {
-          var o = t[n];
-          if (o.ownerNode === e) return o;
-        }
-        throw he(17);
-      }(this.element), this.length = 0;
-    }
-    return e.prototype.insertRule = function (e, t) {
-      try {
-        return this.sheet.insertRule(t, e), this.length++, !0;
-      } catch (e) {
-        return false;
-      }
-    }, e.prototype.deleteRule = function (e) {
-      this.sheet.deleteRule(e), this.length--;
-    }, e.prototype.getRule = function (e) {
-      var t = this.sheet.cssRules[e];
-      return t && t.cssText ? t.cssText : "";
-    }, e;
-  }(),
-  Oe = function () {
-    function e(e) {
-      this.element = Ie(e), this.nodes = this.element.childNodes, this.length = 0;
-    }
-    return e.prototype.insertRule = function (e, t) {
-      if (e <= this.length && e >= 0) {
-        var n = document.createTextNode(t);
-        return this.element.insertBefore(n, this.nodes[e] || null), this.length++, true;
-      }
-      return false;
-    }, e.prototype.deleteRule = function (e) {
-      this.element.removeChild(this.nodes[e]), this.length--;
-    }, e.prototype.getRule = function (e) {
-      return e < this.length ? this.nodes[e].textContent : "";
-    }, e;
-  }(),
-  De = function () {
-    function e(e) {
-      this.rules = [], this.length = 0;
-    }
-    return e.prototype.insertRule = function (e, t) {
-      return e <= this.length && (this.rules.splice(e, 0, t), this.length++, true);
-    }, e.prototype.deleteRule = function (e) {
-      this.rules.splice(e, 1), this.length--;
-    }, e.prototype.getRule = function (e) {
-      return e < this.length ? this.rules[e] : "";
-    }, e;
-  }(),
-  Re = S,
-  Te = {
-    isServer: !S,
-    useCSSOMInjection: !w
-  },
-  ke = function () {
-    function e(e, n, r) {
-      undefined === e && (e = C), undefined === n && (n = {});
-      var o = this;
-      this.options = __assign(__assign({}, Te), e), this.gs = n, this.names = new Map(r), this.server = !!e.isServer, !this.server && S && Re && (Re = false, _e(this)), ue(this, function () {
-        return function (e) {
-          for (var t = e.getTag(), n = t.length, r = "", o = function o(n) {
-              var o = function (e) {
-                return ve.get(e);
-              }(n);
-              if (undefined === o) return "continue";
-              var s = e.names.get(o),
-                i = t.getGroup(n);
-              if (undefined === s || !s.size || 0 === i.length) return "continue";
-              var a = "".concat(f, ".g").concat(n, '[id="').concat(o, '"]'),
-                c = "";
-              undefined !== s && s.forEach(function (e) {
-                e.length > 0 && (c += "".concat(e, ","));
-              }), r += "".concat(i).concat(a, '{content:"').concat(c, '"}').concat(g);
-            }, s = 0; s < n; s++) o(s);
-          return r;
-        }(o);
-      });
-    }
-    return e.registerId = function (e) {
-      return Se(e);
-    }, e.prototype.rehydrate = function () {
-      !this.server && S && _e(this);
-    }, e.prototype.reconstructWithOptions = function (n, r) {
-      return undefined === r && (r = true), new e(__assign(__assign({}, this.options), n), this.gs, r && this.names || undefined);
-    }, e.prototype.allocateGSInstance = function (e) {
-      return this.gs[e] = (this.gs[e] || 0) + 1;
-    }, e.prototype.getTag = function () {
-      return this.tag || (this.tag = (e = function (e) {
-        var t = e.useCSSOMInjection,
-          n = e.target;
-        return e.isServer ? new De(n) : t ? new Ae(n) : new Oe(n);
-      }(this.options), new fe(e)));
-      var e;
-    }, e.prototype.hasNameForId = function (e, t) {
-      return this.names.has(e) && this.names.get(e).has(t);
-    }, e.prototype.registerName = function (e, t) {
-      if (Se(e), this.names.has(e)) this.names.get(e).add(t);else {
-        var n = new Set();
-        n.add(t), this.names.set(e, n);
-      }
-    }, e.prototype.insertRules = function (e, t, n) {
-      this.registerName(e, t), this.getTag().insertRules(Se(e), n);
-    }, e.prototype.clearNames = function (e) {
-      this.names.has(e) && this.names.get(e).clear();
-    }, e.prototype.clearRules = function (e) {
-      this.getTag().clearGroup(Se(e)), this.clearNames(e);
-    }, e.prototype.clearTag = function () {
-      this.tag = undefined;
-    }, e;
-  }(),
-  je = /&/g,
-  xe = /^\s*\/\/.*$/gm;
-function Ve(e, t) {
-  return e.map(function (e) {
-    return "rule" === e.type && (e.value = "".concat(t, " ").concat(e.value), e.value = e.value.replaceAll(",", ",".concat(t, " ")), e.props = e.props.map(function (e) {
-      return "".concat(t, " ").concat(e);
-    })), Array.isArray(e.children) && "@keyframes" !== e.type && (e.children = Ve(e.children, t)), e;
-  });
-}
-function Fe(e) {
-  var t,
-    n,
-    r,
-    o = C ,
-    s = o.options,
-    i = undefined === s ? C : s,
-    a = o.plugins,
-    c = undefined === a ? _ : a,
-    l = function l(e, r, o) {
-      return o.startsWith(n) && o.endsWith(n) && o.replaceAll(n, "").length > 0 ? ".".concat(t) : e;
-    },
-    u = c.slice();
-  u.push(function (e) {
-    e.type === RULESET && e.value.includes("&") && (e.props[0] = e.props[0].replace(je, n).replace(r, l));
-  }), i.prefix && u.push(prefixer), u.push(stringify);
-  var p = function p(e, o, s, a) {
-    undefined === o && (o = ""), undefined === s && (s = ""), undefined === a && (a = "&"), t = a, n = o, r = new RegExp("\\".concat(n, "\\b"), "g");
-    var c = e.replace(xe, ""),
-      l = compile(s || o ? "".concat(s, " ").concat(o, " { ").concat(c, " }") : c);
-    i.namespace && (l = Ve(l, i.namespace));
-    var p = [];
-    return serialize(l, middleware(u.concat(rulesheet(function (e) {
-      return p.push(e);
-    })))), p;
-  };
-  return p.hash = c.length ? c.reduce(function (e, t) {
-    return t.name || he(15), M(e, t.name);
-  }, F).toString() : "", p;
-}
-var Me = new ke(),
-  ze = Fe(),
-  $e = /*#__PURE__*/React.createContext({
-    shouldForwardProp: undefined,
-    styleSheet: Me,
-    stylis: ze
-  });
-  $e.Consumer;
-function Ge() {
-  return React.useContext($e);
-}
-var qe = function () {
-    function e(e, t) {
-      var n = this;
-      this.inject = function (e, t) {
-        undefined === t && (t = ze);
-        var r = n.name + t.hash;
-        e.hasNameForId(n.id, r) || e.insertRules(n.id, r, t(n.rules, r, "@keyframes"));
-      }, this.name = e, this.id = "sc-keyframes-".concat(e), this.rules = t, ue(this, function () {
-        throw he(12, String(n.name));
-      });
-    }
-    return e.prototype.getName = function (e) {
-      return undefined === e && (e = ze), this.name + e.hash;
-    }, e;
-  }(),
-  We = function We(e) {
-    return e >= "A" && e <= "Z";
-  };
-function He(e) {
-  for (var t = "", n = 0; n < e.length; n++) {
-    var r = e[n];
-    if (1 === n && "-" === r && "-" === e[0]) return e;
-    We(r) ? t += "-" + r.toLowerCase() : t += r;
-  }
-  return t.startsWith("ms-") ? "-" + t : t;
-}
-var Ue = function Ue(e) {
-    return null == e || false === e || "" === e;
-  },
-  _Je = function Je(t) {
-    var n,
-      r,
-      o = [];
-    for (var s in t) {
-      var i = t[s];
-      t.hasOwnProperty(s) && !Ue(i) && (Array.isArray(i) && i.isCss || oe(i) ? o.push("".concat(He(s), ":"), i, ";") : ce(i) ? o.push.apply(o, __spreadArray(__spreadArray(["".concat(s, " {")], _Je(i), false), ["}"], false)) : o.push("".concat(He(s), ": ").concat((n = s, null == (r = i) || "boolean" == typeof r || "" === r ? "" : "number" != typeof r || 0 === r || n in unitlessKeys || n.startsWith("--") ? String(r).trim() : "".concat(r, "px")), ";")));
-    }
-    return o;
-  };
-function Xe(e, t, n, r) {
-  if (Ue(e)) return [];
-  if (se(e)) return [".".concat(e.styledComponentId)];
-  if (oe(e)) {
-    if (!oe(s = e) || s.prototype && s.prototype.isReactComponent || !t) return [e];
-    var o = e(t);
-    return "production" === process.env.NODE_ENV || "object" != _typeof(o) || Array.isArray(o) || o instanceof qe || ce(o) || null === o || console.error("".concat(B(e), " is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details.")), Xe(o, t, n, r);
-  }
-  var s;
-  return e instanceof qe ? n ? (e.inject(n, r), [e.getName(r)]) : [e] : ce(e) ? _Je(e) : Array.isArray(e) ? Array.prototype.concat.apply(_, e.map(function (e) {
-    return Xe(e, t, n, r);
-  })) : [e.toString()];
-}
-function Ze(e) {
-  for (var t = 0; t < e.length; t += 1) {
-    var n = e[t];
-    if (oe(n) && !se(n)) return false;
-  }
-  return true;
-}
-var Ke = z(v),
-  Qe = function () {
-    function e(e, t, n) {
-      this.rules = e, this.staticRulesId = "", this.isStatic = "production" === process.env.NODE_ENV && (undefined === n || n.isStatic) && Ze(e), this.componentId = t, this.baseHash = M(Ke, t), this.baseStyle = n, ke.registerId(t);
-    }
-    return e.prototype.generateAndInjectStyles = function (e, t, n) {
-      var r = this.baseStyle ? this.baseStyle.generateAndInjectStyles(e, t, n) : "";
-      if (this.isStatic && !n.hash) {
-        if (this.staticRulesId && t.hasNameForId(this.componentId, this.staticRulesId)) r = ie(r, this.staticRulesId);else {
-          var o = ae(Xe(this.rules, e, t, n)),
-            s = x(M(this.baseHash, o) >>> 0);
-          if (!t.hasNameForId(this.componentId, s)) {
-            var i = n(o, ".".concat(s), undefined, this.componentId);
-            t.insertRules(this.componentId, s, i);
-          }
-          r = ie(r, s), this.staticRulesId = s;
-        }
-      } else {
-        for (var a = M(this.baseHash, n.hash), c = "", l = 0; l < this.rules.length; l++) {
-          var u = this.rules[l];
-          if ("string" == typeof u) c += u, "production" !== process.env.NODE_ENV && (a = M(a, u));else if (u) {
-            var p = ae(Xe(u, e, t, n));
-            a = M(a, p + l), c += p;
-          }
-        }
-        if (c) {
-          var d = x(a >>> 0);
-          t.hasNameForId(this.componentId, d) || t.insertRules(this.componentId, d, n(c, ".".concat(d), undefined, this.componentId)), r = ie(r, d);
-        }
-      }
-      return r;
-    }, e;
-  }(),
-  et = /*#__PURE__*/React.createContext(undefined);
-  et.Consumer;
-function rt(e) {
-  var n = React.useContext(et),
-    o = React.useMemo(function () {
-      return function (e, n) {
-        if (!e) throw he(14);
-        if (oe(e)) {
-          var r = e(n);
-          if ("production" !== process.env.NODE_ENV && (null === r || Array.isArray(r) || "object" != _typeof(r))) throw he(7);
-          return r;
-        }
-        if (Array.isArray(e) || "object" != _typeof(e)) throw he(8);
-        return n ? __assign(__assign({}, n), e) : e;
-      }(e.theme, n);
-    }, [e.theme, n]);
-  return e.children ? /*#__PURE__*/React.createElement(et.Provider, {
-    value: o
-  }, e.children) : null;
-}
-var ot = {},
-  st = new Set();
-function it(e, o, s) {
-  var i = se(e),
-    a = e,
-    c = !L(e),
-    p = o.attrs,
-    d = undefined === p ? _ : p,
-    h = o.componentId,
-    f = undefined === h ? function (e, t) {
-      var n = "string" != typeof e ? "sc" : R(e);
-      ot[n] = (ot[n] || 0) + 1;
-      var r = "".concat(n, "-").concat($(v + n + ot[n]));
-      return t ? "".concat(t, "-").concat(r) : r;
-    }(o.displayName, o.parentComponentId) : h,
-    m = o.displayName,
-    y = undefined === m ? function (e) {
-      return L(e) ? "styled.".concat(e) : "Styled(".concat(B(e), ")");
-    }(e) : m,
-    g = o.displayName && o.componentId ? "".concat(R(o.displayName), "-").concat(o.componentId) : o.componentId || f,
-    S = i && a.attrs ? a.attrs.concat(d).filter(Boolean) : d,
-    w = o.shouldForwardProp;
-  if (i && a.shouldForwardProp) {
-    var b = a.shouldForwardProp;
-    if (o.shouldForwardProp) {
-      var E = o.shouldForwardProp;
-      w = function w(e, t) {
-        return b(e, t) && E(e, t);
-      };
-    } else w = b;
-  }
-  var N = new Qe(s, g, i ? a.componentStyle : undefined);
-  function O(e, o) {
-    return function (e, o, s) {
-      var i = e.attrs,
-        a = e.componentStyle,
-        c = e.defaultProps,
-        p = e.foldedComponentIds,
-        d = e.styledComponentId,
-        h = e.target,
-        f = React.useContext(et),
-        m = Ge(),
-        y = e.shouldForwardProp || m.shouldForwardProp;
-      "production" !== process.env.NODE_ENV && React.useDebugValue(d);
-      var v = I(o, f, c) || C,
-        g = function (e, n, r) {
-          for (var o, s = __assign(__assign({}, n), {
-              className: undefined,
-              theme: r
-            }), i = 0; i < e.length; i += 1) {
-            var a = oe(o = e[i]) ? o(s) : o;
-            for (var c in a) s[c] = "className" === c ? ie(s[c], a[c]) : "style" === c ? __assign(__assign({}, s[c]), a[c]) : a[c];
-          }
-          return n.className && (s.className = ie(s.className, n.className)), s;
-        }(i, o, v),
-        S = g.as || h,
-        w = {};
-      for (var b in g) undefined === g[b] || "$" === b[0] || "as" === b || "theme" === b && g.theme === v || ("forwardedAs" === b ? w.as = g.forwardedAs : y && !y(b, S) || (w[b] = g[b], y || "development" !== process.env.NODE_ENV || isPropValid(b) || st.has(b) || !A.has(S) || (st.add(b), console.warn('styled-components: it looks like an unknown prop "'.concat(b, '" is being sent through to the DOM, which will likely trigger a React console error. If you would like automatic filtering of unknown props, you can opt-into that behavior via `<StyleSheetManager shouldForwardProp={...}>` (connect an API like `@emotion/is-prop-valid`) or consider using transient props (`$` prefix for automatic filtering.)')))));
-      var E = function (e, t) {
-        var n = Ge(),
-          r = e.generateAndInjectStyles(t, n.styleSheet, n.stylis);
-        return "production" !== process.env.NODE_ENV && React.useDebugValue(r), r;
-      }(a, g);
-      "production" !== process.env.NODE_ENV && e.warnTooManyClasses && e.warnTooManyClasses(E);
-      var N = ie(p, d);
-      return E && (N += " " + E), g.className && (N += " " + g.className), w[L(S) && !A.has(S) ? "class" : "className"] = N, s && (w.ref = s), /*#__PURE__*/React.createElement(S, w);
-    }(D, e, o);
-  }
-  O.displayName = y;
-  var D = /*#__PURE__*/React.forwardRef(O);
-  return D.attrs = S, D.componentStyle = N, D.displayName = y, D.shouldForwardProp = w, D.foldedComponentIds = i ? ie(a.foldedComponentIds, a.styledComponentId) : "", D.styledComponentId = g, D.target = i ? a.target : e, Object.defineProperty(D, "defaultProps", {
-    get: function get() {
-      return this._foldedDefaultProps;
-    },
-    set: function set(e) {
-      this._foldedDefaultProps = i ? function (e) {
-        for (var t = [], n = 1; n < arguments.length; n++) t[n - 1] = arguments[n];
-        for (var r = 0, o = t; r < o.length; r++) le(e, o[r], true);
-        return e;
-      }({}, a.defaultProps, e) : e;
-    }
-  }), "production" !== process.env.NODE_ENV && (P(y, g), D.warnTooManyClasses = function (e, t) {
-    var n = {},
-      r = false;
-    return function (o) {
-      if (!r && (n[o] = true, Object.keys(n).length >= 200)) {
-        var s = t ? ' with the id of "'.concat(t, '"') : "";
-        console.warn("Over ".concat(200, " classes were generated for component ").concat(e).concat(s, ".\n") + "Consider using the attrs method, together with a style object for frequently changed styles.\nExample:\n  const Component = styled.div.attrs(props => ({\n    style: {\n      background: props.background,\n    },\n  }))`width: 100%;`\n\n  <Component />"), r = true, n = {};
-      }
-    };
-  }(y, g)), ue(D, function () {
-    return ".".concat(D.styledComponentId);
-  }), c && re(D, e, {
-    attrs: true,
-    componentStyle: true,
-    displayName: true,
-    foldedComponentIds: true,
-    shouldForwardProp: true,
-    styledComponentId: true,
-    target: true
-  }), D;
-}
-function at(e, t) {
-  for (var n = [e[0]], r = 0, o = t.length; r < o; r += 1) n.push(t[r], e[r + 1]);
-  return n;
-}
-var ct = function ct(e) {
-  return Object.assign(e, {
-    isCss: true
-  });
-};
-function lt(t) {
-  for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
-  if (oe(t) || ce(t)) return ct(Xe(at(_, __spreadArray([t], n, true))));
-  var o = t;
-  return 0 === n.length && 1 === o.length && "string" == typeof o[0] ? Xe(o) : ct(Xe(at(o, n)));
-}
-function ut(n, r, o) {
-  if (undefined === o && (o = C), !r) throw he(1, r);
-  var s = function s(t) {
-    for (var s = [], i = 1; i < arguments.length; i++) s[i - 1] = arguments[i];
-    return n(r, o, lt.apply(undefined, __spreadArray([t], s, false)));
-  };
-  return s.attrs = function (e) {
-    return ut(n, r, __assign(__assign({}, o), {
-      attrs: Array.prototype.concat(o.attrs, e).filter(Boolean)
-    }));
-  }, s.withConfig = function (e) {
-    return ut(n, r, __assign(__assign({}, o), e));
-  }, s;
-}
-var pt = function pt(e) {
-    return ut(it, e);
-  },
-  dt = pt;
-A.forEach(function (e) {
-  dt[e] = pt(e);
-});
-var ht = function () {
-  function e(e, t) {
-    this.rules = e, this.componentId = t, this.isStatic = Ze(e), ke.registerId(this.componentId + 1);
-  }
-  return e.prototype.createStyles = function (e, t, n, r) {
-    var o = r(ae(Xe(this.rules, t, n, r)), ""),
-      s = this.componentId + e;
-    n.insertRules(s, s, o);
-  }, e.prototype.removeStyles = function (e, t) {
-    t.clearRules(this.componentId + e);
-  }, e.prototype.renderStyles = function (e, t, n, r) {
-    e > 2 && ke.registerId(this.componentId + e), this.removeStyles(e, n), this.createStyles(e, t, n, r);
-  }, e;
-}();
-function ft(n) {
-  for (var o = [], s = 1; s < arguments.length; s++) o[s - 1] = arguments[s];
-  var i = lt.apply(undefined, __spreadArray([n], o, false)),
-    a = "sc-global-".concat($(JSON.stringify(i))),
-    c = new ht(i, a);
-  "production" !== process.env.NODE_ENV && P(a);
-  var _l = function l(e) {
-    var n = Ge(),
-      o = React.useContext(et),
-      s = React.useRef(n.styleSheet.allocateGSInstance(a)).current;
-    return "production" !== process.env.NODE_ENV && React.Children.count(e.children) && console.warn("The global style component ".concat(a, " was given child JSX. createGlobalStyle does not render children.")), "production" !== process.env.NODE_ENV && i.some(function (e) {
-      return "string" == typeof e && -1 !== e.indexOf("@import");
-    }) && console.warn("Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app."), n.styleSheet.server && function (e, n, r, o, s) {
-      if (c.isStatic) c.renderStyles(e, b, r, s);else {
-        var i = __assign(__assign({}, n), {
-          theme: I(n, o, _l.defaultProps)
-        });
-        c.renderStyles(e, i, r, s);
-      }
-    }(s, e, n.styleSheet, o, n.stylis), null;
-  };
-  return /*#__PURE__*/React.memo(_l);
-}
-"production" !== process.env.NODE_ENV && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://www.styled-components.com/docs/basics#react-native");
-var wt = "__sc-".concat(f, "__");
-"production" !== process.env.NODE_ENV && "test" !== process.env.NODE_ENV && "undefined" != typeof window && (window[wt] || (window[wt] = 0), 1 === window[wt] && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://s-c.sh/2BAXzed for more info."), window[wt] += 1);
-
-var _templateObject$1, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12;
-var Nav = dt.nav(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: ", ";\n  height: 100vh;\n  background-color: ", ";\n  display: flex;\n  flex-direction: column;\n  padding: 0;\n  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);\n  transition: width 0.3s ease;\n  z-index: 1000;\n  border-top-right-radius: 20px;\n  border-bottom-right-radius: 20px;\n"])), function (_ref) {
-  var $isCollapsed = _ref.$isCollapsed;
-  return $isCollapsed ? '60px' : '250px';
-}, function (_ref2) {
-  var theme = _ref2.theme;
-  return theme.colors.primary;
-});
-var Ul = dt.ul(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  list-style: none;\n  padding: 0;\n  margin: 0;\n  display: flex;\n  flex-direction: column;\n  gap: ", ";\n  background-color: ", ";\n  border-radius: ", ";\n"])), function (_ref3) {
-  var theme = _ref3.theme;
-  return theme.spacing.small;
-}, function (_ref4) {
-  var theme = _ref4.theme;
-  return theme.colors.secondaryBackground || '#f7f7f7';
-}, function (_ref5) {
-  var theme = _ref5.theme;
-  return theme.borderRadius.small || '10px';
-});
-var Li = dt.li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  padding: ", ";\n  color: ", ";\n  &:hover {\n    background-color: ", ";\n    cursor: pointer;\n  }\n"])), function (_ref6) {
-  var theme = _ref6.theme;
-  return theme.spacing.small;
-}, function (_ref7) {
-  var theme = _ref7.theme;
-  return theme.colors.secondary;
-}, function (_ref8) {
-  var theme = _ref8.theme;
-  return theme.colors.hover;
-});
-var HamburgerButton = dt.button(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  gap: 4px;\n\n  span {\n    width: 24px;\n    height: 2px;\n    background-color: ", ";\n  }\n"])), function (_ref9) {
-  var theme = _ref9.theme;
-  return theme.colors.secondary;
-});
-var StyledLink = dt.a(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n  text-decoration: none;\n  color: inherit;\n  display: flex;\n  align-items: center;\n\n  &:hover {\n    color: ", ";\n  }\n"])), function (_ref10) {
-  var theme = _ref10.theme;
-  return theme.colors.hoverLight || '#d3d3d3';
-});
-var Icon = dt.span(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n  font-size: ", ";\n  margin-right: ", ";\n"])), function (_ref11) {
-  var theme = _ref11.theme;
-  return theme.icons.size;
-}, function (_ref12) {
-  var theme = _ref12.theme;
-  return theme.spacing.small;
-});
-var Divider = dt.div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n  width: 90%;\n  height: 1px;\n  background-color: ", ";\n  margin: ", " auto;\n"])), function (_ref13) {
-  var theme = _ref13.theme;
-  return theme.colors.secondary;
-}, function (_ref14) {
-  var theme = _ref14.theme;
-  return theme.spacing.small;
-});
-var Header = dt.div(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: ", ";\n  margin-bottom: ", ";\n"])), function (_ref15) {
-  var theme = _ref15.theme;
-  return theme.spacing.small;
-}, function (_ref16) {
-  var theme = _ref16.theme;
-  return theme.spacing.small;
-});
-var Logo = dt.img(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n  max-height: 40px;\n  margin-right: auto;\n  display: ", ";\n  transition:\n    display 0.3s ease,\n    opacity 0.3s ease;\n  opacity: ", ";\n"])), function (_ref17) {
-  var $isCollapsed = _ref17.$isCollapsed;
-  return $isCollapsed ? 'none' : 'block';
-}, function (_ref18) {
-  var $isCollapsed = _ref18.$isCollapsed;
-  return $isCollapsed ? 0 : 1;
-});
-var SubUl = dt.ul(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n  list-style: none;\n  padding: 0 16px;\n  margin: 0;\n  display: flex;\n  flex-direction: column;\n  gap: ", ";\n"])), function (_ref19) {
-  var theme = _ref19.theme;
-  return theme.spacing.xsmall;
-});
-var SubLi = dt.li(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n  padding: ", " 0;\n  color: ", ";\n  font-size: ", ";\n"])), function (_ref20) {
-  var theme = _ref20.theme;
-  return theme.spacing.xsmall;
-}, function (_ref21) {
-  var theme = _ref21.theme;
-  return theme.colors.secondary;
-}, function (_ref22) {
-  var theme = _ref22.theme;
-  return theme.fonts.size.small;
-});
-var ToggleButton = dt.button(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n  background: none;\n  border: none;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  margin-left: auto;\n  color: ", ";\n\n  &:hover {\n    color: ", ";\n  }\n"])), function (_ref23) {
-  var theme = _ref23.theme;
-  return theme.colors.secondary;
-}, function (_ref24) {
-  var theme = _ref24.theme;
-  return theme.colors.hover;
-});
-
 var ArrowRightIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path", {
   d: "m10 17 5-5-5-5z"
 }), 'ArrowRight');
@@ -9871,12 +9762,16 @@ var ArrowDropDownIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path",
 
 var Menu = function Menu(_ref) {
   var _ref$config = _ref.config,
-    config = _ref$config === undefined ? {} : _ref$config,
-    theme = _ref.theme,
+    config = _ref$config === undefined ? {
+      items: [],
+      logo: ''
+    } : _ref$config,
+    _ref$theme = _ref.theme,
+    theme = _ref$theme === undefined ? {} : _ref$theme,
     externalIsCollapsed = _ref.isCollapsed,
     toggleMenu = _ref.toggleMenu,
     _ref$LinkComponent = _ref.LinkComponent,
-    LinkComponent = _ref$LinkComponent === undefined ? "a" : _ref$LinkComponent;
+    LinkComponent = _ref$LinkComponent === undefined ? 'a' : _ref$LinkComponent;
   var _useState = React.useState(false),
     _useState2 = _slicedToArray(_useState, 2),
     internalIsCollapsed = _useState2[0],
@@ -9900,9 +9795,6 @@ var Menu = function Menu(_ref) {
       return _objectSpread2(_objectSpread2({}, prev), {}, _defineProperty$1({}, index, !prev[index]));
     });
   };
-  var finalConfig = _objectSpread2(_objectSpread2(_objectSpread2({}, menuConfig), config), {}, {
-    items: config.items || menuConfig.items
-  });
   var handleLinkClick = function handleLinkClick(e, item, index) {
     if (item.children) {
       e.preventDefault();
@@ -9914,7 +9806,7 @@ var Menu = function Menu(_ref) {
   }, /*#__PURE__*/React.createElement(Nav, {
     $isCollapsed: isCollapsed
   }, /*#__PURE__*/React.createElement(Header, null, /*#__PURE__*/React.createElement(Logo, {
-    src: finalConfig.logo,
+    src: config.logo,
     alt: "Logo",
     $isCollapsed: isCollapsed
   }), /*#__PURE__*/React.createElement(HamburgerButton, {
@@ -9931,18 +9823,18 @@ var Menu = function Menu(_ref) {
     style: {
       width: '10px'
     }
-  }))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Ul, null, finalConfig.items.map(function (item, index) {
+  }))), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement(Ul, null, config.items.map(function (item, index) {
     return /*#__PURE__*/React.createElement(React.Fragment, {
       key: index
     }, /*#__PURE__*/React.createElement(Li, null, item.link ? /*#__PURE__*/React.createElement(LinkComponent, {
       href: item.link,
       passHref: true
-    }, /*#__PURE__*/React.createElement(StyledLink, null, /*#__PURE__*/React.createElement(Icon, null, /*#__PURE__*/React.createElement(iconMap[item.icon] || "span")), !isCollapsed && item.label)) : /*#__PURE__*/React.createElement(StyledLink, {
+    }, /*#__PURE__*/React.createElement(StyledLink, null, /*#__PURE__*/React.createElement(Icon, null, item.icon && /*#__PURE__*/React.isValidElement(/*#__PURE__*/React.createElement(item.icon, null)) ? /*#__PURE__*/React.createElement(item.icon, null) : null), !isCollapsed && item.label)) : /*#__PURE__*/React.createElement(StyledLink, {
       as: "button",
       onClick: function onClick(e) {
         return handleLinkClick(e, item, index);
       }
-    }, /*#__PURE__*/React.createElement(Icon, null, /*#__PURE__*/React.createElement(iconMap[item.icon] || "span")), !isCollapsed && item.label), !isCollapsed && item.children && /*#__PURE__*/React.createElement(ToggleButton, {
+    }, /*#__PURE__*/React.createElement(Icon, null, item.icon && /*#__PURE__*/React.isValidElement(/*#__PURE__*/React.createElement(item.icon, null)) ? /*#__PURE__*/React.createElement(item.icon, null) : null), !isCollapsed && item.label), !isCollapsed && item.children && /*#__PURE__*/React.createElement(ToggleButton, {
       onClick: function onClick() {
         return toggleSubmenu(index);
       }
@@ -9950,7 +9842,7 @@ var Menu = function Menu(_ref) {
       return /*#__PURE__*/React.createElement(SubLi, {
         key: subIndex
       }, /*#__PURE__*/React.createElement(LinkComponent, {
-        href: subitem.link || "#",
+        href: subitem.link || '#',
         passHref: true
       }, /*#__PURE__*/React.createElement(StyledLink, null, "- ", subitem.label)));
     })));
@@ -9960,7 +9852,7 @@ Menu.propTypes = {
   config: PropTypes.shape({
     items: PropTypes.arrayOf(PropTypes.shape({
       label: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
+      icon: PropTypes.elementType,
       link: PropTypes.string,
       children: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string.isRequired,
@@ -10160,7 +10052,7 @@ function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbol
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (undefined !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (undefined !== e) { var i = e.call(t, r); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function Tree2Element(tree) {
   return tree && tree.map((node, i) => /*#__PURE__*/React.createElement(node.tag, _objectSpread({
     key: i
@@ -10202,13 +10094,13 @@ function IconBase(props) {
 
 // THIS FILE IS AUTO GENERATED
 function LuFileUp (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"},"child":[]},{"tag":"path","attr":{"d":"M14 2v4a2 2 0 0 0 2 2h4"},"child":[]},{"tag":"path","attr":{"d":"M12 12v6"},"child":[]},{"tag":"path","attr":{"d":"m15 15-3-3-3 3"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"},"child":[]},{"tag":"path","attr":{"d":"M14 2v4a2 2 0 0 0 2 2h4"},"child":[]},{"tag":"path","attr":{"d":"M12 12v6"},"child":[]},{"tag":"path","attr":{"d":"m15 15-3-3-3 3"},"child":[]}]})(props);
 }function LuFile (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"},"child":[]},{"tag":"path","attr":{"d":"M14 2v4a2 2 0 0 0 2 2h4"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"},"child":[]},{"tag":"path","attr":{"d":"M14 2v4a2 2 0 0 0 2 2h4"},"child":[]}]})(props);
 }function LuUpload (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"},"child":[]},{"tag":"polyline","attr":{"points":"17 8 12 3 7 8"},"child":[]},{"tag":"line","attr":{"x1":"12","x2":"12","y1":"3","y2":"15"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"},"child":[]},{"tag":"polyline","attr":{"points":"17 8 12 3 7 8"},"child":[]},{"tag":"line","attr":{"x1":"12","x2":"12","y1":"3","y2":"15"},"child":[]}]})(props);
 }function LuX (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M18 6 6 18"},"child":[]},{"tag":"path","attr":{"d":"m6 6 12 12"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":"2","strokeLinecap":"round","strokeLinejoin":"round"},"child":[{"tag":"path","attr":{"d":"M18 6 6 18"},"child":[]},{"tag":"path","attr":{"d":"m6 6 12 12"},"child":[]}]})(props);
 }
 
 function _nullishCoalesce$1(lhs, rhsFn) {
@@ -11021,6 +10913,18 @@ var Form = function Form(_ref) {
           isInvalid: !!errors[subField.name],
           errorMessage: errors[subField.name],
           theme: theme
+        }), subField.type === 'date' && /*#__PURE__*/React.createElement(TextField, {
+          label: subField.label,
+          value: formValues[subField.name],
+          onChange: function onChange(e) {
+            return handleChange(subField.name, e.target.value);
+          },
+          placeholder: subField.placeholder,
+          isRequired: subField.isRequired,
+          isInvalid: !!errors[subField.name],
+          errorMessage: errors[subField.name],
+          theme: theme,
+          type: subField.type
         }), subField.type === 'select' && /*#__PURE__*/React.createElement(SelectField, {
           label: subField.label,
           value: formValues[subField.name],
@@ -11043,7 +10947,7 @@ var Form = function Form(_ref) {
         }));
       }));
     }
-    if (field.type === 'text' || field.type === 'select' || field.type === 'file' || field.type === 'drop') {
+    if (field.type === 'text' || field.type === 'date' || field.type === 'select' || field.type === 'file' || field.type === 'drop') {
       return /*#__PURE__*/React.createElement(React.Fragment, {
         key: field.name
       }, field.type === 'text' && /*#__PURE__*/React.createElement(TextField, {
@@ -11057,6 +10961,18 @@ var Form = function Form(_ref) {
         isInvalid: !!errors[field.name],
         errorMessage: errors[field.name],
         theme: theme
+      }), field.type === 'date' && /*#__PURE__*/React.createElement(TextField, {
+        label: field.label,
+        value: formValues[field.name],
+        onChange: function onChange(e) {
+          return handleChange(field.name, e.target.value);
+        },
+        placeholder: field.placeholder,
+        isRequired: field.isRequired,
+        isInvalid: !!errors[field.name],
+        errorMessage: errors[field.name],
+        theme: theme,
+        type: field.type
       }), field.type === 'select' && /*#__PURE__*/React.createElement(SelectField, {
         label: field.label,
         value: formValues[field.name],
@@ -11118,7 +11034,7 @@ Form.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.shape({
     name: PropTypes.string.isRequired,
     label: PropTypes.string,
-    type: PropTypes.oneOf(['text', 'select', 'button', 'file', 'drop']).isRequired,
+    type: PropTypes.oneOf(['text', 'date', 'select', 'button', 'file', 'drop']).isRequired,
     placeholder: PropTypes.string,
     defaultValue: PropTypes.string,
     options: PropTypes.array,
@@ -11139,11 +11055,11 @@ Form.defaultProps = {
 
 // THIS FILE IS AUTO GENERATED
 function HiChevronLeft (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"fillRule":"evenodd","d":"M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z","clipRule":"evenodd"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"fillRule":"evenodd","d":"M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z","clipRule":"evenodd"},"child":[]}]})(props);
 }function HiChevronRight (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 24 24","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"fillRule":"evenodd","d":"M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z","clipRule":"evenodd"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 24 24","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"fillRule":"evenodd","d":"M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z","clipRule":"evenodd"},"child":[]}]})(props);
 }function HiMiniEllipsisHorizontal (props) {
-  return GenIcon({"tag":"svg","attr":{"viewBox":"0 0 20 20","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"d":"M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"},"child":[]}]})(props);
+  return GenIcon({"attr":{"viewBox":"0 0 20 20","fill":"currentColor","aria-hidden":"true"},"child":[{"tag":"path","attr":{"d":"M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"},"child":[]}]})(props);
 }
 
 var _createRecipeContext = react.createRecipeContext({

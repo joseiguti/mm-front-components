@@ -124,6 +124,21 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         theme={theme}
                       />
                     )}
+                    {subField.type === 'date' && (
+                      <TextField
+                        label={subField.label}
+                        value={formValues[subField.name]}
+                        onChange={(e) =>
+                          handleChange(subField.name, e.target.value)
+                        }
+                        placeholder={subField.placeholder}
+                        isRequired={subField.isRequired}
+                        isInvalid={!!errors[subField.name]}
+                        errorMessage={errors[subField.name]}
+                        theme={theme}
+                        type={subField.type}
+                      />
+                    )}
                     {subField.type === 'select' && (
                       <SelectField
                         label={subField.label}
@@ -155,6 +170,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 
           if (
             field.type === 'text' ||
+            field.type === 'date' ||
             field.type === 'select' ||
             field.type === 'file' ||
             field.type === 'drop'
@@ -171,6 +187,19 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     isInvalid={!!errors[field.name]}
                     errorMessage={errors[field.name]}
                     theme={theme}
+                  />
+                )}
+                {field.type === 'date' && (
+                  <TextField
+                    label={field.label}
+                    value={formValues[field.name]}
+                    onChange={(e) => handleChange(field.name, e.target.value)}
+                    placeholder={field.placeholder}
+                    isRequired={field.isRequired}
+                    isInvalid={!!errors[field.name]}
+                    errorMessage={errors[field.name]}
+                    theme={theme}
+                    type={field.type}
                   />
                 )}
                 {field.type === 'select' && (
@@ -254,7 +283,7 @@ Form.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
-        type: PropTypes.oneOf(['text', 'select', 'button', 'file', 'drop'])
+        type: PropTypes.oneOf(['text', 'date', 'select', 'button', 'file', 'drop'])
           .isRequired,
         placeholder: PropTypes.string,
         defaultValue: PropTypes.string,

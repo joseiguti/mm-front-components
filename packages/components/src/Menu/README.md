@@ -1,5 +1,5 @@
 
-A highly customizable and collapsible side menu built with React and Styled Components.
+A highly customizable and collapsible side menu built with React and Styled Components.  
 [Back to Table of Contents](#table-of-contents)
 
 ## Features
@@ -7,7 +7,7 @@ A highly customizable and collapsible side menu built with React and Styled Comp
 - **Collapsible Sidebar**: Expand or collapse the menu with a toggle button.
 - **Nested Submenus**: Support for parent menu items with child items.
 - **Theming**: Easily customizable through a JSON configuration and theming support.
-- **Icons**: Leverages Material Design icons for visual representation.
+- **Icons**: Supports React component-based icons for better performance.
 - **JSON Configuration**: Fully customizable menu via a JSON file.
 
 ---
@@ -19,67 +19,36 @@ Import the `Menu` component and use it in your project:
 ```javascript
 import React from 'react';
 import { Menu } from 'web-monorepo-ui-components';
+import { FaHome, FaCog } from 'react-icons/fa';
+import Link from 'next/link';
+
+const customConfig = {
+  logo: 'https://example.com/my-logo.png',
+  items: [
+    {
+      label: 'Home',
+      icon: FaHome,
+      link: '/',
+      children: [
+        { label: 'Sub Home 1', link: '/sub-home-1' },
+        { label: 'Sub Home 2', link: '/sub-home-2' },
+      ],
+    },
+    { label: 'Settings', icon: FaCog, link: '/settings' },
+  ],
+};
+
+const CustomLink = ({ href, children }) => (
+  <Link href={href} legacyBehavior>
+    <a>{children}</a>
+  </Link>
+);
 
 const App = () => {
-  const customConfig = {
-    logo: 'https://example.com/my-logo.png',
-    items: [
-      {
-        label: 'Home',
-        icon: 'HomeIcon',
-        link: '/',
-        children: [
-          { label: 'Sub Home 1', link: '/sub-home-1' },
-          { label: 'Sub Home 2', link: '/sub-home-2' },
-        ],
-      },
-      { label: 'Settings', icon: 'SettingsIcon', link: '/settings' },
-    ],
-  };
-
-  const CustomLink = ({ href, children }) => (
-    <Link href={href} legacyBehavior>
-      <a>{children}</a>
-    </Link>
-  );
-
   return <Menu config={customConfig} LinkComponent={CustomLink} />;
 };
 
 export default App;
-```
-
----
-
-## Configuration
-
-The menu can be customized through a JSON object passed to the `config` prop. Below is an example of the configuration:
-
-```json
-{
-  "logo": "https://via.placeholder.com/150",
-  "items": [
-    {
-      "label": "Home",
-      "icon": "HomeIcon",
-      "link": "/",
-      "children": [
-        { "label": "Sub Home 1", "link": "/sub-home-1" },
-        { "label": "Sub Home 2", "link": "/sub-home-2" }
-      ]
-    },
-    {
-      "label": "Settings",
-      "icon": "SettingsIcon",
-      "link": "/settings"
-    },
-    {
-      "label": "Messages",
-      "icon": "MailIcon",
-      "link": "/messages"
-    }
-  ]
-}
 ```
 
 ---
@@ -90,7 +59,7 @@ The menu can be customized through a JSON object passed to the `config` prop. Be
 
 - **Type**: `object`
 - **Description**: The configuration object for the menu.
-- **Default**: `{}`
+- **Default**: `{ items: [], logo: '' }`
 
 ### `theme`
 

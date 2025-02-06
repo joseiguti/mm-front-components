@@ -1,6 +1,6 @@
 {
   "name": "web-monorepo-ui-components",
-  "version": "1.0.45",
+  "version": "1.0.48",
   "type": "module",
   "private": false,
   "workspaces": [

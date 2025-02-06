@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Menu } from './index';
-import { FaSave } from 'react-icons/fa';
+
+import { BsMessenger } from "react-icons/bs";
+import { BsHouseDoorFill } from "react-icons/bs";
+import { BsWrench } from "react-icons/bs";
+
 import theme from '../theme';
 
 export default {
@@ -9,15 +13,18 @@ export default {
 };
 
 const Template = (args) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(args.isCollapsed ?? false);
 
   const toggleMenu = () => {
     setIsCollapsed((prev) => !prev);
   };
 
+  console.log(isCollapsed)
+
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ flexShrink: 0 }}>
+
         <Menu {...args} isCollapsed={isCollapsed} toggleMenu={toggleMenu} />
       </div>
 
@@ -48,21 +55,21 @@ Expanded.args = {
     items: [
       {
         label: 'Home',
-        icon: FaSave,
+        icon: BsHouseDoorFill,
         link: '/',
         children: [
-          { label: 'Ayuda', link: '/help' },
-          { label: 'Información', link: '/info' }
+          { label: 'Help', link: '/help' },
+          { label: 'Information', link: '/info' }
         ]
       },
       {
         label: 'Settings',
-        icon: FaSave,
+        icon: BsWrench,
         link: '/settings'
       },
       {
         label: 'Messages',
-        icon: FaSave,
+        icon: BsMessenger,
         link: '/messages'
       }
     ],
@@ -74,11 +81,23 @@ Collapsed.args = {
   config: {
     logo: "https://via.placeholder.com/150",
     items: [
-      { label: 'Home', icon: FaSave, link: '/' },
-      { label: 'Settings', icon: FaSave, link: '/settings' },
-      { label: 'Messages', icon: FaSave, link: '/messages' },
+      {
+        label: 'Home',
+        icon: BsHouseDoorFill,
+        link: '/'
+      },
+      {
+        label: 'Settings',
+        icon: BsWrench,
+        link: '/settings'
+      },
+      {
+        label: 'Messages',
+        icon: BsMessenger,
+        link: '/messages'
+      },
     ],
   },
   theme: theme,
-  isCollapsed: false,
+  isCollapsed: true,
 };
