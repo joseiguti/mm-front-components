@@ -1,1 +1,1 @@
-# my-ui-components
+# mm-front-components
