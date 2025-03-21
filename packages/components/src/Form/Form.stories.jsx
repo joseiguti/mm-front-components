@@ -5,6 +5,7 @@ import {
   RiCheckLine,
   RiCloseFill,
   RiSave2Fill,
+  RiMailLine
 } from 'react-icons/ri';
 
 export default {
@@ -25,13 +26,14 @@ Validation.args = {
       label: 'Username',
       type: 'text',
       placeholder: 'Enter your username',
-      defaultValue: '',
+      value: 'joseigutierrez',
       errorMessage: 'Please fill this field',
       isRequired: true,
     },
     {
       name: 'email',
       label: 'Email',
+      value: 'joseigutierrez@gmail.com',
       type: 'text',
       placeholder: 'Enter your email',
       validate: (value) => {
@@ -53,12 +55,60 @@ Validation.args = {
         { value: 'angular', label: 'Angular' },
       ],
       placeholder: 'Select one...',
-      defaultValue: '',
     },
     {
       type: 'button',
       label: 'Submit',
       isSubmit: true,
+    },
+  ],
+  onSubmit: (values) => {
+    alert(`Form submitted with values: ${JSON.stringify(values)}`);
+  },
+};
+
+
+export const UpdateFields = Template.bind({});
+UpdateFields.args = {
+  fields: [
+    {
+      name: 'username',
+      label: 'Username',
+      type: 'text',
+      placeholder: 'Enter your username',
+      errorMessage: 'Please fill this field',
+      isRequired: true,
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'text',
+      placeholder: 'Enter your email',
+      isRequired: true,
+    },
+    {
+      type: 'button',
+      label: 'Change email...',
+      isSubmit: false,
+      size: 'lg',
+      icon: <RiMailLine />,
+      theme: {
+        colors: {
+          buttonBg: 'blue.800',
+          buttonText: 'white',
+        },
+      },
+      onClick: (_, formValues, setFormValues) => {
+        const randomEmails = [
+          'test1@example.com',
+          'random2@mail.com',
+          'user3@domain.com',
+          'sample4@site.org',
+          'person5@web.net',
+        ];
+        const randomEmail = randomEmails[Math.floor(Math.random() * randomEmails.length)];
+        setFormValues((prev) => ({ ...prev, email: randomEmail }));
+      },
     },
   ],
   onSubmit: (values) => {
@@ -101,8 +151,8 @@ ajaxCall.args = {
       name: 'username',
       label: 'Username',
       type: 'text',
+      value: 'joseigutierrez',
       placeholder: 'Enter your username',
-      defaultValue: '',
       errorMessage: 'Please fill this field',
       isRequired: true,
     },

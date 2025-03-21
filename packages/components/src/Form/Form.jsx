@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '../TextField';
 import SelectField from '../SelectField';
@@ -8,50 +8,57 @@ import FileDropZone from '../FileDropZone';
 import { Box, Flex, Stack } from '@chakra-ui/react';
 
 export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
+  // 🔹 Inicializar valores desde `fields` usando `value`
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {
-        acc[field.name] = field.defaultValue || '';
+        acc[field.name] = field.value || ''; // 🔹 Usamos `value` en lugar de `defaultValue`
       }
       return acc;
     }, {})
   );
 
-  const [errors, setErrors] = useState(() =>
-    fields.flat().reduce((acc, field) => {
-      acc[field.name] = '';
-      return acc;
-    }, {})
-  );
+  // 🔹 Si `fields` cambia, actualizamos `formValues`
+  useEffect(() => {
+    setFormValues((prevValues) => {
+      const newValues = fields.flat().reduce((acc, field) => {
+        if (field.name) {
+          const newValue = field.value ?? prevValues[field.name] ?? '';
+          if (newValue !== prevValues[field.name]) {
+            acc[field.name] = newValue;
+          }
+        }
+        return acc;
+      }, {});
 
+      return Object.keys(newValues).length ? { ...prevValues, ...newValues } : prevValues;
+    });
+  }, [fields]);
+
+  // 🔹 Estado de errores
+  const [errors, setErrors] = useState({});
+
+  // 🔹 Resetear formulario
   const resetForm = () => {
     setFormValues(
       fields.flat().reduce((acc, field) => {
         if (field.name) {
-          acc[field.name] = field.defaultValue || '';
+          acc[field.name] = field.value || ''; // 🔹 Reiniciar valores
         }
         return acc;
       }, {})
     );
-    setErrors(
-      fields.flat().reduce((acc, field) => {
-        acc[field.name] = '';
-        return acc;
-      }, {})
-    );
+    setErrors({});
   };
 
+  // 🔹 Validar formulario
   const validate = () => {
     const newErrors = {};
     fields.flat().forEach((field) => {
       const value = formValues[field.name];
 
       if (field.isRequired && !value) {
-        if (field.errorMessage) {
-          newErrors[field.name] = field.errorMessage;
-        } else {
-          newErrors[field.name] = `${field.label || 'This field'} is required.`;
-        }
+        newErrors[field.name] = field.errorMessage || `${field.label || 'This field'} is required.`;
       }
 
       if (field.validate) {
@@ -66,28 +73,16 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // 🔹 Manejar cambios en los inputs
   const handleChange = (name, value) => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
-  const filterUndefinedFields = (values) => {
-    const filteredValues = {};
-    Object.keys(values).forEach((key) => {
-      if (key && key !== 'undefined') {
-        filteredValues[key] = values[key];
-      }
-    });
-    return filteredValues;
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validate()) {
-      const filteredValues = filterUndefinedFields(formValues);
-      if (onSubmit) {
-        onSubmit(filteredValues);
-      }
+      onSubmit?.(formValues);
     }
   };
 
@@ -97,11 +92,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
         {fields.map((field) => {
           if (Array.isArray(field)) {
             return (
-              <Flex
-                key={field.map((f) => f.name || f.label).join('-')}
-                gap="0"
-                justify="space-between"
-              >
+              <Flex key={field.map((f) => f.name || f.label).join('-')} gap="0" justify="space-between">
                 {field.map((subField) => (
                   <Box
                     px="2"
@@ -114,9 +105,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       <TextField
                         label={subField.label}
                         value={formValues[subField.name]}
-                        onChange={(e) =>
-                          handleChange(subField.name, e.target.value)
-                        }
+                        onChange={(e) => handleChange(subField.name, e.target.value)}
                         placeholder={subField.placeholder}
                         isRequired={subField.isRequired}
                         isInvalid={!!errors[subField.name]}
@@ -128,9 +117,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       <TextField
                         label={subField.label}
                         value={formValues[subField.name]}
-                        onChange={(e) =>
-                          handleChange(subField.name, e.target.value)
-                        }
+                        onChange={(e) => handleChange(subField.name, e.target.value)}
                         placeholder={subField.placeholder}
                         isRequired={subField.isRequired}
                         isInvalid={!!errors[subField.name]}
@@ -157,9 +144,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         label={subField.label}
                         maxWidth={subField.maxWidth}
                         accept={subField.accept}
-                        onFileChange={(file) =>
-                          handleChange(subField.name, file)
-                        }
+                        onFileChange={(file) => handleChange(subField.name, file)}
                       />
                     )}
                   </Box>
@@ -168,13 +153,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
             );
           }
 
-          if (
-            field.type === 'text' ||
-            field.type === 'date' ||
-            field.type === 'select' ||
-            field.type === 'file' ||
-            field.type === 'drop'
-          ) {
+          if (['text', 'date', 'select', 'file', 'drop'].includes(field.type)) {
             return (
               <React.Fragment key={field.name}>
                 {field.type === 'text' && (
@@ -257,8 +236,8 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                   button.isSubmit
                     ? handleSubmit
                     : button.isReset
-                      ? resetForm
-                      : button.onClick
+                      ? () => resetForm()
+                      : (event) => button.onClick?.(event, formValues, setFormValues)
                 }
                 icon={button.icon}
                 theme={button.theme}
@@ -286,7 +265,7 @@ Form.propTypes = {
         type: PropTypes.oneOf(['text', 'date', 'select', 'button', 'file', 'drop'])
           .isRequired,
         placeholder: PropTypes.string,
-        defaultValue: PropTypes.string,
+        value: PropTypes.string,
         options: PropTypes.array,
         isInvalid: PropTypes.bool,
         errorMessage: PropTypes.string,

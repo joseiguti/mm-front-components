@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
 import {
   SelectRoot,
@@ -14,94 +13,67 @@ import { createListCollection } from '@chakra-ui/react';
 export const StyledBox = (props) => <Box {...props} pb={4} borderRadius="md" />;
 
 export const StyledSelect = ({
-  label,
-  options,
-  isDisabled,
-  isInvalid,
-  isRequired,
-  isMultiple,
-  ...props
-}) => {
-  const [value, setValue] = useState([]);
+                               label,
+                               value,
+                               onChange,
+                               options,
+                               isDisabled,
+                               isInvalid,
+                               isRequired,
+                               isMultiple,
+                               placeholder,
+                               errorMessage,
+                               labelColor,
+                               size,
+                             }) => {
+  const selectOptions = createListCollection({ items: options });
 
-  const selectOptions = createListCollection({
-    items: options,
-  });
+  // 🔹 Asegurar que `value` sea correcto
+  const formattedValue = isMultiple
+    ? Array.isArray(value)
+      ? value
+      : []
+    : value || '';
 
-  const handleValueChange = (selectedItem) => {
-    const value = Array.isArray(selectedItem.value)
-      ? selectedItem.value[0]
-      : selectedItem.value;
-
-    setValue(value);
-    if (props.onChange) {
-      props.onChange(value);
+  // 🔹 Manejo de cambios en selección
+  const handleValueChange = (selectedItems) => {
+    if (isMultiple) {
+      const selectedValues = Array.isArray(selectedItems)
+        ? selectedItems.map((item) => item.value)
+        : [];
+      onChange?.(selectedValues);
     } else {
-      console.warn('props.onChange is undefined!');
+      onChange?.(selectedItems.value);
     }
   };
 
   return (
-    <>
-      {isInvalid ? (
-        <Field
-          disabled={isDisabled}
-          invalid
-          errorText={props.errorMessage || 'Error'}
-          label={label}
-          css={{ color: props.labelColor }}
-          {...(isRequired && { required: true })}
-        >
-          <SelectRoot
-            collection={selectOptions}
-            size={props.size}
-            defaultValue={props.defaultValue}
-            onValueChange={(value) => {
-              handleValueChange(value);
-            }}
-            {...(isMultiple && { multiple: true })}
-          >
-            <SelectTrigger>
-              <SelectValueText placeholder={props.placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-              {selectOptions.items.map((record) => (
-                <SelectItem item={record} key={record.value}>
-                  {record.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </SelectRoot>
-        </Field>
-      ) : (
-        <Field
-          disabled={isDisabled}
-          label={label}
-          css={{ color: props.labelColor }}
-          {...(isRequired && { required: true })}
-        >
-          <SelectRoot
-            collection={selectOptions}
-            size={props.size}
-            defaultValue={props.defaultValue}
-            onValueChange={(value) => {
-              handleValueChange(value);
-            }}
-            {...(isMultiple && { multiple: true })}
-          >
-            <SelectTrigger>
-              <SelectValueText placeholder={props.placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-              {selectOptions.items.map((record) => (
-                <SelectItem item={record} key={record.value}>
-                  {record.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </SelectRoot>
-        </Field>
-      )}
-    </>
+    <Field
+      disabled={isDisabled}
+      invalid={isInvalid}
+      errorText={isInvalid ? errorMessage || 'Error' : undefined}
+      label={label}
+      css={{ color: labelColor }}
+      {...(isRequired && { required: true })}
+    >
+      <SelectRoot
+        collection={selectOptions}
+        size={size}
+        value={formattedValue} // 🔹 Usamos `value`
+        onValueChange={handleValueChange}
+        {...(isMultiple && { multiple: true })}
+      >
+        <SelectTrigger>
+          <SelectValueText placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {selectOptions.items.map((record) => (
+            <SelectItem item={record} key={record.value}>
+              {record.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </SelectRoot>
+    </Field>
   );
 };

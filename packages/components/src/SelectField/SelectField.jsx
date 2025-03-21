@@ -4,27 +4,25 @@ import { StyledBox, StyledSelect } from './SelectField.styles.jsx';
 import defaultTheme from '../themeForm';
 
 export const SelectField = ({
-  label = '',
-  defaultValue = '',
-  onChange,
-  options = [],
-  placeholder = 'Select an option',
-  errorMessage = '',
-  isInvalid = false,
-  isDisabled = false,
-  isRequired = false,
-  isMultiple = false,
-  theme = defaultTheme,
-}) => {
+                              label = '',
+                              value = '',
+                              onChange,
+                              options = [],
+                              placeholder = 'Select an option',
+                              errorMessage = '',
+                              isInvalid = false,
+                              isDisabled = false,
+                              isRequired = false,
+                              isMultiple = false,
+                              theme = defaultTheme,
+                            }) => {
   const mergedTheme = { ...defaultTheme, ...theme };
-
-  console.log(mergedTheme);
 
   return (
     <StyledBox>
       <StyledSelect
         label={label}
-        defaultValue={defaultValue}
+        value={value} // 🔹 Se usa `value` en lugar de `defaultValue`
         onChange={onChange}
         options={options}
         placeholder={placeholder}
@@ -46,7 +44,7 @@ export const SelectField = ({
 
 SelectField.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]), // 🔹 Soporta arrays para `isMultiple`
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({

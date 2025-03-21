@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from './TextField';
 
 export default {
@@ -7,7 +7,11 @@ export default {
 };
 
 const Template = (args) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(args.value || '');
+
+  useEffect(() => {
+    setValue(args.value || '');
+  }, [args.value]);
 
   return (
     <TextField
@@ -22,6 +26,7 @@ export const Default = Template.bind({});
 Default.args = {
   label: 'Default Label',
   placeholder: 'Enter text',
+  value: 'Default value',
 };
 
 export const Required = Template.bind({});

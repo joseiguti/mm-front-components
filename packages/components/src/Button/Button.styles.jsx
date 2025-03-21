@@ -2,68 +2,55 @@ import React from 'react';
 import { Button } from '../../../../src/components/ui/button';
 import themeForm from '../themeForm';
 
-export const StyledButton = (props) => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (props.onSubmit && !props.isDisabled) {
-      props.onSubmit();
+export const StyledButton = ({
+                               label,
+                               isLoading = false,
+                               isDisabled = false,
+                               isSubmit = false,
+                               onClick,
+                               onSubmit,
+                               icon,
+                               size = 'md',
+                               loadingText = 'Loading...',
+                               theme = themeForm, // 🔹 Mantener el tema correctamente
+                             }) => {
+  const mergedTheme = { ...themeForm, ...theme };
+
+  const handleEvent = (event) => {
+    if (isDisabled) return; // 🔹 Evita interacción si está deshabilitado
+
+    if (isSubmit && onSubmit) {
+      event.preventDefault();
+      onSubmit(event);
+    } else if (!isSubmit && onClick) {
+      onClick(event);
     }
   };
-
-  const handleClick = () => {
-    if (props.onClick && !props.isDisabled) {
-      props.onClick();
-    }
-  };
-
-  const theme = props.theme ? { ...themeForm, ...props.theme } : themeForm;
-
-  if (props.isLoading) {
-    return (
-      <Button
-        loading
-        loadingText={props.loadingText || 'Loading...'}
-        bg={themeForm.colors.buttonDisabled}
-        color={themeForm.colors.buttonText}
-        css={{
-          minWidth: themeForm.buttonMinWidth,
-          maxWidth: themeForm.buttonMaxWidth,
-        }}
-        size={props.size}
-        type={props.isSubmit ? 'submit' : 'button'}
-      >
-        {props.label}
-      </Button>
-    );
-  }
 
   return (
     <Button
-      onClick={props.isSubmit ? undefined : handleClick}
-      onSubmit={props.isSubmit ? handleSubmit : undefined}
-      type={props.isSubmit ? 'submit' : 'button'}
-      bg={
-        props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonBg
-      }
-      color={theme.colors.buttonText}
+      isLoading={isLoading}
+      loadingText={loadingText}
+      onClick={handleEvent} // 🔹 Unifica `onClick` y `onSubmit`
+      type={isSubmit ? 'submit' : 'button'}
+      bg={isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonBg}
+      color={mergedTheme.colors.buttonText}
       css={{
-        minWidth: themeForm.buttonMinWidth,
-        maxWidth: themeForm.buttonMaxWidth,
+        minWidth: mergedTheme.buttonMinWidth,
+        maxWidth: mergedTheme.buttonMaxWidth,
       }}
-      isDisabled={props.isDisabled}
+      isDisabled={isDisabled}
       _hover={{
-        bg: props.isDisabled
-          ? theme.colors.buttonDisabled
-          : theme.colors.buttonHover,
+        bg: isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonHover,
       }}
       _disabled={{
         cursor: 'not-allowed',
-        bg: themeForm.colors.buttonDisabled,
+        bg: mergedTheme.colors.buttonDisabled,
       }}
-      size={props.size}
+      size={size}
     >
-      {props.icon && <span className="button-icon">{props.icon}</span>}
-      {props.label}
+      {icon && <span className="button-icon">{icon}</span>}
+      {label}
     </Button>
   );
 };

@@ -23,6 +23,14 @@ const Template = (args) => {
   );
 };
 
+const SubmitTemplate = (args) => {
+  return (
+    <form onSubmit={args.onSubmit}>
+      <Button {...args} />
+    </form>
+  );
+};
+
 export const aButton = Template.bind({});
 aButton.args = {
   label: 'Say Hello!',
@@ -67,11 +75,12 @@ CustomTheme.args = {
   },
 };
 
-export const aSubmit = Template.bind({});
+export const aSubmit = SubmitTemplate.bind({});
 aSubmit.args = {
   label: 'Submit',
   isSubmit: true,
-  onSubmit: () => {
+  onSubmit: (event) => {
+    event.preventDefault(); // Evita la recarga de la página
     alert('Greetings from the OnSubmit event');
   },
 };
