@@ -8,17 +8,15 @@ import FileDropZone from '../FileDropZone';
 import { Box, Flex, Stack } from '@chakra-ui/react';
 
 export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
-  // 🔹 Inicializar valores desde `fields` usando `value`
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {
-        acc[field.name] = field.value || ''; // 🔹 Usamos `value` en lugar de `defaultValue`
+        acc[field.name] = field.type === 'select' ? field.value || '' : field.value || '';
       }
       return acc;
     }, {})
   );
 
-  // 🔹 Si `fields` cambia, actualizamos `formValues`
   useEffect(() => {
     setFormValues((prevValues) => {
       const newValues = fields.flat().reduce((acc, field) => {
@@ -35,15 +33,13 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     });
   }, [fields]);
 
-  // 🔹 Estado de errores
   const [errors, setErrors] = useState({});
 
-  // 🔹 Resetear formulario
   const resetForm = () => {
     setFormValues(
       fields.flat().reduce((acc, field) => {
         if (field.name) {
-          acc[field.name] = field.value || ''; // 🔹 Reiniciar valores
+          acc[field.name] = field.type === 'select' ? String(field.value || '') : field.value || '';
         }
         return acc;
       }, {})
@@ -51,7 +47,6 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     setErrors({});
   };
 
-  // 🔹 Validar formulario
   const validate = () => {
     const newErrors = {};
     fields.flat().forEach((field) => {
@@ -73,9 +68,12 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // 🔹 Manejar cambios en los inputs
   const handleChange = (name, value) => {
-    setFormValues((prev) => ({ ...prev, [name]: value }));
+    setFormValues((prev) => {
+      const newValues = { ...prev, [name]: value };
+      return newValues;
+    });
+
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
@@ -127,17 +125,19 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       />
                     )}
                     {subField.type === 'select' && (
-                      <SelectField
-                        label={subField.label}
-                        value={formValues[subField.name]}
-                        onChange={(value) => handleChange(subField.name, value)}
-                        options={subField.options}
-                        placeholder={subField.placeholder}
-                        isRequired={subField.isRequired}
-                        isInvalid={!!errors[subField.name]}
-                        errorMessage={errors[subField.name]}
-                        theme={theme}
-                      />
+                      <>
+                        <SelectField
+                          label={subField.label}
+                          value={formValues[subField.name]}
+                          onChange={(value) => handleChange(subField.name, value)}
+                          options={subField.options}
+                          placeholder={subField.placeholder}
+                          isRequired={subField.isRequired}
+                          isInvalid={!!errors[subField.name]}
+                          errorMessage={errors[subField.name]}
+                          theme={theme}
+                        />
+                      </>
                     )}
                     {subField.type === 'file' && (
                       <FileField
@@ -182,6 +182,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                   />
                 )}
                 {field.type === 'select' && (
+                  <>
                   <SelectField
                     label={field.label}
                     value={formValues[field.name]}
@@ -193,6 +194,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     errorMessage={errors[field.name]}
                     theme={theme}
                   />
+                  </>
                 )}
                 {field.type === 'file' && (
                   <FileField

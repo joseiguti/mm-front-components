@@ -87,8 +87,20 @@ UpdateFields.args = {
       isRequired: true,
     },
     {
+      name: 'framework',
+      label: 'Favorite Framework',
+      type: 'select',
+      value: ['vue'],
+      options: [
+        { value: 'react', label: 'React' },
+        { value: 'vue', label: 'Vue' },
+        { value: 'angular', label: 'Angular' },
+      ],
+      placeholder: 'Select one...',
+    },
+    {
       type: 'button',
-      label: 'Change email...',
+      label: 'Change email & framework',
       isSubmit: false,
       size: 'lg',
       icon: <RiMailLine />,
@@ -106,8 +118,18 @@ UpdateFields.args = {
           'sample4@site.org',
           'person5@web.net',
         ];
+        const randomFrameworks = ['react', 'vue', 'angular'];
+
         const randomEmail = randomEmails[Math.floor(Math.random() * randomEmails.length)];
-        setFormValues((prev) => ({ ...prev, email: randomEmail }));
+        const randomFramework = randomFrameworks[Math.floor(Math.random() * randomFrameworks.length)];
+
+        console.log('Updating values:', { email: randomEmail, framework: [randomFramework] });
+
+        setFormValues((prev) => ({
+          ...prev,
+          email: randomEmail,
+          framework: [randomFramework],
+        }));
       },
     },
   ],
