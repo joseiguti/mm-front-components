@@ -21,7 +21,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export const Menu = ({
-  config = {items: [], logo: ''},
+  config = { items: [], logo: '' },
   theme = {},
   isCollapsed: externalIsCollapsed,
   toggleMenu,
@@ -77,7 +77,9 @@ export const Menu = ({
                   <LinkComponent href={item.link} passHref>
                     <StyledLink>
                       <Icon>
-                        {item.icon && React.isValidElement(<item.icon />) ? <item.icon /> : null}
+                        {item.icon && React.isValidElement(<item.icon />) ? (
+                          <item.icon />
+                        ) : null}
                       </Icon>
                       {!isCollapsed && item.label}
                     </StyledLink>
@@ -88,7 +90,9 @@ export const Menu = ({
                     onClick={(e) => handleLinkClick(e, item, index)}
                   >
                     <Icon>
-                      {item.icon && React.isValidElement(<item.icon />) ? <item.icon /> : null}
+                      {item.icon && React.isValidElement(<item.icon />) ? (
+                        <item.icon />
+                      ) : null}
                     </Icon>
                     {!isCollapsed && item.label}
                   </StyledLink>

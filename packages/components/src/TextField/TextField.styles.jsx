@@ -5,18 +5,18 @@ import { Field } from '../../../../src/components/ui/field';
 export const StyledBox = (props) => <Box {...props} pb={4} borderRadius="md" />;
 
 export const StyledInput = ({
-                              isDisabled,
-                              isInvalid,
-                              isRequired,
-                              value,
-                              onChange,
-                              type,
-                              errorText,
-                              label,
-                              labelColor,
-                              placeholder,
-                              size,
-                            }) => {
+  isDisabled,
+  isInvalid,
+  isRequired,
+  value,
+  onChange,
+  type,
+  errorText,
+  label,
+  labelColor,
+  placeholder,
+  size,
+}) => {
   return (
     <Field
       disabled={isDisabled}

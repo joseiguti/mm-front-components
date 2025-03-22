@@ -3,7 +3,8 @@ import React from 'react';
 import {
   Box,
   SelectControl,
-  SelectIndicator, SelectIndicatorGroup,
+  SelectIndicator,
+  SelectIndicatorGroup,
   SelectPositioner,
 } from '@chakra-ui/react';
 import {
@@ -12,7 +13,6 @@ import {
   SelectValueText,
   SelectContent,
   SelectItem,
-
 } from '../../../../src/components/ui/select';
 import { Field } from '../../../../src/components/ui/field';
 import { createListCollection, Portal } from '@chakra-ui/react';
@@ -28,9 +28,11 @@ export const StyledSelect = ({
   isRequired,
   ...props
 }) => {
-
   const selectOptions = createListCollection({
-    items: options.map(opt => ({ value: String(opt.value), label: opt.label })),
+    items: options.map((opt) => ({
+      value: String(opt.value),
+      label: opt.label,
+    })),
   });
 
   const handleValueChange = (selectedItem) => {
@@ -74,7 +76,6 @@ export const StyledSelect = ({
                 </SelectContent>
               </SelectPositioner>
             </Portal>
-
           </SelectRoot>
         </Field>
       ) : (
@@ -106,13 +107,11 @@ export const StyledSelect = ({
                   {selectOptions.items.map((record) => (
                     <SelectItem item={record} key={record.value}>
                       {record.label}
-
                     </SelectItem>
                   ))}
                 </SelectContent>
               </SelectPositioner>
             </Portal>
-
           </SelectRoot>
         </Field>
       )}

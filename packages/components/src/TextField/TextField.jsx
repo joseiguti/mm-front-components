@@ -4,17 +4,17 @@ import { StyledBox, StyledInput } from './TextField.styles.jsx';
 import defaultTheme from '../themeForm';
 
 export const TextField = ({
-                            label = '',
-                            value = '',
-                            onChange,
-                            placeholder = 'Enter text',
-                            errorMessage = '',
-                            isInvalid = false,
-                            isDisabled = false,
-                            isRequired = false,
-                            type = 'text',
-                            theme = defaultTheme,
-                          }) => {
+  label = '',
+  value = '',
+  onChange,
+  placeholder = 'Enter text',
+  errorMessage = '',
+  isInvalid = false,
+  isDisabled = false,
+  isRequired = false,
+  type = 'text',
+  theme = defaultTheme,
+}) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   return (

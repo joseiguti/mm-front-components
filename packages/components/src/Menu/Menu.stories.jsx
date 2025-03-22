@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Menu } from './index';
 
-import { BsMessenger } from "react-icons/bs";
-import { BsHouseDoorFill } from "react-icons/bs";
-import { BsWrench } from "react-icons/bs";
+import { BsMessenger } from 'react-icons/bs';
+import { BsHouseDoorFill } from 'react-icons/bs';
+import { BsWrench } from 'react-icons/bs';
 
 import theme from '../theme';
 
@@ -19,12 +19,11 @@ const Template = (args) => {
     setIsCollapsed((prev) => !prev);
   };
 
-  console.log(isCollapsed)
+  console.log(isCollapsed);
 
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ flexShrink: 0 }}>
-
         <Menu {...args} isCollapsed={isCollapsed} toggleMenu={toggleMenu} />
       </div>
 
@@ -51,7 +50,7 @@ const Template = (args) => {
 export const Expanded = Template.bind({});
 Expanded.args = {
   config: {
-    logo: "https://via.placeholder.com/150",
+    logo: 'https://via.placeholder.com/150',
     items: [
       {
         label: 'Home',
@@ -59,19 +58,19 @@ Expanded.args = {
         link: '/',
         children: [
           { label: 'Help', link: '/help' },
-          { label: 'Information', link: '/info' }
-        ]
+          { label: 'Information', link: '/info' },
+        ],
       },
       {
         label: 'Settings',
         icon: BsWrench,
-        link: '/settings'
+        link: '/settings',
       },
       {
         label: 'Messages',
         icon: BsMessenger,
-        link: '/messages'
-      }
+        link: '/messages',
+      },
     ],
   },
 };
@@ -79,22 +78,22 @@ Expanded.args = {
 export const Collapsed = Template.bind({});
 Collapsed.args = {
   config: {
-    logo: "https://via.placeholder.com/150",
+    logo: 'https://via.placeholder.com/150',
     items: [
       {
         label: 'Home',
         icon: BsHouseDoorFill,
-        link: '/'
+        link: '/',
       },
       {
         label: 'Settings',
         icon: BsWrench,
-        link: '/settings'
+        link: '/settings',
       },
       {
         label: 'Messages',
         icon: BsMessenger,
-        link: '/messages'
+        link: '/messages',
       },
     ],
   },

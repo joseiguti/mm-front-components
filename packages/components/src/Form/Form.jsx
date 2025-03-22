@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '../TextField';
 import SelectField from '../SelectField';
@@ -11,7 +11,8 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
   const [formValues, setFormValues] = useState(() =>
     fields.flat().reduce((acc, field) => {
       if (field.name) {
-        acc[field.name] = field.type === 'select' ? field.value || '' : field.value || '';
+        acc[field.name] =
+          field.type === 'select' ? field.value || '' : field.value || '';
       }
       return acc;
     }, {})
@@ -29,7 +30,9 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
         return acc;
       }, {});
 
-      return Object.keys(newValues).length ? { ...prevValues, ...newValues } : prevValues;
+      return Object.keys(newValues).length
+        ? { ...prevValues, ...newValues }
+        : prevValues;
     });
   }, [fields]);
 
@@ -39,7 +42,10 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
     setFormValues(
       fields.flat().reduce((acc, field) => {
         if (field.name) {
-          acc[field.name] = field.type === 'select' ? String(field.value || '') : field.value || '';
+          acc[field.name] =
+            field.type === 'select'
+              ? String(field.value || '')
+              : field.value || '';
         }
         return acc;
       }, {})
@@ -53,7 +59,8 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
       const value = formValues[field.name];
 
       if (field.isRequired && !value) {
-        newErrors[field.name] = field.errorMessage || `${field.label || 'This field'} is required.`;
+        newErrors[field.name] =
+          field.errorMessage || `${field.label || 'This field'} is required.`;
       }
 
       if (field.validate) {
@@ -70,8 +77,7 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
 
   const handleChange = (name, value) => {
     setFormValues((prev) => {
-      const newValues = { ...prev, [name]: value };
-      return newValues;
+      return { ...prev, [name]: value };
     });
 
     setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -90,7 +96,11 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
         {fields.map((field) => {
           if (Array.isArray(field)) {
             return (
-              <Flex key={field.map((f) => f.name || f.label).join('-')} gap="0" justify="space-between">
+              <Flex
+                key={field.map((f) => f.name || f.label).join('-')}
+                gap="0"
+                justify="space-between"
+              >
                 {field.map((subField) => (
                   <Box
                     px="2"
@@ -103,7 +113,9 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       <TextField
                         label={subField.label}
                         value={formValues[subField.name]}
-                        onChange={(e) => handleChange(subField.name, e.target.value)}
+                        onChange={(e) =>
+                          handleChange(subField.name, e.target.value)
+                        }
                         placeholder={subField.placeholder}
                         isRequired={subField.isRequired}
                         isInvalid={!!errors[subField.name]}
@@ -115,7 +127,9 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                       <TextField
                         label={subField.label}
                         value={formValues[subField.name]}
-                        onChange={(e) => handleChange(subField.name, e.target.value)}
+                        onChange={(e) =>
+                          handleChange(subField.name, e.target.value)
+                        }
                         placeholder={subField.placeholder}
                         isRequired={subField.isRequired}
                         isInvalid={!!errors[subField.name]}
@@ -129,7 +143,9 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         <SelectField
                           label={subField.label}
                           value={formValues[subField.name]}
-                          onChange={(value) => handleChange(subField.name, value)}
+                          onChange={(value) =>
+                            handleChange(subField.name, value)
+                          }
                           options={subField.options}
                           placeholder={subField.placeholder}
                           isRequired={subField.isRequired}
@@ -144,7 +160,9 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                         label={subField.label}
                         maxWidth={subField.maxWidth}
                         accept={subField.accept}
-                        onFileChange={(file) => handleChange(subField.name, file)}
+                        onFileChange={(file) =>
+                          handleChange(subField.name, file)
+                        }
                       />
                     )}
                   </Box>
@@ -183,17 +201,17 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                 )}
                 {field.type === 'select' && (
                   <>
-                  <SelectField
-                    label={field.label}
-                    value={formValues[field.name]}
-                    onChange={(value) => handleChange(field.name, value)}
-                    options={field.options}
-                    placeholder={field.placeholder}
-                    isRequired={field.isRequired}
-                    isInvalid={!!errors[field.name]}
-                    errorMessage={errors[field.name]}
-                    theme={theme}
-                  />
+                    <SelectField
+                      label={field.label}
+                      value={formValues[field.name]}
+                      onChange={(value) => handleChange(field.name, value)}
+                      options={field.options}
+                      placeholder={field.placeholder}
+                      isRequired={field.isRequired}
+                      isInvalid={!!errors[field.name]}
+                      errorMessage={errors[field.name]}
+                      theme={theme}
+                    />
                   </>
                 )}
                 {field.type === 'file' && (
@@ -239,7 +257,8 @@ export const Form = ({ fields, buttonsPosition, theme, onSubmit }) => {
                     ? handleSubmit
                     : button.isReset
                       ? () => resetForm()
-                      : (event) => button.onClick?.(event, formValues, setFormValues)
+                      : (event) =>
+                          button.onClick?.(event, formValues, setFormValues)
                 }
                 icon={button.icon}
                 theme={button.theme}
@@ -264,8 +283,14 @@ Form.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
-        type: PropTypes.oneOf(['text', 'date', 'select', 'button', 'file', 'drop'])
-          .isRequired,
+        type: PropTypes.oneOf([
+          'text',
+          'date',
+          'select',
+          'button',
+          'file',
+          'drop',
+        ]).isRequired,
         placeholder: PropTypes.string,
         value: PropTypes.string,
         options: PropTypes.array,

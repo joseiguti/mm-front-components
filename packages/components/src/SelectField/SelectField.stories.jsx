@@ -29,10 +29,10 @@ Default.args = {
   placeholder: 'Choose a framework...',
   size: 'lg',
   options: [
-    { label: "React.js", value: "react" },
-    { label: "Vue.js", value: "vue" },
-    { label: "Angular", value: "angular" },
-    { label: "Svelte", value: "svelte" },
+    { label: 'React.js', value: 'react' },
+    { label: 'Vue.js', value: 'vue' },
+    { label: 'Angular', value: 'angular' },
+    { label: 'Svelte', value: 'svelte' },
   ],
   onChange: (value) => {
     console.log('Selected value from story:', value);
@@ -100,25 +100,25 @@ LargeSize.args = {
   },
 };
 
-import { Portal, Select, createListCollection } from "@chakra-ui/react";
+import { Portal, Select, createListCollection } from '@chakra-ui/react';
 
 export const BasedOnChakraDocs = {
   render() {
     const frameworks = createListCollection({
-
       items: [
-        { value: "9", label: "VueJs" },
-        { value: "8", label: "ReactJs" },
-        { value: "11", label: "NextJs" },
+        { value: '9', label: 'VueJs' },
+        { value: '8', label: 'ReactJs' },
+        { value: '11', label: 'NextJs' },
       ],
     });
 
     return (
-      <Select.Root collection={frameworks}
-                   size="sm"
-                   width="320px"
-                   defaultValue={["11"]}
-                   onValueChange={(value) => console.log(value)}
+      <Select.Root
+        collection={frameworks}
+        size="sm"
+        width="320px"
+        defaultValue={['11']}
+        onValueChange={(value) => console.log(value)}
       >
         <Select.HiddenSelect />
         <Select.Label>Select framework</Select.Label>

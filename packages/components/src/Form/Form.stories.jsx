@@ -5,7 +5,7 @@ import {
   RiCheckLine,
   RiCloseFill,
   RiSave2Fill,
-  RiMailLine
+  RiMailLine,
 } from 'react-icons/ri';
 
 export default {
@@ -67,7 +67,6 @@ Validation.args = {
   },
 };
 
-
 export const UpdateFields = Template.bind({});
 UpdateFields.args = {
   fields: [
@@ -120,10 +119,15 @@ UpdateFields.args = {
         ];
         const randomFrameworks = ['react', 'vue', 'angular'];
 
-        const randomEmail = randomEmails[Math.floor(Math.random() * randomEmails.length)];
-        const randomFramework = randomFrameworks[Math.floor(Math.random() * randomFrameworks.length)];
+        const randomEmail =
+          randomEmails[Math.floor(Math.random() * randomEmails.length)];
+        const randomFramework =
+          randomFrameworks[Math.floor(Math.random() * randomFrameworks.length)];
 
-        console.log('Updating values:', { email: randomEmail, framework: [randomFramework] });
+        console.log('Updating values:', {
+          email: randomEmail,
+          framework: [randomFramework],
+        });
 
         setFormValues((prev) => ({
           ...prev,

@@ -4,17 +4,17 @@ import { StyledButton } from './Button.styles.jsx';
 import defaultTheme from '../themeForm';
 
 export const Button = ({
-                         label = '',
-                         isLoading = false,
-                         isDisabled = false,
-                         isSubmit = false, // 🔹 Si es un botón de submit
-                         onClick,
-                         onSubmit,
-                         icon = null,
-                         size = '',
-                         loadingText = '',
-                         theme = defaultTheme,
-                       }) => {
+  label = '',
+  isLoading = false,
+  isDisabled = false,
+  isSubmit = false, // 🔹 Si es un botón de submit
+  onClick,
+  onSubmit,
+  icon = null,
+  size = '',
+  loadingText = '',
+  theme = defaultTheme,
+}) => {
   const mergedTheme = { ...defaultTheme, ...theme };
 
   const handleClick = (event) => {

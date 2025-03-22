@@ -3,17 +3,17 @@ import { Button } from '../../../../src/components/ui/button';
 import themeForm from '../themeForm';
 
 export const StyledButton = ({
-                               label,
-                               isLoading = false,
-                               isDisabled = false,
-                               isSubmit = false,
-                               onClick,
-                               onSubmit,
-                               icon,
-                               size = 'md',
-                               loadingText = 'Loading...',
-                               theme = themeForm, // 🔹 Mantener el tema correctamente
-                             }) => {
+  label,
+  isLoading = false,
+  isDisabled = false,
+  isSubmit = false,
+  onClick,
+  onSubmit,
+  icon,
+  size = 'md',
+  loadingText = 'Loading...',
+  theme = themeForm, // 🔹 Mantener el tema correctamente
+}) => {
   const mergedTheme = { ...themeForm, ...theme };
 
   const handleEvent = (event) => {
@@ -33,7 +33,11 @@ export const StyledButton = ({
       loadingText={loadingText}
       onClick={handleEvent} // 🔹 Unifica `onClick` y `onSubmit`
       type={isSubmit ? 'submit' : 'button'}
-      bg={isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonBg}
+      bg={
+        isDisabled
+          ? mergedTheme.colors.buttonDisabled
+          : mergedTheme.colors.buttonBg
+      }
       color={mergedTheme.colors.buttonText}
       css={{
         minWidth: mergedTheme.buttonMinWidth,
@@ -41,7 +45,9 @@ export const StyledButton = ({
       }}
       isDisabled={isDisabled}
       _hover={{
-        bg: isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonHover,
+        bg: isDisabled
+          ? mergedTheme.colors.buttonDisabled
+          : mergedTheme.colors.buttonHover,
       }}
       _disabled={{
         cursor: 'not-allowed',
