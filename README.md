@@ -1,6 +1,6 @@
-# Web Monorepo UI Components
+# mm-front-components
 
-Welcome to **Web Monorepo UI Components**, a library of reusable components for React projects.
+Welcome to **mm-front-components**, a library of reusable components for React projects.
 
 ## Table of Contents
 
@@ -31,8 +31,8 @@ This library is designed to accelerate UI development by providing styled and co
 Below are the components available in this library:
 
 <a id="menu"></a>
-# `<Menu />`
 
+# `<Menu />`
 
 A highly customizable and collapsible side menu built with React and Styled Components.  
 [Back to Table of Contents](#table-of-contents)
@@ -53,7 +53,7 @@ Import the `Menu` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import { Menu } from 'web-monorepo-ui-components';
+import { Menu } from 'mm-front-components';
 import { FaHome, FaCog } from 'react-icons/fa';
 import Link from 'next/link';
 
@@ -162,13 +162,12 @@ import theme from './theme';
   <App />
 </ThemeProvider>;
 ```
- 
 
 <!-- Placeholder for the Menu README.md -->
 
 <a id="textfield"></a>
-# `<TextField />`
 
+# `<TextField />`
 
 A reusable and customizable text input field for your projects.
 [Back to Table of Contents](#table-of-contents)
@@ -179,7 +178,7 @@ Import the `TextField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import TextField from 'web-monorepo-ui-components';
+import TextField from 'mm-front-components';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -286,31 +285,27 @@ Here is an advanced example demonstrating error handling with the `SelectField` 
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from 'web-monorepo-ui-components';
+import { TextField } from 'mm-front-components';
 
 const App = () => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [name, setName] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const handleChange = (value) => {
-    setSelectedValue(value);
-    setIsInvalid(!value); // Mark as invalid if no value is selected
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setName(value);
+    setIsInvalid(!value); // Marca como inválido si está vacío
   };
 
   return (
     <div>
-      <SelectField
-        label="Select an Option"
-        placeholder="Choose a framework..."
-        options={[
-          { value: '1', label: 'React.js' },
-          { value: '2', label: 'Vue.js' },
-          { value: '3', label: 'Angular' },
-        ]}
-        value={selectedValue}
+      <TextField
+        label="Name"
+        value={name}
+        placeholder="Type your name..."
         onChange={handleChange}
         isInvalid={isInvalid}
-        errorMessage={isInvalid ? 'Please select an option.' : ''}
+        errorMessage={isInvalid ? 'Please complete this field' : ''}
       />
     </div>
   );
@@ -318,13 +313,12 @@ const App = () => {
 
 export default App;
 ```
- 
 
 <!-- Placeholder for the TextField README.md -->
 
 <a id="selectfield"></a>
-# `<SelectField />`
 
+# `<SelectField />`
 
 A reusable and customizable select field component for your projects.
 [Back to Table of Contents](#table-of-contents)
@@ -335,7 +329,7 @@ Import the `SelectField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from 'web-monorepo-ui-components';
+import SelectField from 'mm-front-components';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -470,12 +464,11 @@ const App = () => (
 );
 ```
 
-
 <!-- Placeholder for the SelectField README.md -->
 
 <a id="filefield"></a>
-# `<FileField />`
 
+# `<FileField />`
 
 A reusable and customizable file input field for your projects, designed for easy file uploads with additional functionality.
 [Back to Table of Contents](#table-of-contents)
@@ -486,7 +479,7 @@ Import the `FileField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import FileField from 'web-monorepo-ui-components';
+import FileField from 'mm-front-components';
 
 const App = () => {
   const [file, setFile] = useState(null);
@@ -589,7 +582,7 @@ Here is an advanced example demonstrating validation with the `FileField` compon
 
 ```javascript
 import React, { useState } from 'react';
-import FileField from 'web-monorepo-ui-components';
+import FileField from 'mm-front-components';
 
 const App = () => {
   const [file, setFile] = useState(null);
@@ -617,12 +610,11 @@ const App = () => {
 export default App;
 ```
 
-
 <!-- Placeholder for the FileField README.md -->
 
 <a id="filedropzone"></a>
-# `<FileDropZone />`
 
+# `<FileDropZone />`
 
 A reusable and customizable drag-and-drop file input zone for your projects, ideal for user-friendly file uploads with additional functionality.
 [Back to Table of Contents](#table-of-contents)
@@ -633,7 +625,7 @@ Import the `FileDropZone` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import FileDropZone from 'web-monorepo-ui-components';
+import FileDropZone from 'mm-front-components';
 
 const App = () => {
   const handleDrop = (files) => {
@@ -749,7 +741,7 @@ Here is an advanced example demonstrating error handling with the `FileDropZone`
 
 ```javascript
 import React, { useState } from 'react';
-import FileDropZone from 'web-monorepo-ui-components';
+import FileDropZone from 'mm-front-components';
 
 const App = () => {
   const [isInvalid, setIsInvalid] = useState(false);
@@ -780,12 +772,11 @@ const App = () => {
 export default App;
 ```
 
-
 <!-- Placeholder for the FileDropZone README.md -->
 
 <a id="button"></a>
-# `<Button />`
 
+# `<Button />`
 
 A reusable and customizable button component for your projects. It supports various states like loading, disabled, and can include icons.
 [Back to Table of Contents](#table-of-contents)
@@ -796,7 +787,7 @@ Import the `Button` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import { Button } from 'web-monorepo-ui-components';
+import { Button } from 'mm-front-components';
 import { FaSave } from 'react-icons/fa';
 
 const App = () => {
@@ -914,12 +905,11 @@ const customTheme = {
 <Button label="Custom Themed Button" icon={<FaCheck />} theme={customTheme} />;
 ```
 
-
 <!-- Placeholder for the Button README.md -->
 
 <a id="notifications"></a>
-# `<Notifications />`
 
+# `<Notifications />`
 
 The `Notifications` component is a reusable wrapper for creating customizable toast notifications using `Toastify`. It supports multiple notification types, durations, and positions, with the ability to customize styles through a centralized theme file. This component provides a simple and flexible way to add user notifications to your project.
 [Back to Table of Contents](#table-of-contents)
@@ -1090,12 +1080,11 @@ Toastify({
 }).showToast();
 ```
 
-
 <!-- Placeholder for the Notifications README.md -->
 
 <a id="dialog"></a>
-# `<Dialog />`
 
+# `<Dialog />`
 
 A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons.
 [Back to Table of Contents](#table-of-contents)
@@ -1114,8 +1103,7 @@ Import the `Dialog` component and configure it with dynamic properties:
 
 ```javascript
 import React, { useState } from 'react';
-import Dialog from 'web-monorepo-ui-components';
-import Button from 'web-monorepo-ui-components';
+import { Dialog, Button } from 'mm-front-components';
 import { RiCloseLine, RiSaveLine } from 'react-icons/ri';
 
 const App = () => {
@@ -1280,7 +1268,7 @@ The `Dialog` component supports the `placement` prop to position the dialog on t
 
 ```javascript
 import React from 'react';
-import Dialog from 'web-monorepo-ui-components';
+import Dialog from 'mm-front-components';
 
 import { RiCloseLine } from 'react-icons/ri';
 
@@ -1362,12 +1350,11 @@ const customTheme = {
 />;
 ```
 
-
 <!-- Placeholder for the Dialog README.md -->
 
 <a id="form"></a>
-# `<Form />`
 
+# `<Form />`
 
 A reusable and customizable form component for your projects. It supports dynamic field configurations, validations, file uploads, and flexible layouts with Chakra UI.
 [Back to Table of Contents](#table-of-contents)
@@ -1378,7 +1365,7 @@ Import the `Form` component and configure it with dynamic fields:
 
 ```javascript
 import React from 'react';
-import Form from 'web-monorepo-ui-components';
+import Form from 'mm-front-components';
 
 const App = () => {
   return (
@@ -1565,10 +1552,10 @@ A larger example with validations, file fields, drop zones, and theming:
       accept: ['application/pdf'],
     },
     // Fifth row: Buttons
-    { 
-      type: 'button', 
-      label: 'Submit', 
-      isSubmit: true 
+    {
+      type: 'button',
+      label: 'Submit',
+      isSubmit: true,
     },
     {
       type: 'button',
@@ -1645,12 +1632,11 @@ You can also apply custom themes to specific fields using the theme property wit
 />
 ```
 
-
 <!-- Placeholder for the Form README.md -->
 
 <a id="grid"></a>
-# `<Grid />`
 
+# `<Grid />`
 
 A customizable and feature-rich data grid component for displaying tabular data with sorting, pagination, and custom actions. Built with Chakra UI.
 [Back to Table of Contents](#table-of-contents)
@@ -1661,7 +1647,7 @@ Import the `Grid` component and pass the necessary props:
 
 ```javascript
 import React from 'react';
-import Grid from 'web-monorepo-ui-components';
+import Grid from 'mm-front-components';
 
 import { RiEditLine, RiDeleteBinLine } from 'react-icons/ri';
 
@@ -1742,26 +1728,30 @@ export default App;
 ## Features
 
 ### Sorting
+
 Enable sorting on specific columns by setting `isSortable: true` in the header configuration.
 
 ### Pagination
+
 Activate pagination by passing the `pagination` prop and setting `itemsPerPage`.
 
 ### Custom Actions
+
 Add action buttons to any column using the `buttons` property in the header configuration.
 
 ### Theming
+
 Customize the grid using the `theme` prop to override default styles.
 
 ```javascript
 const customTheme = {
-  headerColor: "purple.600",
-  cellColor: "gray.700",
-  rowHoverBg: "purple.50",
+  headerColor: 'purple.600',
+  cellColor: 'gray.700',
+  rowHoverBg: 'purple.50',
 };
 
 <Grid headers={headers} data={data} theme={customTheme} />;
-````
+```
 
 ## Example
 
@@ -1769,6 +1759,7 @@ A full example with sorting, pagination, and custom theming:
 
 ```javascript
 import { RiEyeLine } from 'react-icons/ri';
+import Grid from 'mm-front-components';
 
 <Grid
   headers={[
@@ -1799,9 +1790,8 @@ import { RiEyeLine } from 'react-icons/ri';
     headerColor: 'blue.600',
     rowHoverBg: 'blue.50',
   }}
-/>
+/>;
 ```
-
 
 <!-- Placeholder for the Grid README.md -->
 
@@ -1810,7 +1800,7 @@ import { RiEyeLine } from 'react-icons/ri';
 To install the library:
 
 ```bash
-npm install web-monorepo-ui-components
+npm install mm-front-components
 ```
 
 Make sure your project is configured to use React 19 and includes all the necessary peer dependencies (see [Dependencies and Peer Dependencies](#dependencies-and-peer-dependencies)).
@@ -1838,7 +1828,7 @@ Below is an example of a **Next.js** project configured to use this library. Ens
     "react-hook-form": "^7.53.2",
     "react-icons": "^5.4.0",
     "styled-components": "^6.1.14",
-    "web-monorepo-ui-components": "1.0.17"
+    "mm-front-components": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -1898,4 +1888,3 @@ If you want to contribute to the library, follow these steps:
 ## License
 
 This library is distributed under the MIT license. See the `LICENSE` file in the root of the repository for more details.
-

@@ -1,4 +1,3 @@
-
 A reusable and customizable form component for your projects. It supports dynamic field configurations, validations, file uploads, and flexible layouts with Chakra UI.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `Form` component and configure it with dynamic fields:
 
 ```javascript
 import React from 'react';
-import Form from 'web-monorepo-ui-components';
+import Form from 'mm-front-components';
 
 const App = () => {
   return (
@@ -195,10 +194,10 @@ A larger example with validations, file fields, drop zones, and theming:
       accept: ['application/pdf'],
     },
     // Fifth row: Buttons
-    { 
-      type: 'button', 
-      label: 'Submit', 
-      isSubmit: true 
+    {
+      type: 'button',
+      label: 'Submit',
+      isSubmit: true,
     },
     {
       type: 'button',

@@ -1,4 +1,3 @@
-
 A reusable and customizable dialog component designed for seamless integration into your projects. It supports dynamic content, flexible positioning, and customizable buttons.
 [Back to Table of Contents](#table-of-contents)
 
@@ -16,8 +15,7 @@ Import the `Dialog` component and configure it with dynamic properties:
 
 ```javascript
 import React, { useState } from 'react';
-import Dialog from 'web-monorepo-ui-components';
-import Button from 'web-monorepo-ui-components';
+import { Dialog, Button } from 'mm-front-components';
 import { RiCloseLine, RiSaveLine } from 'react-icons/ri';
 
 const App = () => {
@@ -182,7 +180,7 @@ The `Dialog` component supports the `placement` prop to position the dialog on t
 
 ```javascript
 import React from 'react';
-import Dialog from 'web-monorepo-ui-components';
+import Dialog from 'mm-front-components';
 
 import { RiCloseLine } from 'react-icons/ri';
 

@@ -1,4 +1,3 @@
-
 The `Notifications` component is a reusable wrapper for creating customizable toast notifications using `Toastify`. It supports multiple notification types, durations, and positions, with the ability to customize styles through a centralized theme file. This component provides a simple and flexible way to add user notifications to your project.
 [Back to Table of Contents](#table-of-contents)
 

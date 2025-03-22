@@ -1,4 +1,3 @@
-
 A reusable and customizable button component for your projects. It supports various states like loading, disabled, and can include icons.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `Button` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import { Button } from 'web-monorepo-ui-components';
+import { Button } from 'mm-front-components';
 import { FaSave } from 'react-icons/fa';
 
 const App = () => {

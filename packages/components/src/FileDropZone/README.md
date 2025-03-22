@@ -1,4 +1,3 @@
-
 A reusable and customizable drag-and-drop file input zone for your projects, ideal for user-friendly file uploads with additional functionality.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `FileDropZone` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import FileDropZone from 'web-monorepo-ui-components';
+import FileDropZone from 'mm-front-components';
 
 const App = () => {
   const handleDrop = (files) => {
@@ -124,7 +123,7 @@ Here is an advanced example demonstrating error handling with the `FileDropZone`
 
 ```javascript
 import React, { useState } from 'react';
-import FileDropZone from 'web-monorepo-ui-components';
+import FileDropZone from 'mm-front-components';
 
 const App = () => {
   const [isInvalid, setIsInvalid] = useState(false);

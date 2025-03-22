@@ -1,4 +1,3 @@
-
 A customizable and feature-rich data grid component for displaying tabular data with sorting, pagination, and custom actions. Built with Chakra UI.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `Grid` component and pass the necessary props:
 
 ```javascript
 import React from 'react';
-import Grid from 'web-monorepo-ui-components';
+import Grid from 'mm-front-components';
 
 import { RiEditLine, RiDeleteBinLine } from 'react-icons/ri';
 
@@ -89,26 +88,30 @@ export default App;
 ## Features
 
 ### Sorting
+
 Enable sorting on specific columns by setting `isSortable: true` in the header configuration.
 
 ### Pagination
+
 Activate pagination by passing the `pagination` prop and setting `itemsPerPage`.
 
 ### Custom Actions
+
 Add action buttons to any column using the `buttons` property in the header configuration.
 
 ### Theming
+
 Customize the grid using the `theme` prop to override default styles.
 
 ```javascript
 const customTheme = {
-  headerColor: "purple.600",
-  cellColor: "gray.700",
-  rowHoverBg: "purple.50",
+  headerColor: 'purple.600',
+  cellColor: 'gray.700',
+  rowHoverBg: 'purple.50',
 };
 
 <Grid headers={headers} data={data} theme={customTheme} />;
-````
+```
 
 ## Example
 
@@ -116,6 +119,7 @@ A full example with sorting, pagination, and custom theming:
 
 ```javascript
 import { RiEyeLine } from 'react-icons/ri';
+import Grid from 'mm-front-components';
 
 <Grid
   headers={[
@@ -146,5 +150,5 @@ import { RiEyeLine } from 'react-icons/ri';
     headerColor: 'blue.600',
     rowHoverBg: 'blue.50',
   }}
-/>
+/>;
 ```

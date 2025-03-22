@@ -1,4 +1,3 @@
-
 A reusable and customizable select field component for your projects.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `SelectField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from 'web-monorepo-ui-components';
+import SelectField from 'mm-front-components';
 
 const App = () => {
   const [value, setValue] = useState('');

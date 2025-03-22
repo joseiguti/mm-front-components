@@ -1,4 +1,3 @@
-
 A highly customizable and collapsible side menu built with React and Styled Components.  
 [Back to Table of Contents](#table-of-contents)
 
@@ -18,7 +17,7 @@ Import the `Menu` component and use it in your project:
 
 ```javascript
 import React from 'react';
-import { Menu } from 'web-monorepo-ui-components';
+import { Menu } from 'mm-front-components';
 import { FaHome, FaCog } from 'react-icons/fa';
 import Link from 'next/link';
 

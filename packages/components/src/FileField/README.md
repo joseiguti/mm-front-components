@@ -1,4 +1,3 @@
-
 A reusable and customizable file input field for your projects, designed for easy file uploads with additional functionality.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `FileField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import FileField from 'web-monorepo-ui-components';
+import FileField from 'mm-front-components';
 
 const App = () => {
   const [file, setFile] = useState(null);
@@ -111,7 +110,7 @@ Here is an advanced example demonstrating validation with the `FileField` compon
 
 ```javascript
 import React, { useState } from 'react';
-import FileField from 'web-monorepo-ui-components';
+import FileField from 'mm-front-components';
 
 const App = () => {
   const [file, setFile] = useState(null);

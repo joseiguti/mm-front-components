@@ -1,4 +1,3 @@
-
 A reusable and customizable text input field for your projects.
 [Back to Table of Contents](#table-of-contents)
 
@@ -8,7 +7,7 @@ Import the `TextField` component and use it in your project:
 
 ```javascript
 import React, { useState } from 'react';
-import TextField from 'web-monorepo-ui-components';
+import TextField from 'mm-front-components';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -115,31 +114,27 @@ Here is an advanced example demonstrating error handling with the `SelectField` 
 
 ```javascript
 import React, { useState } from 'react';
-import SelectField from 'web-monorepo-ui-components';
+import { TextField } from 'mm-front-components';
 
 const App = () => {
-  const [selectedValue, setSelectedValue] = useState('');
+  const [name, setName] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const handleChange = (value) => {
-    setSelectedValue(value);
-    setIsInvalid(!value); // Mark as invalid if no value is selected
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setName(value);
+    setIsInvalid(!value); // Marca como inválido si está vacío
   };
 
   return (
     <div>
-      <SelectField
-        label="Select an Option"
-        placeholder="Choose a framework..."
-        options={[
-          { value: '1', label: 'React.js' },
-          { value: '2', label: 'Vue.js' },
-          { value: '3', label: 'Angular' },
-        ]}
-        value={selectedValue}
+      <TextField
+        label="Name"
+        value={name}
+        placeholder="Type your name..."
         onChange={handleChange}
         isInvalid={isInvalid}
-        errorMessage={isInvalid ? 'Please select an option.' : ''}
+        errorMessage={isInvalid ? 'Please complete this field' : ''}
       />
     </div>
   );

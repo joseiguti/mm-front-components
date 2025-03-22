@@ -1,6 +1,6 @@
-# Web Monorepo UI Components
+# mm-front-components
 
-Welcome to **Web Monorepo UI Components**, a library of reusable components for React projects.
+Welcome to **mm-front-components**, a library of reusable components for React projects.
 
 ## Table of Contents
 
@@ -31,51 +31,61 @@ This library is designed to accelerate UI development by providing styled and co
 Below are the components available in this library:
 
 <a id="menu"></a>
-# `<Menu />` 
+
+# `<Menu />`
 
 <!-- Placeholder for the Menu README.md -->
 
 <a id="textfield"></a>
-# `<TextField />` 
+
+# `<TextField />`
 
 <!-- Placeholder for the TextField README.md -->
 
 <a id="selectfield"></a>
+
 # `<SelectField />`
 
 <!-- Placeholder for the SelectField README.md -->
 
 <a id="filefield"></a>
+
 # `<FileField />`
 
 <!-- Placeholder for the FileField README.md -->
 
 <a id="filedropzone"></a>
+
 # `<FileDropZone />`
 
 <!-- Placeholder for the FileDropZone README.md -->
 
 <a id="button"></a>
+
 # `<Button />`
 
 <!-- Placeholder for the Button README.md -->
 
 <a id="notifications"></a>
+
 # `<Notifications />`
 
 <!-- Placeholder for the Notifications README.md -->
 
 <a id="dialog"></a>
+
 # `<Dialog />`
 
 <!-- Placeholder for the Dialog README.md -->
 
 <a id="form"></a>
+
 # `<Form />`
 
 <!-- Placeholder for the Form README.md -->
 
 <a id="grid"></a>
+
 # `<Grid />`
 
 <!-- Placeholder for the Grid README.md -->
@@ -85,7 +95,7 @@ Below are the components available in this library:
 To install the library:
 
 ```bash
-npm install web-monorepo-ui-components
+npm install mm-front-components
 ```
 
 Make sure your project is configured to use React 19 and includes all the necessary peer dependencies (see [Dependencies and Peer Dependencies](#dependencies-and-peer-dependencies)).
@@ -113,7 +123,7 @@ Below is an example of a **Next.js** project configured to use this library. Ens
     "react-hook-form": "^7.53.2",
     "react-icons": "^5.4.0",
     "styled-components": "^6.1.14",
-    "web-monorepo-ui-components": "1.0.17"
+    "mm-front-components": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -173,4 +183,3 @@ If you want to contribute to the library, follow these steps:
 ## License
 
 This library is distributed under the MIT license. See the `LICENSE` file in the root of the repository for more details.
-
