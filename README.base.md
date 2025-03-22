@@ -104,9 +104,11 @@ Make sure your project is configured to use React 19 and includes all the necess
 
 Below is an example of a **Next.js** project configured to use this library. Ensure your `package.json` includes the following:
 
+Or you can fork [`mm-front-boilerplate`](https://github.com/joseiguti/mm-front-boilerplate) that already implements `mm-front-components`.
+
 ```json
 {
-  "name": "next-styled-boilerplate",
+  "name": "mm-front-boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

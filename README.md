@@ -163,6 +163,7 @@ import theme from './theme';
 </ThemeProvider>;
 ```
 
+
 <!-- Placeholder for the Menu README.md -->
 
 <a id="textfield"></a>
@@ -314,6 +315,7 @@ const App = () => {
 export default App;
 ```
 
+
 <!-- Placeholder for the TextField README.md -->
 
 <a id="selectfield"></a>
@@ -464,6 +466,7 @@ const App = () => (
 );
 ```
 
+
 <!-- Placeholder for the SelectField README.md -->
 
 <a id="filefield"></a>
@@ -609,6 +612,7 @@ const App = () => {
 
 export default App;
 ```
+
 
 <!-- Placeholder for the FileField README.md -->
 
@@ -772,6 +776,7 @@ const App = () => {
 export default App;
 ```
 
+
 <!-- Placeholder for the FileDropZone README.md -->
 
 <a id="button"></a>
@@ -904,6 +909,7 @@ const customTheme = {
 
 <Button label="Custom Themed Button" icon={<FaCheck />} theme={customTheme} />;
 ```
+
 
 <!-- Placeholder for the Button README.md -->
 
@@ -1079,6 +1085,7 @@ Toastify({
   duration: 5000,
 }).showToast();
 ```
+
 
 <!-- Placeholder for the Notifications README.md -->
 
@@ -1349,6 +1356,7 @@ const customTheme = {
   theme={customTheme}
 />;
 ```
+
 
 <!-- Placeholder for the Dialog README.md -->
 
@@ -1632,6 +1640,7 @@ You can also apply custom themes to specific fields using the theme property wit
 />
 ```
 
+
 <!-- Placeholder for the Form README.md -->
 
 <a id="grid"></a>
@@ -1793,6 +1802,7 @@ import Grid from 'mm-front-components';
 />;
 ```
 
+
 <!-- Placeholder for the Grid README.md -->
 
 ## Installation
@@ -1809,9 +1819,11 @@ Make sure your project is configured to use React 19 and includes all the necess
 
 Below is an example of a **Next.js** project configured to use this library. Ensure your `package.json` includes the following:
 
+Or you can fork [`mm-front-boilerplate`](https://github.com/joseiguti/mm-front-boilerplate) that already implements `mm-front-components`.
+
 ```json
 {
-  "name": "next-styled-boilerplate",
+  "name": "mm-front-boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
