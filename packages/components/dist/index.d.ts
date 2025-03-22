@@ -1,4 +1,4 @@
-declare module "web-monorepo-ui-components" {
+declare module "mm-front-components" {
   import { ElementType, ReactNode } from 'react';
 
   export interface DialogButton {
@@ -58,7 +58,7 @@ declare module "web-monorepo-ui-components" {
 
   export interface SelectFieldProps {
     label?: string;
-    defaultValue?: string;
+    value?: string[];
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     options: { value: string; label: string }[];
     placeholder?: string;

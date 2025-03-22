@@ -144,7 +144,7 @@ function _toConsumableArray(r) {
 function _toPrimitive$1(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
-  if (undefined !== e) {
+  if (void 0 !== e) {
     var i = e.call(t, r);
     if ("object" != typeof i) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
@@ -168,7 +168,7 @@ function _unsupportedIterableToArray(r, a) {
   if (r) {
     if ("string" == typeof r) return _arrayLikeToArray(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : undefined;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
   }
 }
 
@@ -482,7 +482,7 @@ var hasRequiredObjectAssign;
 function requireObjectAssign() {
   if (hasRequiredObjectAssign) return objectAssign;
   hasRequiredObjectAssign = 1;
-   
+  /* eslint-disable no-unused-vars */
   var getOwnPropertySymbols = Object.getOwnPropertySymbols;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
   var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -501,7 +501,7 @@ function requireObjectAssign() {
       // Detect buggy property enumeration order in older V8 versions.
 
       // https://bugs.chromium.org/p/v8/issues/detail?id=4118
-      var test1 = new String('abc');  
+      var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
       test1[5] = 'de';
       if (Object.getOwnPropertyNames(test1)[0] === '5') {
         return false;
@@ -798,7 +798,7 @@ function requireFactoryWithTypeCheckers() {
      * inlined Object.is polyfill to avoid requiring consumers ship their own
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
      */
-     
+    /*eslint-disable no-self-compare*/
     function is(x, y) {
       // SameValue algorithm
       if (x === y) {
@@ -810,7 +810,7 @@ function requireFactoryWithTypeCheckers() {
         return x !== x && y !== y;
       }
     }
-     
+    /*eslint-enable no-self-compare*/
 
     /**
      * We use an Error-like object for backward compatibility as people may call
@@ -994,7 +994,7 @@ function requireFactoryWithTypeCheckers() {
     }
     function createUnionTypeChecker(arrayOfTypeCheckers) {
       if (!Array.isArray(arrayOfTypeCheckers)) {
-        process.env.NODE_ENV !== 'production' ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : undefined;
+        process.env.NODE_ENV !== 'production' ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
         return emptyFunctionThatReturnsNull;
       }
       for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
@@ -2273,13 +2273,13 @@ var unitlessKeys$1 = {
   strokeWidth: 1
 };
 
-var f = "undefined" != typeof process && undefined !== process.env && (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR) || "data-styled",
+var f = "undefined" != typeof process && void 0 !== process.env && (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR) || "data-styled",
   m = "active",
   y = "data-styled-version",
-  v = "6.1.14",
+  v = "6.1.16",
   g = "/*!sc*/\n",
   S = "undefined" != typeof window && "HTMLElement" in window,
-  w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.REACT_APP_SC_DISABLE_SPEEDY && "" !== process.env.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== process.env.REACT_APP_SC_DISABLE_SPEEDY && process.env.REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && undefined !== process.env && undefined !== process.env.SC_DISABLE_SPEEDY && "" !== process.env.SC_DISABLE_SPEEDY ? "false" !== process.env.SC_DISABLE_SPEEDY && process.env.SC_DISABLE_SPEEDY : "production" !== process.env.NODE_ENV),
+  w = Boolean("boolean" == typeof SC_DISABLE_SPEEDY ? SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== process.env && void 0 !== process.env.REACT_APP_SC_DISABLE_SPEEDY && "" !== process.env.REACT_APP_SC_DISABLE_SPEEDY ? "false" !== process.env.REACT_APP_SC_DISABLE_SPEEDY && process.env.REACT_APP_SC_DISABLE_SPEEDY : "undefined" != typeof process && void 0 !== process.env && void 0 !== process.env.SC_DISABLE_SPEEDY && "" !== process.env.SC_DISABLE_SPEEDY ? "false" !== process.env.SC_DISABLE_SPEEDY && process.env.SC_DISABLE_SPEEDY : "production" !== process.env.NODE_ENV),
   b = {},
   E = /invalid hook call/i,
   N = new Set(),
@@ -2304,7 +2304,7 @@ var f = "undefined" != typeof process && undefined !== process.env && (process.e
   _ = Object.freeze([]),
   C = Object.freeze({});
 function I(e, t, n) {
-  return undefined === n && (n = C), e.theme !== n.theme && e.theme || t || n.theme;
+  return void 0 === n && (n = C), e.theme !== n.theme && e.theme || t || n.theme;
 }
 var A = new Set(["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "tr", "track", "u", "ul", "use", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "marker", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"]),
   O = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g,
@@ -2429,7 +2429,7 @@ function ce(e) {
   return null !== e && "object" == _typeof(e) && e.constructor.name === Object.name && !("props" in e && e.$$typeof);
 }
 function le(e, t, n) {
-  if (undefined === n && (n = false), !n && !ce(e) && !Array.isArray(e)) return t;
+  if (void 0 === n && (n = false), !n && !ce(e) && !Array.isArray(e)) return t;
   if (Array.isArray(t)) for (var r = 0; r < t.length; r++) e[r] = le(e[r], t[r]);else if (ce(t)) for (var r in t) e[r] = le(e[r], t[r]);
   return e;
 }
@@ -2467,7 +2467,7 @@ function de() {
 }
 function he(t) {
   for (var n = [], r = 1; r < arguments.length; r++) n[r - 1] = arguments[r];
-  return "production" === process.env.NODE_ENV ? new Error("An error occurred. See https://github.com/styled-components/styled-components/blob/main/packages/styled-components/src/utils/errors.md#".concat(t, " for more information.").concat(n.length > 0 ? " Args: ".concat(n.join(", ")) : "")) : new Error(de.apply(undefined, __spreadArray([pe[t]], n, false)).trim());
+  return "production" === process.env.NODE_ENV ? new Error("An error occurred. See https://github.com/styled-components/styled-components/blob/main/packages/styled-components/src/utils/errors.md#".concat(t, " for more information.").concat(n.length > 0 ? " Args: ".concat(n.join(", ")) : "")) : new Error(de.apply(void 0, __spreadArray([pe[t]], n, false)).trim());
 }
 var fe = function () {
     function e(e) {
@@ -2518,7 +2518,7 @@ var fe = function () {
     for (var r, o = n.split(","), s = 0, i = o.length; s < i; s++) (r = o[s]) && e.registerName(t, r);
   },
   Pe = function Pe(e, t) {
-    for (var n, r = (null !== (n = t.textContent) && undefined !== n ? n : "").split(g), o = [], s = 0, i = r.length; s < i; s++) {
+    for (var n, r = (null !== (n = t.textContent) && void 0 !== n ? n : "").split(g), o = [], s = 0, i = r.length; s < i; s++) {
       var a = r[s].trim();
       if (a) {
         var c = a.match(Ee);
@@ -2547,7 +2547,7 @@ var Ie = function Ie(e) {
         var t = Array.from(e.querySelectorAll("style[".concat(f, "]")));
         return t[t.length - 1];
       }(n),
-      s = undefined !== o ? o.nextSibling : null;
+      s = void 0 !== o ? o.nextSibling : null;
     r.setAttribute(f, m), r.setAttribute(y, v);
     var i = Ce();
     return i && r.setAttribute("nonce", i), n.insertBefore(r, s), r;
@@ -2611,7 +2611,7 @@ var Ie = function Ie(e) {
   },
   ke = function () {
     function e(e, n, r) {
-      undefined === e && (e = C), undefined === n && (n = {});
+      void 0 === e && (e = C), void 0 === n && (n = {});
       var o = this;
       this.options = __assign(__assign({}, Te), e), this.gs = n, this.names = new Map(r), this.server = !!e.isServer, !this.server && S && Re && (Re = false, _e(this)), ue(this, function () {
         return function (e) {
@@ -2619,13 +2619,13 @@ var Ie = function Ie(e) {
               var o = function (e) {
                 return ve.get(e);
               }(n);
-              if (undefined === o) return "continue";
+              if (void 0 === o) return "continue";
               var s = e.names.get(o),
                 i = t.getGroup(n);
-              if (undefined === s || !s.size || 0 === i.length) return "continue";
+              if (void 0 === s || !s.size || 0 === i.length) return "continue";
               var a = "".concat(f, ".g").concat(n, '[id="').concat(o, '"]'),
                 c = "";
-              undefined !== s && s.forEach(function (e) {
+              void 0 !== s && s.forEach(function (e) {
                 e.length > 0 && (c += "".concat(e, ","));
               }), r += "".concat(i).concat(a, '{content:"').concat(c, '"}').concat(g);
             }, s = 0; s < n; s++) o(s);
@@ -2638,7 +2638,7 @@ var Ie = function Ie(e) {
     }, e.prototype.rehydrate = function () {
       !this.server && S && _e(this);
     }, e.prototype.reconstructWithOptions = function (n, r) {
-      return undefined === r && (r = true), new e(__assign(__assign({}, this.options), n), this.gs, r && this.names || undefined);
+      return void 0 === r && (r = true), new e(__assign(__assign({}, this.options), n), this.gs, r && this.names || void 0);
     }, e.prototype.allocateGSInstance = function (e) {
       return this.gs[e] = (this.gs[e] || 0) + 1;
     }, e.prototype.getTag = function () {
@@ -2662,7 +2662,7 @@ var Ie = function Ie(e) {
     }, e.prototype.clearRules = function (e) {
       this.getTag().clearGroup(Se(e)), this.clearNames(e);
     }, e.prototype.clearTag = function () {
-      this.tag = undefined;
+      this.tag = void 0;
     }, e;
   }(),
   je = /&/g,
@@ -2680,9 +2680,9 @@ function Fe(e) {
     r,
     o = C ,
     s = o.options,
-    i = undefined === s ? C : s,
+    i = void 0 === s ? C : s,
     a = o.plugins,
-    c = undefined === a ? _ : a,
+    c = void 0 === a ? _ : a,
     l = function l(e, r, o) {
       return o.startsWith(n) && o.endsWith(n) && o.replaceAll(n, "").length > 0 ? ".".concat(t) : e;
     },
@@ -2691,7 +2691,7 @@ function Fe(e) {
     e.type === RULESET$1 && e.value.includes("&") && (e.props[0] = e.props[0].replace(je, n).replace(r, l));
   }), i.prefix && u.push(prefixer$1), u.push(stringify$1);
   var p = function p(e, o, s, a) {
-    undefined === o && (o = ""), undefined === s && (s = ""), undefined === a && (a = "&"), t = a, n = o, r = new RegExp("\\".concat(n, "\\b"), "g");
+    void 0 === o && (o = ""), void 0 === s && (s = ""), void 0 === a && (a = "&"), t = a, n = o, r = new RegExp("\\".concat(n, "\\b"), "g");
     var c = e.replace(xe, ""),
       l = compile$1(s || o ? "".concat(s, " ").concat(o, " { ").concat(c, " }") : c);
     i.namespace && (l = Ve(l, i.namespace));
@@ -2707,7 +2707,7 @@ function Fe(e) {
 var Me = new ke(),
   ze = Fe(),
   $e = /*#__PURE__*/React.createContext({
-    shouldForwardProp: undefined,
+    shouldForwardProp: void 0,
     styleSheet: Me,
     stylis: ze
   });
@@ -2719,7 +2719,7 @@ var qe = function () {
     function e(e, t) {
       var n = this;
       this.inject = function (e, t) {
-        undefined === t && (t = ze);
+        void 0 === t && (t = ze);
         var r = n.name + t.hash;
         e.hasNameForId(n.id, r) || e.insertRules(n.id, r, t(n.rules, r, "@keyframes"));
       }, this.name = e, this.id = "sc-keyframes-".concat(e), this.rules = t, ue(this, function () {
@@ -2727,7 +2727,7 @@ var qe = function () {
       });
     }
     return e.prototype.getName = function (e) {
-      return undefined === e && (e = ze), this.name + e.hash;
+      return void 0 === e && (e = ze), this.name + e.hash;
     }, e;
   }(),
   We = function We(e) {
@@ -2777,7 +2777,7 @@ function Ze(e) {
 var Ke = z(v),
   Qe = function () {
     function e(e, t, n) {
-      this.rules = e, this.staticRulesId = "", this.isStatic = "production" === process.env.NODE_ENV && (undefined === n || n.isStatic) && Ze(e), this.componentId = t, this.baseHash = M(Ke, t), this.baseStyle = n, ke.registerId(t);
+      this.rules = e, this.staticRulesId = "", this.isStatic = "production" === process.env.NODE_ENV && (void 0 === n || n.isStatic) && Ze(e), this.componentId = t, this.baseHash = M(Ke, t), this.baseStyle = n, ke.registerId(t);
     }
     return e.prototype.generateAndInjectStyles = function (e, t, n) {
       var r = this.baseStyle ? this.baseStyle.generateAndInjectStyles(e, t, n) : "";
@@ -2786,7 +2786,7 @@ var Ke = z(v),
           var o = ae(Xe(this.rules, e, t, n)),
             s = x(M(this.baseHash, o) >>> 0);
           if (!t.hasNameForId(this.componentId, s)) {
-            var i = n(o, ".".concat(s), undefined, this.componentId);
+            var i = n(o, ".".concat(s), void 0, this.componentId);
             t.insertRules(this.componentId, s, i);
           }
           r = ie(r, s), this.staticRulesId = s;
@@ -2801,13 +2801,13 @@ var Ke = z(v),
         }
         if (c) {
           var d = x(a >>> 0);
-          t.hasNameForId(this.componentId, d) || t.insertRules(this.componentId, d, n(c, ".".concat(d), undefined, this.componentId)), r = ie(r, d);
+          t.hasNameForId(this.componentId, d) || t.insertRules(this.componentId, d, n(c, ".".concat(d), void 0, this.componentId)), r = ie(r, d);
         }
       }
       return r;
     }, e;
   }(),
-  et = /*#__PURE__*/React.createContext(undefined);
+  et = /*#__PURE__*/React.createContext(void 0);
   et.Consumer;
 function rt(e) {
   var n = React.useContext(et),
@@ -2834,16 +2834,16 @@ function it(e, o, s) {
     a = e,
     c = !L(e),
     p = o.attrs,
-    d = undefined === p ? _ : p,
+    d = void 0 === p ? _ : p,
     h = o.componentId,
-    f = undefined === h ? function (e, t) {
+    f = void 0 === h ? function (e, t) {
       var n = "string" != typeof e ? "sc" : R(e);
       ot[n] = (ot[n] || 0) + 1;
       var r = "".concat(n, "-").concat($(v + n + ot[n]));
       return t ? "".concat(t, "-").concat(r) : r;
     }(o.displayName, o.parentComponentId) : h,
     m = o.displayName,
-    y = undefined === m ? function (e) {
+    y = void 0 === m ? function (e) {
       return L(e) ? "styled.".concat(e) : "Styled(".concat(B(e), ")");
     }(e) : m,
     g = o.displayName && o.componentId ? "".concat(R(o.displayName), "-").concat(o.componentId) : o.componentId || f,
@@ -2858,7 +2858,7 @@ function it(e, o, s) {
       };
     } else w = b;
   }
-  var N = new Qe(s, g, i ? a.componentStyle : undefined);
+  var N = new Qe(s, g, i ? a.componentStyle : void 0);
   function O(e, o) {
     return function (e, o, s) {
       var i = e.attrs,
@@ -2874,7 +2874,7 @@ function it(e, o, s) {
       var v = I(o, f, c) || C,
         g = function (e, n, r) {
           for (var o, s = __assign(__assign({}, n), {
-              className: undefined,
+              className: void 0,
               theme: r
             }), i = 0; i < e.length; i += 1) {
             var a = oe(o = e[i]) ? o(s) : o;
@@ -2884,7 +2884,7 @@ function it(e, o, s) {
         }(i, o, v),
         S = g.as || h,
         w = {};
-      for (var b in g) undefined === g[b] || "$" === b[0] || "as" === b || "theme" === b && g.theme === v || ("forwardedAs" === b ? w.as = g.forwardedAs : y && !y(b, S) || (w[b] = g[b], y || "development" !== process.env.NODE_ENV || isPropValid$1(b) || st.has(b) || !A.has(S) || (st.add(b), console.warn('styled-components: it looks like an unknown prop "'.concat(b, '" is being sent through to the DOM, which will likely trigger a React console error. If you would like automatic filtering of unknown props, you can opt-into that behavior via `<StyleSheetManager shouldForwardProp={...}>` (connect an API like `@emotion/is-prop-valid`) or consider using transient props (`$` prefix for automatic filtering.)')))));
+      for (var b in g) void 0 === g[b] || "$" === b[0] || "as" === b || "theme" === b && g.theme === v || ("forwardedAs" === b ? w.as = g.forwardedAs : y && !y(b, S) || (w[b] = g[b], y || "development" !== process.env.NODE_ENV || isPropValid$1(b) || st.has(b) || !A.has(S) || (st.add(b), console.warn('styled-components: it looks like an unknown prop "'.concat(b, '" is being sent through to the DOM, which will likely trigger a React console error. If you would like automatic filtering of unknown props, you can opt-into that behavior via `<StyleSheetManager shouldForwardProp={...}>` (connect an API like `@emotion/is-prop-valid`) or consider using transient props (`$` prefix for automatic filtering.)')))));
       var E = function (e, t) {
         var n = Ge(),
           r = e.generateAndInjectStyles(t, n.styleSheet, n.stylis);
@@ -2945,10 +2945,10 @@ function lt(t) {
   return 0 === n.length && 1 === o.length && "string" == typeof o[0] ? Xe(o) : ct(Xe(at(o, n)));
 }
 function ut(n, r, o) {
-  if (undefined === o && (o = C), !r) throw he(1, r);
+  if (void 0 === o && (o = C), !r) throw he(1, r);
   var s = function s(t) {
     for (var s = [], i = 1; i < arguments.length; i++) s[i - 1] = arguments[i];
-    return n(r, o, lt.apply(undefined, __spreadArray([t], s, false)));
+    return n(r, o, lt.apply(void 0, __spreadArray([t], s, false)));
   };
   return s.attrs = function (e) {
     return ut(n, r, __assign(__assign({}, o), {
@@ -2981,7 +2981,7 @@ var ht = function () {
 }();
 function ft(n) {
   for (var o = [], s = 1; s < arguments.length; s++) o[s - 1] = arguments[s];
-  var i = lt.apply(undefined, __spreadArray([n], o, false)),
+  var i = lt.apply(void 0, __spreadArray([n], o, false)),
     a = "sc-global-".concat($(JSON.stringify(i))),
     c = new ht(i, a);
   "production" !== process.env.NODE_ENV && P(a);
@@ -3193,7 +3193,7 @@ function requireReactIs_production() {
     return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
   };
   reactIs_production.isValidElementType = function (type) {
-    return "string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE || undefined !== type.getModuleId) ? true : false;
+    return "string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE || void 0 !== type.getModuleId) ? true : false;
   };
   reactIs_production.typeOf = typeOf;
   return reactIs_production;
@@ -3299,7 +3299,7 @@ function requireReactIs_development() {
       return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
     };
     reactIs_development.isValidElementType = function (type) {
-      return "string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE || undefined !== type.getModuleId) ? true : false;
+      return "string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE || void 0 !== type.getModuleId) ? true : false;
     };
     reactIs_development.typeOf = typeOf;
   }();
@@ -3626,7 +3626,7 @@ function sortContainerQueries(theme, css) {
   }).sort(function (a, b) {
     var _a$match, _b$match;
     var regex = /min-width:\s*([0-9.]+)/;
-    return +(((_a$match = a.match(regex)) === null || _a$match === undefined ? undefined : _a$match[1]) || 0) - +(((_b$match = b.match(regex)) === null || _b$match === undefined ? undefined : _b$match[1]) || 0);
+    return +(((_a$match = a.match(regex)) === null || _a$match === void 0 ? void 0 : _a$match[1]) || 0) - +(((_b$match = b.match(regex)) === null || _b$match === void 0 ? void 0 : _b$match[1]) || 0);
   });
   if (!sorted.length) {
     return css;
@@ -3768,7 +3768,7 @@ function handleBreakpoints(props, propValue, styleFromPropValue) {
 function createEmptyBreakpointObject() {
   var _breakpointsInput$key;
   var breakpointsInput = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var breakpointsInOrder = (_breakpointsInput$key = breakpointsInput.keys) === null || _breakpointsInput$key === undefined ? undefined : _breakpointsInput$key.reduce(function (acc, key) {
+  var breakpointsInOrder = (_breakpointsInput$key = breakpointsInput.keys) === null || _breakpointsInput$key === void 0 ? void 0 : _breakpointsInput$key.reduce(function (acc, key) {
     var breakpointStyleKey = breakpointsInput.up(key);
     acc[breakpointStyleKey] = {};
     return acc;
@@ -3826,12 +3826,12 @@ function getStyleValue(themeMapping, transform, propValueFinal) {
 function style$1(options) {
   var prop = options.prop,
     _options$cssProperty = options.cssProperty,
-    cssProperty = _options$cssProperty === undefined ? options.prop : _options$cssProperty,
+    cssProperty = _options$cssProperty === void 0 ? options.prop : _options$cssProperty,
     themeKey = options.themeKey,
     transform = options.transform;
 
   // false positive
-   
+  // eslint-disable-next-line react/function-component-definition
   var fn = function fn(props) {
     if (props[prop] == null) {
       return null;
@@ -3913,7 +3913,7 @@ var paddingKeys = ['p', 'pt', 'pr', 'pb', 'pl', 'px', 'py', 'padding', 'paddingT
 var spacingKeys = [].concat(marginKeys, paddingKeys);
 function createUnaryUnit(theme, themeKey, defaultValue, propName) {
   var _getPath;
-  var themeSpacing = (_getPath = getPath(theme, themeKey, true)) !== null && _getPath !== undefined ? _getPath : defaultValue;
+  var themeSpacing = (_getPath = getPath(theme, themeKey, true)) !== null && _getPath !== void 0 ? _getPath : defaultValue;
   if (typeof themeSpacing === 'number' || typeof themeSpacing === 'string') {
     return function (val) {
       if (typeof val === 'string') {
@@ -4030,7 +4030,7 @@ function compose() {
   }, {});
 
   // false positive
-   
+  // eslint-disable-next-line react/function-component-definition
   var fn = function fn(props) {
     return Object.keys(props).reduce(function (acc, prop) {
       if (handlers[prop]) {
@@ -4075,7 +4075,7 @@ var outline = createBorderStyle('outline', borderTransform);
 var outlineColor = createBorderStyle('outlineColor');
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var borderRadius = function borderRadius(props) {
   if (props.borderRadius !== undefined && props.borderRadius !== null) {
     var transformer = createUnaryUnit(props.theme, 'shape.borderRadius', 4, 'borderRadius');
@@ -4095,7 +4095,7 @@ borderRadius.filterProps = ['borderRadius'];
 compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius, outline, outlineColor);
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var gap = function gap(props) {
   if (props.gap !== undefined && props.gap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'gap');
@@ -4114,7 +4114,7 @@ gap.propTypes = process.env.NODE_ENV !== 'production' ? {
 gap.filterProps = ['gap'];
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var columnGap = function columnGap(props) {
   if (props.columnGap !== undefined && props.columnGap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'columnGap');
@@ -4133,7 +4133,7 @@ columnGap.propTypes = process.env.NODE_ENV !== 'production' ? {
 columnGap.filterProps = ['columnGap'];
 
 // false positive
- 
+// eslint-disable-next-line react/function-component-definition
 var rowGap = function rowGap(props) {
   if (props.rowGap !== undefined && props.rowGap !== null) {
     var transformer = createUnaryUnit(props.theme, 'spacing', 8, 'rowGap');
@@ -4214,13 +4214,13 @@ var maxWidth = function maxWidth(props) {
   if (props.maxWidth !== undefined && props.maxWidth !== null) {
     var styleFromPropValue = function styleFromPropValue(propValue) {
       var _props$theme, _props$theme2;
-      var breakpoint = ((_props$theme = props.theme) === null || _props$theme === undefined || (_props$theme = _props$theme.breakpoints) === null || _props$theme === undefined || (_props$theme = _props$theme.values) === null || _props$theme === undefined ? undefined : _props$theme[propValue]) || values[propValue];
+      var breakpoint = ((_props$theme = props.theme) === null || _props$theme === void 0 || (_props$theme = _props$theme.breakpoints) === null || _props$theme === void 0 || (_props$theme = _props$theme.values) === null || _props$theme === void 0 ? void 0 : _props$theme[propValue]) || values[propValue];
       if (!breakpoint) {
         return {
           maxWidth: sizingTransform(propValue)
         };
       }
-      if (((_props$theme2 = props.theme) === null || _props$theme2 === undefined || (_props$theme2 = _props$theme2.breakpoints) === null || _props$theme2 === undefined ? undefined : _props$theme2.unit) !== 'px') {
+      if (((_props$theme2 = props.theme) === null || _props$theme2 === void 0 || (_props$theme2 = _props$theme2.breakpoints) === null || _props$theme2 === void 0 ? void 0 : _props$theme2.unit) !== 'px') {
         return {
           maxWidth: "".concat(breakpoint).concat(props.theme.breakpoints.unit)
         };
@@ -4581,7 +4581,7 @@ function unstable_createStyleFunctionSx() {
       return _defineProperty$1({}, prop, val);
     }
     var _options$cssProperty = options.cssProperty,
-      cssProperty = _options$cssProperty === undefined ? prop : _options$cssProperty,
+      cssProperty = _options$cssProperty === void 0 ? prop : _options$cssProperty,
       themeKey = options.themeKey,
       transform = options.transform,
       style = options.style;
@@ -4615,11 +4615,11 @@ function unstable_createStyleFunctionSx() {
     var _ref4 = props || {},
       sx = _ref4.sx,
       _ref4$theme = _ref4.theme,
-      theme = _ref4$theme === undefined ? {} : _ref4$theme;
+      theme = _ref4$theme === void 0 ? {} : _ref4$theme;
     if (!sx) {
       return null; // Emotion & styled-components will neglect null
     }
-    var config = (_theme$unstable_sxCon = theme.unstable_sxConfig) !== null && _theme$unstable_sxCon !== undefined ? _theme$unstable_sxCon : defaultSxConfig;
+    var config = (_theme$unstable_sxCon = theme.unstable_sxConfig) !== null && _theme$unstable_sxCon !== void 0 ? _theme$unstable_sxCon : defaultSxConfig;
 
     /*
      * Receive `sxInput` as object or callback
@@ -4792,7 +4792,7 @@ var StyleSheet = /*#__PURE__*/function () {
   _proto.flush = function flush() {
     this.tags.forEach(function (tag) {
       var _tag$parentNode;
-      return (_tag$parentNode = tag.parentNode) == null ? undefined : _tag$parentNode.removeChild(tag);
+      return (_tag$parentNode = tag.parentNode) == null ? void 0 : _tag$parentNode.removeChild(tag);
     });
     this.tags = [];
     this.ctr = 0;
@@ -5518,7 +5518,7 @@ var removeLabel = function removeLabel(element) {
   }
 };
 
- 
+/* eslint-disable no-fallthrough */
 
 function prefix(value, length) {
   switch (hash(value, length)) {
@@ -6220,7 +6220,7 @@ if (!isBrowser$1) {
 }
 var ThemeContext = /* #__PURE__ */React__namespace.createContext({});
 
- 
+// eslint-disable-next-line no-undef
 var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|abbr|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|disableRemotePlayback|download|draggable|encType|enterKeyHint|fetchpriority|fetchPriority|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|translate|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|incremental|fallback|inert|itemProp|itemScope|itemType|itemID|itemRef|on|option|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
 
 var isPropValid = /* #__PURE__ */memoize(function (prop) {
@@ -6290,14 +6290,14 @@ var createStyled$1 = function createStyled(tag, options) {
   var defaultShouldForwardProp = shouldForwardProp || getDefaultShouldForwardProp(baseTag);
   var shouldUseAs = !defaultShouldForwardProp('as');
   return function () {
-     
+    // eslint-disable-next-line prefer-rest-params
     var args = arguments;
     var styles = isReal && tag.__emotion_styles !== undefined ? tag.__emotion_styles.slice(0) : [];
     if (identifierName !== undefined) {
       styles.push("label:" + identifierName + ";");
     }
     if (args[0] == null || args[0].raw === undefined) {
-       
+      // eslint-disable-next-line prefer-spread
       styles.push.apply(styles, args);
     } else {
       var templateStringsArr = args[0];
@@ -6363,7 +6363,7 @@ var createStyled$1 = function createStyled(tag, options) {
       var newStyled = createStyled(nextTag, _extends$1({}, options, nextOptions, {
         shouldForwardProp: composeShouldForwardProps(Styled, nextOptions, true)
       }));
-      return newStyled.apply(undefined, styles);
+      return newStyled.apply(void 0, styles);
     };
     return Styled;
   };
@@ -6400,8 +6400,8 @@ function requireReactJsxRuntime_production() {
     REACT_FRAGMENT_TYPE = Symbol["for"]("react.fragment");
   function jsxProd(type, config, maybeKey) {
     var key = null;
-    undefined !== maybeKey && (key = "" + maybeKey);
-    undefined !== config.key && (key = "" + config.key);
+    void 0 !== maybeKey && (key = "" + maybeKey);
+    void 0 !== config.key && (key = "" + config.key);
     if ("key" in config) {
       maybeKey = {};
       for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
@@ -6411,7 +6411,7 @@ function requireReactJsxRuntime_production() {
       $$typeof: REACT_ELEMENT_TYPE,
       type: type,
       key: key,
-      ref: undefined !== config ? config : null,
+      ref: void 0 !== config ? config : null,
       props: maybeKey
     };
   }
@@ -6548,7 +6548,7 @@ function requireReactJsxRuntime_development() {
       0 > disabledDepth && console.error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
     }
     function describeBuiltInComponentFrame(name) {
-      if (undefined === prefix) try {
+      if (void 0 === prefix) try {
         throw Error();
       } catch (x) {
         var match = x.stack.trim().match(/\n( *(at )?)/);
@@ -6560,10 +6560,10 @@ function requireReactJsxRuntime_development() {
     function describeNativeComponentFrame(fn, construct) {
       if (!fn || reentry) return "";
       var frame = componentFrameCache.get(fn);
-      if (undefined !== frame) return frame;
+      if (void 0 !== frame) return frame;
       reentry = true;
       frame = Error.prepareStackTrace;
-      Error.prepareStackTrace = undefined;
+      Error.prepareStackTrace = void 0;
       var previousDispatcher = null;
       previousDispatcher = ReactSharedInternals.H;
       ReactSharedInternals.H = null;
@@ -6679,7 +6679,7 @@ function requireReactJsxRuntime_development() {
         var getter = Object.getOwnPropertyDescriptor(config, "key").get;
         if (getter && getter.isReactWarning) return false;
       }
-      return undefined !== config.key;
+      return void 0 !== config.key;
     }
     function defineKeyPropWarningGetter(props, displayName) {
       function warnAboutAccessingKey() {
@@ -6695,7 +6695,7 @@ function requireReactJsxRuntime_development() {
       var componentName = getComponentNameFromType(this.type);
       didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = true, console.error("Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."));
       componentName = this.props.ref;
-      return undefined !== componentName ? componentName : null;
+      return void 0 !== componentName ? componentName : null;
     }
     function ReactElement(type, key, self, source, owner, props) {
       self = props.ref;
@@ -6706,7 +6706,7 @@ function requireReactJsxRuntime_development() {
         props: props,
         _owner: owner
       };
-      null !== (undefined !== self ? self : null) ? Object.defineProperty(type, "ref", {
+      null !== (void 0 !== self ? self : null) ? Object.defineProperty(type, "ref", {
         enumerable: false,
         get: elementRefGetterWithDeprecationWarning
       }) : Object.defineProperty(type, "ref", {
@@ -6730,9 +6730,9 @@ function requireReactJsxRuntime_development() {
       return type;
     }
     function jsxDEVImpl(type, config, maybeKey, isStaticChildren, source, self) {
-      if ("string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE$1 || undefined !== type.getModuleId)) {
+      if ("string" === typeof type || "function" === typeof type || type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_OFFSCREEN_TYPE || "object" === _typeof(type) && null !== type && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_CONSUMER_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_CLIENT_REFERENCE$1 || void 0 !== type.getModuleId)) {
         var children = config.children;
-        if (undefined !== children) if (isStaticChildren) {
+        if (void 0 !== children) if (isStaticChildren) {
           if (isArrayImpl(children)) {
             for (isStaticChildren = 0; isStaticChildren < children.length; isStaticChildren++) validateChildKeys(children[isStaticChildren], type);
             Object.freeze && Object.freeze(children);
@@ -6740,8 +6740,8 @@ function requireReactJsxRuntime_development() {
         } else validateChildKeys(children, type);
       } else {
         children = "";
-        if (undefined === type || "object" === _typeof(type) && null !== type && 0 === Object.keys(type).length) children += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
-        null === type ? isStaticChildren = "null" : isArrayImpl(type) ? isStaticChildren = "array" : undefined !== type && type.$$typeof === REACT_ELEMENT_TYPE ? (isStaticChildren = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", children = " Did you accidentally export a JSX literal instead of a component?") : isStaticChildren = _typeof(type);
+        if (void 0 === type || "object" === _typeof(type) && null !== type && 0 === Object.keys(type).length) children += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+        null === type ? isStaticChildren = "null" : isArrayImpl(type) ? isStaticChildren = "array" : void 0 !== type && type.$$typeof === REACT_ELEMENT_TYPE ? (isStaticChildren = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", children = " Did you accidentally export a JSX literal instead of a component?") : isStaticChildren = _typeof(type);
         console.error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", isStaticChildren, children);
       }
       if (hasOwnProperty.call(config, "key")) {
@@ -6753,7 +6753,7 @@ function requireReactJsxRuntime_development() {
         didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error('A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />', isStaticChildren, children, keys, children), didWarnAboutKeySpread[children + isStaticChildren] = true);
       }
       children = null;
-      undefined !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
+      void 0 !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
       hasValidKey(config) && (checkKeyStringCoercion(config.key), children = "" + config.key);
       if ("key" in config) {
         maybeKey = {};
@@ -6858,13 +6858,13 @@ function requireJsxRuntime() {
 var jsxRuntimeExports = requireJsxRuntime();
 
 /**
- * @mui/styled-engine v6.4.3
+ * @mui/styled-engine v6.4.8
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
- 
+/* eslint-disable no-underscore-dangle */
 function styled$1(tag, options) {
   var stylesFactory = newStyled(tag, options);
   if (process.env.NODE_ENV !== 'production') {
@@ -6880,7 +6880,7 @@ function styled$1(tag, options) {
       })) {
         console.error("MUI: the styled(".concat(component, ")(...args) API requires all its args to be defined."));
       }
-      return stylesFactory.apply(undefined, styles);
+      return stylesFactory.apply(void 0, styles);
     };
   }
   return stylesFactory;
@@ -6903,7 +6903,7 @@ function internal_serializeStyles(styles) {
   return serializeStyles(wrapper);
 }
 
-var _excluded$m = ["values", "unit", "step"];
+var _excluded$l = ["values", "unit", "step"];
 var sortBreakpointsValues = function sortBreakpointsValues(values) {
   var breakpointsAsArray = Object.keys(values).map(function (key) {
     return {
@@ -6923,7 +6923,7 @@ var sortBreakpointsValues = function sortBreakpointsValues(values) {
 // Keep in mind that @media is inclusive by the CSS specification.
 function createBreakpoints(breakpoints) {
   var _breakpoints$values = breakpoints.values,
-    values = _breakpoints$values === undefined ? {
+    values = _breakpoints$values === void 0 ? {
       xs: 0,
       // phone
       sm: 600,
@@ -6935,10 +6935,10 @@ function createBreakpoints(breakpoints) {
       xl: 1536 // large screen
     } : _breakpoints$values,
     _breakpoints$unit = breakpoints.unit,
-    unit = _breakpoints$unit === undefined ? 'px' : _breakpoints$unit,
+    unit = _breakpoints$unit === void 0 ? 'px' : _breakpoints$unit,
     _breakpoints$step = breakpoints.step,
-    step = _breakpoints$step === undefined ? 5 : _breakpoints$step,
-    other = _objectWithoutProperties$1(breakpoints, _excluded$m);
+    step = _breakpoints$step === void 0 ? 5 : _breakpoints$step,
+    other = _objectWithoutProperties$1(breakpoints, _excluded$l);
   var sortedValues = sortBreakpointsValues(values);
   var keys = Object.keys(sortedValues);
   function up(key) {
@@ -7084,7 +7084,7 @@ function applyStyles(key, styles) {
   var theme = this;
   if (theme.vars) {
     var _theme$colorSchemes;
-    if (!((_theme$colorSchemes = theme.colorSchemes) !== null && _theme$colorSchemes !== undefined && _theme$colorSchemes[key]) || typeof theme.getColorSchemeSelector !== 'function') {
+    if (!((_theme$colorSchemes = theme.colorSchemes) !== null && _theme$colorSchemes !== void 0 && _theme$colorSchemes[key]) || typeof theme.getColorSchemeSelector !== 'function') {
       return {};
     }
     // If CssVarsProvider is used as a provider, returns '*:where({selector}) &'
@@ -7104,17 +7104,17 @@ function applyStyles(key, styles) {
   return {};
 }
 
-var _excluded$l = ["breakpoints", "palette", "spacing", "shape"];
+var _excluded$k = ["breakpoints", "palette", "spacing", "shape"];
 function createTheme$1() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var _options$breakpoints = options.breakpoints,
-    breakpointsInput = _options$breakpoints === undefined ? {} : _options$breakpoints,
+    breakpointsInput = _options$breakpoints === void 0 ? {} : _options$breakpoints,
     _options$palette = options.palette,
-    paletteInput = _options$palette === undefined ? {} : _options$palette,
+    paletteInput = _options$palette === void 0 ? {} : _options$palette,
     spacingInput = options.spacing,
     _options$shape = options.shape,
-    shapeInput = _options$shape === undefined ? {} : _options$shape,
-    other = _objectWithoutProperties$1(options, _excluded$l);
+    shapeInput = _options$shape === void 0 ? {} : _options$shape,
+    other = _objectWithoutProperties$1(options, _excluded$k);
   var breakpoints = createBreakpoints(breakpointsInput);
   var spacing = createSpacing(spacingInput);
   var muiTheme = deepmerge({
@@ -7136,7 +7136,7 @@ function createTheme$1() {
   muiTheme = args.reduce(function (acc, argument) {
     return deepmerge(acc, argument);
   }, muiTheme);
-  muiTheme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), other === null || other === undefined ? undefined : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), other === null || other === void 0 ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx({
       sx: props,
@@ -7146,10 +7146,10 @@ function createTheme$1() {
   return muiTheme;
 }
 
-var _excluded$k = ["variants"];
+var _excluded$j = ["variants"];
 function preprocessStyles(input) {
   var variants = input.variants,
-    style = _objectWithoutProperties$1(input, _excluded$k);
+    style = _objectWithoutProperties$1(input, _excluded$j);
   var result = {
     variants: variants,
     style: internal_serializeStyles(style),
@@ -7170,12 +7170,12 @@ function preprocessStyles(input) {
   return result;
 }
 
-var _excluded$j = ["variants"],
+var _excluded$i = ["variants"],
   _excluded2$3 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 
- 
- 
- 
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-labels */
+/* eslint-disable no-lone-blocks */
 
 var systemDefaultTheme = createTheme$1();
 
@@ -7210,18 +7210,18 @@ function processStyle(props, style) {
       return processStyle(props, subStyle);
     });
   }
-  if (Array.isArray(resolvedStyle === null || resolvedStyle === undefined ? undefined : resolvedStyle.variants)) {
+  if (Array.isArray(resolvedStyle === null || resolvedStyle === void 0 ? void 0 : resolvedStyle.variants)) {
     var rootStyle;
     if (resolvedStyle.isProcessed) {
       rootStyle = resolvedStyle.style;
     } else {
       resolvedStyle.variants;
-        var otherStyles = _objectWithoutProperties$1(resolvedStyle, _excluded$j);
+        var otherStyles = _objectWithoutProperties$1(resolvedStyle, _excluded$i);
       rootStyle = otherStyles;
     }
     return processStyleVariants(props, resolvedStyle.variants, [rootStyle]);
   }
-  if (resolvedStyle !== null && resolvedStyle !== undefined && resolvedStyle.isProcessed) {
+  if (resolvedStyle !== null && resolvedStyle !== void 0 && resolvedStyle.isProcessed) {
     return resolvedStyle.style;
   }
   return resolvedStyle;
@@ -7233,7 +7233,7 @@ function processStyleVariants(props, variants) {
   variantLoop: for (var i = 0; i < variants.length; i += 1) {
     var variant = variants[i];
     if (typeof variant.props === 'function') {
-      mergedState !== null && mergedState !== undefined ? mergedState : mergedState = _objectSpread2(_objectSpread2(_objectSpread2({}, props), props.ownerState), {}, {
+      mergedState !== null && mergedState !== void 0 ? mergedState : mergedState = _objectSpread2(_objectSpread2(_objectSpread2({}, props), props.ownerState), {}, {
         ownerState: props.ownerState
       });
       if (!variant.props(mergedState)) {
@@ -7242,13 +7242,13 @@ function processStyleVariants(props, variants) {
     } else {
       for (var key in variant.props) {
         var _props$ownerState;
-        if (props[key] !== variant.props[key] && ((_props$ownerState = props.ownerState) === null || _props$ownerState === undefined ? undefined : _props$ownerState[key]) !== variant.props[key]) {
+        if (props[key] !== variant.props[key] && ((_props$ownerState = props.ownerState) === null || _props$ownerState === void 0 ? void 0 : _props$ownerState[key]) !== variant.props[key]) {
           continue variantLoop;
         }
       }
     }
     if (typeof variant.style === 'function') {
-      mergedState !== null && mergedState !== undefined ? mergedState : mergedState = _objectSpread2(_objectSpread2(_objectSpread2({}, props), props.ownerState), {}, {
+      mergedState !== null && mergedState !== void 0 ? mergedState : mergedState = _objectSpread2(_objectSpread2(_objectSpread2({}, props), props.ownerState), {}, {
         ownerState: props.ownerState
       });
       results.push(variant.style(mergedState));
@@ -7262,11 +7262,11 @@ function createStyled() {
   var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var themeId = input.themeId,
     _input$defaultTheme = input.defaultTheme,
-    defaultTheme = _input$defaultTheme === undefined ? systemDefaultTheme : _input$defaultTheme,
+    defaultTheme = _input$defaultTheme === void 0 ? systemDefaultTheme : _input$defaultTheme,
     _input$rootShouldForw = input.rootShouldForwardProp,
-    rootShouldForwardProp = _input$rootShouldForw === undefined ? shouldForwardProp : _input$rootShouldForw,
+    rootShouldForwardProp = _input$rootShouldForw === void 0 ? shouldForwardProp : _input$rootShouldForw,
     _input$slotShouldForw = input.slotShouldForwardProp,
-    slotShouldForwardProp = _input$slotShouldForw === undefined ? shouldForwardProp : _input$slotShouldForw;
+    slotShouldForwardProp = _input$slotShouldForw === void 0 ? shouldForwardProp : _input$slotShouldForw;
   function styleAttachTheme(props) {
     attachTheme(props, themeId, defaultTheme);
   }
@@ -7284,7 +7284,7 @@ function createStyled() {
       inputSkipVariantsResolver = inputOptions.skipVariantsResolver,
       inputSkipSx = inputOptions.skipSx,
       _inputOptions$overrid = inputOptions.overridesResolver,
-      overridesResolver = _inputOptions$overrid === undefined ? defaultOverridesResolver(lowercaseFirstLetter(componentSlot)) : _inputOptions$overrid,
+      overridesResolver = _inputOptions$overrid === void 0 ? defaultOverridesResolver(lowercaseFirstLetter(componentSlot)) : _inputOptions$overrid,
       options = _objectWithoutProperties$1(inputOptions, _excluded2$3);
 
     // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
@@ -7345,14 +7345,14 @@ function createStyled() {
         expressionsTail.push(function styleThemeOverrides(props) {
           var _theme$components;
           var theme = props.theme;
-          var styleOverrides = (_theme$components = theme.components) === null || _theme$components === undefined || (_theme$components = _theme$components[componentName]) === null || _theme$components === undefined ? undefined : _theme$components.styleOverrides;
+          var styleOverrides = (_theme$components = theme.components) === null || _theme$components === void 0 || (_theme$components = _theme$components[componentName]) === null || _theme$components === void 0 ? void 0 : _theme$components.styleOverrides;
           if (!styleOverrides) {
             return null;
           }
           var resolvedStyleOverrides = {};
 
           // TODO: v7 remove iteration and use `resolveStyleArg(styleOverrides[slot])` directly
-           
+          // eslint-disable-next-line guard-for-in
           for (var slotKey in styleOverrides) {
             resolvedStyleOverrides[slotKey] = processStyle(props, styleOverrides[slotKey]);
           }
@@ -7363,7 +7363,7 @@ function createStyled() {
         expressionsTail.push(function styleThemeVariants(props) {
           var _theme$components2;
           var theme = props.theme;
-          var themeVariants = theme === null || theme === undefined || (_theme$components2 = theme.components) === null || _theme$components2 === undefined || (_theme$components2 = _theme$components2[componentName]) === null || _theme$components2 === undefined ? undefined : _theme$components2.variants;
+          var themeVariants = theme === null || theme === void 0 || (_theme$components2 = theme.components) === null || _theme$components2 === void 0 || (_theme$components2 = _theme$components2[componentName]) === null || _theme$components2 === void 0 ? void 0 : _theme$components2.variants;
           if (!themeVariants) {
             return null;
           }
@@ -7394,7 +7394,7 @@ function createStyled() {
         expressionsHead.unshift(outputStrings);
       }
       var expressions = [].concat(expressionsHead, _toConsumableArray(expressionsBody), expressionsTail);
-      var Component = defaultStyledResolver.apply(undefined, _toConsumableArray(expressions));
+      var Component = defaultStyledResolver.apply(void 0, _toConsumableArray(expressions));
       if (tag.muiName) {
         Component.muiName = tag.muiName;
       }
@@ -7428,7 +7428,7 @@ function generateStyledLabel(componentName, componentSlot) {
   return label;
 }
 function isObjectEmpty(object) {
-   
+  // eslint-disable-next-line
   for (var _ in object) {
     return false;
   }
@@ -7768,7 +7768,7 @@ process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   value: PropTypes.object
-} : undefined;
+} : void 0;
 function getThemeProps(params) {
   var theme = params.theme,
     name = params.name,
@@ -7842,7 +7842,7 @@ function createGetCssVar$1() {
     }
     var value = vars[0];
     if (typeof value === 'string' && !value.match(/(#|\(|\)|(-?(\d*\.)?\d+)(px|em|%|ex|ch|rem|vw|vh|vmin|vmax|cm|mm|in|pt|pc))|^(-?(\d*\.)?\d+)$|(\d+ \d+ \d+)/)) {
-      return ", var(--".concat(prefix ? "".concat(prefix, "-") : '').concat(value).concat(appendVar.apply(undefined, _toConsumableArray(vars.slice(1))), ")");
+      return ", var(--".concat(prefix ? "".concat(prefix, "-") : '').concat(value).concat(appendVar.apply(void 0, _toConsumableArray(vars.slice(1))), ")");
     }
     return ", ".concat(value);
   }
@@ -7852,7 +7852,7 @@ function createGetCssVar$1() {
     for (var _len2 = arguments.length, fallbacks = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
       fallbacks[_key2 - 1] = arguments[_key2];
     }
-    return "var(--".concat(prefix ? "".concat(prefix, "-") : '').concat(field).concat(appendVar.apply(undefined, fallbacks), ")");
+    return "var(--".concat(prefix ? "".concat(prefix, "-") : '').concat(field).concat(appendVar.apply(void 0, fallbacks), ")");
   };
   return getCssVar;
 }
@@ -7994,20 +7994,20 @@ function cssVarsParser(theme, options) {
   };
 }
 
-var _excluded$i = ["colorSchemes", "components", "defaultColorScheme"];
+var _excluded$h = ["colorSchemes", "components", "defaultColorScheme"];
 function prepareCssVars(theme) {
   var parserConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var _parserConfig$getSele = parserConfig.getSelector,
-    getSelector = _parserConfig$getSele === undefined ? defaultGetSelector : _parserConfig$getSele,
+    getSelector = _parserConfig$getSele === void 0 ? defaultGetSelector : _parserConfig$getSele,
     disableCssColorScheme = parserConfig.disableCssColorScheme,
     selector = parserConfig.colorSchemeSelector;
   // @ts-ignore - ignore components do not exist
   var _theme$colorSchemes = theme.colorSchemes,
-    colorSchemes = _theme$colorSchemes === undefined ? {} : _theme$colorSchemes;
+    colorSchemes = _theme$colorSchemes === void 0 ? {} : _theme$colorSchemes;
     theme.components;
     var _theme$defaultColorSc = theme.defaultColorScheme,
-    defaultColorScheme = _theme$defaultColorSc === undefined ? 'light' : _theme$defaultColorSc,
-    otherTheme = _objectWithoutProperties$1(theme, _excluded$i);
+    defaultColorScheme = _theme$defaultColorSc === void 0 ? 'light' : _theme$defaultColorSc,
+    otherTheme = _objectWithoutProperties$1(theme, _excluded$h);
   var _cssVarsParser = cssVarsParser(otherTheme, parserConfig),
     rootVars = _cssVarsParser.vars,
     rootCss = _cssVarsParser.css,
@@ -8050,7 +8050,7 @@ function prepareCssVars(theme) {
     if (selector === 'data') {
       rule = '[data-%s]';
     }
-    if (selector !== null && selector !== undefined && selector.startsWith('data-') && !selector.includes('%s')) {
+    if (selector !== null && selector !== void 0 && selector.startsWith('data-') && !selector.includes('%s')) {
       // 'data-joy-color-scheme' -> '[data-joy-color-scheme="%s"]'
       rule = "[".concat(selector, "=\"%s\"]");
     }
@@ -8060,7 +8060,7 @@ function prepareCssVars(theme) {
         if (theme.defaultColorScheme === colorScheme) {
           return ':root';
         }
-        var mode = ((_colorSchemes$colorSc = colorSchemes[colorScheme]) === null || _colorSchemes$colorSc === undefined || (_colorSchemes$colorSc = _colorSchemes$colorSc.palette) === null || _colorSchemes$colorSc === undefined ? undefined : _colorSchemes$colorSc.mode) || colorScheme;
+        var mode = ((_colorSchemes$colorSc = colorSchemes[colorScheme]) === null || _colorSchemes$colorSc === void 0 || (_colorSchemes$colorSc = _colorSchemes$colorSc.palette) === null || _colorSchemes$colorSc === void 0 ? void 0 : _colorSchemes$colorSc.mode) || colorScheme;
         return _defineProperty$1({}, "@media (prefers-color-scheme: ".concat(mode, ")"), {
           ':root': cssObject
         });
@@ -8098,7 +8098,7 @@ function prepareCssVars(theme) {
       var _colorSchemes$colorSc2;
       // default color scheme has to come before other color schemes
       var _css = defaultSchemeVal.css;
-      var cssColorSheme = (_colorSchemes$colorSc2 = colorSchemes[colorScheme]) === null || _colorSchemes$colorSc2 === undefined || (_colorSchemes$colorSc2 = _colorSchemes$colorSc2.palette) === null || _colorSchemes$colorSc2 === undefined ? undefined : _colorSchemes$colorSc2.mode;
+      var cssColorSheme = (_colorSchemes$colorSc2 = colorSchemes[colorScheme]) === null || _colorSchemes$colorSc2 === void 0 || (_colorSchemes$colorSc2 = _colorSchemes$colorSc2.palette) === null || _colorSchemes$colorSc2 === void 0 ? void 0 : _colorSchemes$colorSc2.mode;
       var finalCss = !disableCssColorScheme && cssColorSheme ? _objectSpread2({
         colorScheme: cssColorSheme
       }, _css) : _objectSpread2({}, _css);
@@ -8109,7 +8109,7 @@ function prepareCssVars(theme) {
       var _ref8 = _slicedToArray(_ref7, 2),
         key = _ref8[0],
         css = _ref8[1].css;
-      var cssColorSheme = (_colorSchemes$key = colorSchemes[key]) === null || _colorSchemes$key === undefined || (_colorSchemes$key = _colorSchemes$key.palette) === null || _colorSchemes$key === undefined ? undefined : _colorSchemes$key.mode;
+      var cssColorSheme = (_colorSchemes$key = colorSchemes[key]) === null || _colorSchemes$key === void 0 || (_colorSchemes$key = _colorSchemes$key.palette) === null || _colorSchemes$key === void 0 ? void 0 : _colorSchemes$key.mode;
       var finalCss = !disableCssColorScheme && cssColorSheme ? _objectSpread2({
         colorScheme: cssColorSheme
       }, css) : _objectSpread2({}, css);
@@ -8217,7 +8217,7 @@ var green = {
   800: '#2e7d32',
   900: '#1b5e20'};
 
-var _excluded$h = ["mode", "contrastThreshold", "tonalOffset"];
+var _excluded$g = ["mode", "contrastThreshold", "tonalOffset"];
 function getLight() {
   return {
     // The colors used to style the text.
@@ -8394,12 +8394,12 @@ function getDefaultWarning() {
 }
 function createPalette(palette) {
   var _palette$mode = palette.mode,
-    mode = _palette$mode === undefined ? 'light' : _palette$mode,
+    mode = _palette$mode === void 0 ? 'light' : _palette$mode,
     _palette$contrastThre = palette.contrastThreshold,
-    contrastThreshold = _palette$contrastThre === undefined ? 3 : _palette$contrastThre,
+    contrastThreshold = _palette$contrastThre === void 0 ? 3 : _palette$contrastThre,
     _palette$tonalOffset = palette.tonalOffset,
-    tonalOffset = _palette$tonalOffset === undefined ? 0.2 : _palette$tonalOffset,
-    other = _objectWithoutProperties$1(palette, _excluded$h);
+    tonalOffset = _palette$tonalOffset === void 0 ? 0.2 : _palette$tonalOffset,
+    other = _objectWithoutProperties$1(palette, _excluded$g);
   var primary = palette.primary || getDefaultPrimary(mode);
   var secondary = palette.secondary || getDefaultSecondary(mode);
   var error = palette.error || getDefaultError(mode);
@@ -8424,11 +8424,11 @@ function createPalette(palette) {
     var color = _ref.color,
       name = _ref.name,
       _ref$mainShade = _ref.mainShade,
-      mainShade = _ref$mainShade === undefined ? 500 : _ref$mainShade,
+      mainShade = _ref$mainShade === void 0 ? 500 : _ref$mainShade,
       _ref$lightShade = _ref.lightShade,
-      lightShade = _ref$lightShade === undefined ? 300 : _ref$lightShade,
+      lightShade = _ref$lightShade === void 0 ? 300 : _ref$lightShade,
       _ref$darkShade = _ref.darkShade,
-      darkShade = _ref$darkShade === undefined ? 700 : _ref$darkShade;
+      darkShade = _ref$darkShade === void 0 ? 700 : _ref$darkShade;
     color = _objectSpread2({}, color);
     if (!color.main && color[mainShade]) {
       color.main = color[mainShade];
@@ -8541,7 +8541,7 @@ function createMixins(breakpoints, mixins) {
   }, mixins);
 }
 
-var _excluded$g = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+var _excluded$f = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
 function round(value) {
   return Math.round(value * 1e5) / 1e5;
 }
@@ -8557,22 +8557,22 @@ var defaultFontFamily = '"Roboto", "Helvetica", "Arial", sans-serif';
 function createTypography(palette, typography) {
   var _ref = typeof typography === 'function' ? typography(palette) : typography,
     _ref$fontFamily = _ref.fontFamily,
-    fontFamily = _ref$fontFamily === undefined ? defaultFontFamily : _ref$fontFamily,
+    fontFamily = _ref$fontFamily === void 0 ? defaultFontFamily : _ref$fontFamily,
     _ref$fontSize = _ref.fontSize,
-    fontSize = _ref$fontSize === undefined ? 14 : _ref$fontSize,
+    fontSize = _ref$fontSize === void 0 ? 14 : _ref$fontSize,
     _ref$fontWeightLight = _ref.fontWeightLight,
-    fontWeightLight = _ref$fontWeightLight === undefined ? 300 : _ref$fontWeightLight,
+    fontWeightLight = _ref$fontWeightLight === void 0 ? 300 : _ref$fontWeightLight,
     _ref$fontWeightRegula = _ref.fontWeightRegular,
-    fontWeightRegular = _ref$fontWeightRegula === undefined ? 400 : _ref$fontWeightRegula,
+    fontWeightRegular = _ref$fontWeightRegula === void 0 ? 400 : _ref$fontWeightRegula,
     _ref$fontWeightMedium = _ref.fontWeightMedium,
-    fontWeightMedium = _ref$fontWeightMedium === undefined ? 500 : _ref$fontWeightMedium,
+    fontWeightMedium = _ref$fontWeightMedium === void 0 ? 500 : _ref$fontWeightMedium,
     _ref$fontWeightBold = _ref.fontWeightBold,
-    fontWeightBold = _ref$fontWeightBold === undefined ? 700 : _ref$fontWeightBold,
+    fontWeightBold = _ref$fontWeightBold === void 0 ? 700 : _ref$fontWeightBold,
     _ref$htmlFontSize = _ref.htmlFontSize,
-    htmlFontSize = _ref$htmlFontSize === undefined ? 16 : _ref$htmlFontSize,
+    htmlFontSize = _ref$htmlFontSize === void 0 ? 16 : _ref$htmlFontSize,
     allVariants = _ref.allVariants,
     pxToRem2 = _ref.pxToRem,
-    other = _objectWithoutProperties$1(_ref, _excluded$g);
+    other = _objectWithoutProperties$1(_ref, _excluded$f);
   if (process.env.NODE_ENV !== 'production') {
     if (typeof fontSize !== 'number') {
       console.error('MUI: `fontSize` is required to be a number.');
@@ -8643,7 +8643,7 @@ function createShadow() {
 // Values from https://github.com/material-components/material-components-web/blob/be8747f94574669cb5e7add1a7c54fa41a89cec7/packages/mdc-elevation/_variables.scss
 var shadows = ['none', createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
 
-var _excluded$f = ["duration", "easing", "delay"];
+var _excluded$e = ["duration", "easing", "delay"];
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
 var easing = {
@@ -8692,12 +8692,12 @@ function createTransitions(inputTransitions) {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['all'];
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var _options$duration = options.duration,
-      durationOption = _options$duration === undefined ? mergedDuration.standard : _options$duration,
+      durationOption = _options$duration === void 0 ? mergedDuration.standard : _options$duration,
       _options$easing = options.easing,
-      easingOption = _options$easing === undefined ? mergedEasing.easeInOut : _options$easing,
+      easingOption = _options$easing === void 0 ? mergedEasing.easeInOut : _options$easing,
       _options$delay = options.delay,
-      delay = _options$delay === undefined ? 0 : _options$delay,
-      other = _objectWithoutProperties$1(options, _excluded$f);
+      delay = _options$delay === void 0 ? 0 : _options$delay,
+      other = _objectWithoutProperties$1(options, _excluded$e);
     if (process.env.NODE_ENV !== 'production') {
       var isString = function isString(value) {
         return typeof value === 'string';
@@ -8778,7 +8778,7 @@ function stringifyTheme() {
   var serializableTheme = _objectSpread2({}, baseTheme);
   function serializeTheme(object) {
     var array = Object.entries(object);
-     
+    // eslint-disable-next-line no-plusplus
     for (var index = 0; index < array.length; index++) {
       var _array$index = _slicedToArray(array[index], 2),
         key = _array$index[0],
@@ -8795,23 +8795,28 @@ function stringifyTheme() {
   return "import { unstable_createBreakpoints as createBreakpoints, createTransitions } from '@mui/material/styles';\n\nconst theme = ".concat(JSON.stringify(serializableTheme, null, 2), ";\n\ntheme.breakpoints = createBreakpoints(theme.breakpoints || {});\ntheme.transitions = createTransitions(theme.transitions || {});\n\nexport default theme;");
 }
 
-var _excluded$e = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+var _excluded$d = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
 function createThemeNoVars() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   options.breakpoints;
     var _options$mixins = options.mixins,
-    mixinsInput = _options$mixins === undefined ? {} : _options$mixins;
+    mixinsInput = _options$mixins === void 0 ? {} : _options$mixins;
     options.spacing;
     var _options$palette = options.palette,
-    paletteInput = _options$palette === undefined ? {} : _options$palette,
+    paletteInput = _options$palette === void 0 ? {} : _options$palette,
     _options$transitions = options.transitions,
-    transitionsInput = _options$transitions === undefined ? {} : _options$transitions,
+    transitionsInput = _options$transitions === void 0 ? {} : _options$transitions,
     _options$typography = options.typography,
-    typographyInput = _options$typography === undefined ? {} : _options$typography;
+    typographyInput = _options$typography === void 0 ? {} : _options$typography;
     options.shape;
-    var other = _objectWithoutProperties$1(options, _excluded$e);
-  if (options.vars) {
-    throw new Error(process.env.NODE_ENV !== "production" ? 'MUI: `vars` is a private field used for CSS variables support.\n' + 'Please use another name.' : formatMuiErrorMessage(20));
+    var other = _objectWithoutProperties$1(options, _excluded$d);
+  if (options.vars &&
+  // The error should throw only for the root theme creation because user is not allowed to use a custom node `vars`.
+  // `generateThemeVars` is the closest identifier for checking that the `options` is a result of `createTheme` with CSS variables so that user can create new theme for nested ThemeProvider.
+  options.generateThemeVars === undefined) {
+    throw new Error(process.env.NODE_ENV !== "production" ? 'MUI: `vars` is a private field used for CSS variables support.\n' +
+    // #host-reference
+    'Please use another name or follow the [docs](https://mui.com/material-ui/customization/css-theme-variables/usage/) to enable the feature.' : formatMuiErrorMessage(20));
   }
   var palette = createPalette(paletteInput);
   var systemTheme = createTheme$1(options);
@@ -8837,7 +8842,7 @@ function createThemeNoVars() {
     var traverse = function traverse(node, component) {
       var key;
 
-       
+      // eslint-disable-next-line guard-for-in
       for (key in node) {
         var child = node[key];
         if (stateClasses.includes(key) && Object.keys(child).length > 0) {
@@ -8859,7 +8864,7 @@ function createThemeNoVars() {
       }
     });
   }
-  muiTheme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), other === null || other === undefined ? undefined : other.unstable_sxConfig);
+  muiTheme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), other === null || other === void 0 ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
     return styleFunctionSx({
       sx: props,
@@ -8882,7 +8887,7 @@ function getOverlayAlpha(elevation) {
   return Math.round(alphaValue * 10) / 1000;
 }
 
-var _excluded$d = ["palette", "opacity", "overlays"];
+var _excluded$c = ["palette", "opacity", "overlays"];
 var defaultDarkOverlays = _toConsumableArray(Array(25)).map(function (_, index) {
   if (index === 0) {
     return 'none';
@@ -8903,12 +8908,12 @@ function getOverlays(mode) {
 }
 function createColorScheme(options) {
   var _options$palette = options.palette,
-    paletteInput = _options$palette === undefined ? {
+    paletteInput = _options$palette === void 0 ? {
       mode: 'light'
     } : _options$palette,
     opacity = options.opacity,
     overlays = options.overlays,
-    rest = _objectWithoutProperties$1(options, _excluded$d);
+    rest = _objectWithoutProperties$1(options, _excluded$c);
   var palette = createPalette(paletteInput);
   return _objectSpread2({
     palette: palette,
@@ -8921,7 +8926,7 @@ function shouldSkipGeneratingVar(keys) {
   var _keys$;
   return !!keys[0].match(/(cssVarPrefix|colorSchemeSelector|rootSelector|typography|mixins|breakpoints|direction|transitions)/) || !!keys[0].match(/sxConfig$/) ||
   // ends with sxConfig
-  keys[0] === 'palette' && !!((_keys$ = keys[1]) !== null && _keys$ !== undefined && _keys$.match(/(mode|contrastThreshold|tonalOffset)/));
+  keys[0] === 'palette' && !!((_keys$ = keys[1]) !== null && _keys$ !== void 0 && _keys$.match(/(mode|contrastThreshold|tonalOffset)/));
 }
 
 /**
@@ -8944,7 +8949,7 @@ var defaultGetSelector = (function (theme) {
     if (selector === 'data') {
       rule = '[data-%s]';
     }
-    if (selector !== null && selector !== undefined && selector.startsWith('data-') && !selector.includes('%s')) {
+    if (selector !== null && selector !== void 0 && selector.startsWith('data-') && !selector.includes('%s')) {
       // 'data-mui-color-scheme' -> '[data-mui-color-scheme="%s"]'
       rule = "[".concat(selector, "=\"%s\"]");
     }
@@ -8978,7 +8983,7 @@ var defaultGetSelector = (function (theme) {
   };
 });
 
-var _excluded$c = ["palette"],
+var _excluded$b = ["palette"],
   _excluded2$2 = ["colorSchemes", "defaultColorScheme", "disableCssColorScheme", "cssVarPrefix", "shouldSkipGeneratingVar", "colorSchemeSelector", "rootSelector"];
 function assignNode(obj, keys) {
   keys.forEach(function (k) {
@@ -9038,21 +9043,21 @@ function attachColorScheme$1(colorSchemes, scheme, restTheme, colorScheme) {
     colorSchemes[colorScheme] = createColorScheme(_objectSpread2(_objectSpread2({}, scheme), {}, {
       palette: _objectSpread2({
         mode: mode
-      }, (_scheme = scheme) === null || _scheme === undefined ? undefined : _scheme.palette)
+      }, (_scheme = scheme) === null || _scheme === void 0 ? void 0 : _scheme.palette)
     }));
     return undefined;
   }
   var _createThemeNoVars = createThemeNoVars(_objectSpread2(_objectSpread2({}, restTheme), {}, {
       palette: _objectSpread2({
         mode: mode
-      }, (_scheme2 = scheme) === null || _scheme2 === undefined ? undefined : _scheme2.palette)
+      }, (_scheme2 = scheme) === null || _scheme2 === void 0 ? void 0 : _scheme2.palette)
     })),
     palette = _createThemeNoVars.palette,
-    muiTheme = _objectWithoutProperties$1(_createThemeNoVars, _excluded$c);
+    muiTheme = _objectWithoutProperties$1(_createThemeNoVars, _excluded$b);
   colorSchemes[colorScheme] = _objectSpread2(_objectSpread2({}, scheme), {}, {
     palette: palette,
-    opacity: _objectSpread2(_objectSpread2({}, getOpacity(mode)), (_scheme3 = scheme) === null || _scheme3 === undefined ? undefined : _scheme3.opacity),
-    overlays: ((_scheme4 = scheme) === null || _scheme4 === undefined ? undefined : _scheme4.overlays) || getOverlays(mode)
+    opacity: _objectSpread2(_objectSpread2({}, getOpacity(mode)), (_scheme3 = scheme) === null || _scheme3 === void 0 ? void 0 : _scheme3.opacity),
+    overlays: ((_scheme4 = scheme) === null || _scheme4 === void 0 ? void 0 : _scheme4.overlays) || getOverlays(mode)
   });
   return muiTheme;
 }
@@ -9068,20 +9073,20 @@ function attachColorScheme$1(colorSchemes, scheme, restTheme, colorScheme) {
 function createThemeWithVars() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var _options$colorSchemes = options.colorSchemes,
-    colorSchemesInput = _options$colorSchemes === undefined ? {
+    colorSchemesInput = _options$colorSchemes === void 0 ? {
       light: true
     } : _options$colorSchemes,
     defaultColorSchemeInput = options.defaultColorScheme,
     _options$disableCssCo = options.disableCssColorScheme,
-    disableCssColorScheme = _options$disableCssCo === undefined ? false : _options$disableCssCo,
+    disableCssColorScheme = _options$disableCssCo === void 0 ? false : _options$disableCssCo,
     _options$cssVarPrefix = options.cssVarPrefix,
-    cssVarPrefix = _options$cssVarPrefix === undefined ? 'mui' : _options$cssVarPrefix,
+    cssVarPrefix = _options$cssVarPrefix === void 0 ? 'mui' : _options$cssVarPrefix,
     _options$shouldSkipGe = options.shouldSkipGeneratingVar,
-    shouldSkipGeneratingVar$1 = _options$shouldSkipGe === undefined ? shouldSkipGeneratingVar : _options$shouldSkipGe,
+    shouldSkipGeneratingVar$1 = _options$shouldSkipGe === void 0 ? shouldSkipGeneratingVar : _options$shouldSkipGe,
     _options$colorSchemeS = options.colorSchemeSelector,
-    selector = _options$colorSchemeS === undefined ? colorSchemesInput.light && colorSchemesInput.dark ? 'media' : undefined : _options$colorSchemeS,
+    selector = _options$colorSchemeS === void 0 ? colorSchemesInput.light && colorSchemesInput.dark ? 'media' : undefined : _options$colorSchemeS,
     _options$rootSelector = options.rootSelector,
-    rootSelector = _options$rootSelector === undefined ? ':root' : _options$rootSelector,
+    rootSelector = _options$rootSelector === void 0 ? ':root' : _options$rootSelector,
     input = _objectWithoutProperties$1(options, _excluded2$2);
   var firstColorScheme = Object.keys(colorSchemesInput)[0];
   var defaultColorScheme = defaultColorSchemeInput || (colorSchemesInput.light && firstColorScheme !== 'light' ? 'light' : firstColorScheme);
@@ -9361,7 +9366,7 @@ function createThemeWithVars() {
   theme.getColorSchemeSelector = createGetColorSchemeSelector(selector);
   theme.spacing = theme.generateSpacing();
   theme.shouldSkipGeneratingVar = shouldSkipGeneratingVar$1;
-  theme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), input === null || input === undefined ? undefined : input.unstable_sxConfig);
+  theme.unstable_sxConfig = _objectSpread2(_objectSpread2({}, defaultSxConfig), input === null || input === void 0 ? void 0 : input.unstable_sxConfig);
   theme.unstable_sx = function sx(props) {
     return styleFunctionSx({
       sx: props,
@@ -9373,8 +9378,8 @@ function createThemeWithVars() {
   return theme;
 }
 
-var _excluded$b = ["palette", "cssVariables", "colorSchemes", "defaultColorScheme"];
- 
+var _excluded$a = ["palette", "cssVariables", "colorSchemes", "defaultColorScheme"];
+// eslint-disable-next-line consistent-return
 function attachColorScheme(theme, scheme, colorScheme) {
   if (!theme.colorSchemes) {
     return undefined;
@@ -9398,16 +9403,16 @@ function createTheme() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var palette = options.palette,
     _options$cssVariables = options.cssVariables,
-    cssVariables = _options$cssVariables === undefined ? false : _options$cssVariables,
+    cssVariables = _options$cssVariables === void 0 ? false : _options$cssVariables,
     _options$colorSchemes = options.colorSchemes,
-    initialColorSchemes = _options$colorSchemes === undefined ? !palette ? {
+    initialColorSchemes = _options$colorSchemes === void 0 ? !palette ? {
       light: true
     } : undefined : _options$colorSchemes,
     _options$defaultColor = options.defaultColorScheme,
-    initialDefaultColorScheme = _options$defaultColor === undefined ? palette === null || palette === undefined ? undefined : palette.mode : _options$defaultColor,
-    rest = _objectWithoutProperties$1(options, _excluded$b);
+    initialDefaultColorScheme = _options$defaultColor === void 0 ? palette === null || palette === void 0 ? void 0 : palette.mode : _options$defaultColor,
+    rest = _objectWithoutProperties$1(options, _excluded$a);
   var defaultColorSchemeInput = initialDefaultColorScheme || 'light';
-  var defaultScheme = initialColorSchemes === null || initialColorSchemes === undefined ? undefined : initialColorSchemes[defaultColorSchemeInput];
+  var defaultScheme = initialColorSchemes === null || initialColorSchemes === void 0 ? void 0 : initialColorSchemes[defaultColorSchemeInput];
   var colorSchemesInput = _objectSpread2(_objectSpread2({}, initialColorSchemes), palette ? _defineProperty$1({}, defaultColorSchemeInput, _objectSpread2(_objectSpread2({}, typeof defaultScheme !== 'boolean' && defaultScheme), {}, {
     palette: palette
   })) : undefined);
@@ -9417,7 +9422,7 @@ function createTheme() {
   if (cssVariables === false) {
     if (!('colorSchemes' in options)) {
       // Behaves exactly as v5
-      return createThemeNoVars.apply(undefined, [options].concat(args));
+      return createThemeNoVars.apply(void 0, [options].concat(args));
     }
     var paletteOptions = palette;
     if (!('palette' in options)) {
@@ -9432,7 +9437,7 @@ function createTheme() {
         }
       }
     }
-    var theme = createThemeNoVars.apply(undefined, [_objectSpread2(_objectSpread2({}, options), {}, {
+    var theme = createThemeNoVars.apply(void 0, [_objectSpread2(_objectSpread2({}, options), {}, {
       palette: paletteOptions
     })].concat(args));
     theme.defaultColorScheme = defaultColorSchemeInput;
@@ -9454,7 +9459,7 @@ function createTheme() {
   if (!palette && !('light' in colorSchemesInput) && defaultColorSchemeInput === 'light') {
     colorSchemesInput.light = true;
   }
-  return createThemeWithVars.apply(undefined, [_objectSpread2(_objectSpread2({}, rest), {}, {
+  return createThemeWithVars.apply(void 0, [_objectSpread2(_objectSpread2({}, rest), {}, {
     colorSchemes: colorSchemesInput,
     defaultColorScheme: defaultColorSchemeInput
   }, typeof cssVariables !== 'boolean' && cssVariables)].concat(args));
@@ -9494,7 +9499,7 @@ process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   value: PropTypes.object.isRequired
-} : undefined;
+} : void 0;
 function useDefaultProps(params) {
   return useDefaultProps$1(params);
 }
@@ -9504,7 +9509,7 @@ function getSvgIconUtilityClass(slot) {
 }
 generateUtilityClasses('MuiSvgIcon', ['root', 'colorPrimary', 'colorSecondary', 'colorAction', 'colorError', 'colorDisabled', 'fontSizeInherit', 'fontSizeSmall', 'fontSizeMedium', 'fontSizeLarge']);
 
-var _excluded$a = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
+var _excluded$9 = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
 var useUtilityClasses = function useUtilityClasses(ownerState) {
   var color = ownerState.color,
     fontSize = ownerState.fontSize,
@@ -9530,8 +9535,8 @@ var SvgIconRoot = styled('svg', {
     height: '1em',
     display: 'inline-block',
     flexShrink: 0,
-    transition: (_theme$transitions = theme.transitions) === null || _theme$transitions === undefined || (_theme$transitions$cr = _theme$transitions.create) === null || _theme$transitions$cr === undefined ? undefined : _theme$transitions$cr.call(_theme$transitions, 'fill', {
-      duration: (_transitions = ((_theme$vars = theme.vars) !== null && _theme$vars !== undefined ? _theme$vars : theme).transitions) === null || _transitions === undefined || (_transitions = _transitions.duration) === null || _transitions === undefined ? undefined : _transitions.shorter
+    transition: (_theme$transitions = theme.transitions) === null || _theme$transitions === void 0 || (_theme$transitions$cr = _theme$transitions.create) === null || _theme$transitions$cr === void 0 ? void 0 : _theme$transitions$cr.call(_theme$transitions, 'fill', {
+      duration: (_transitions = ((_theme$vars = theme.vars) !== null && _theme$vars !== void 0 ? _theme$vars : theme).transitions) === null || _transitions === void 0 || (_transitions = _transitions.duration) === null || _transitions === void 0 ? void 0 : _transitions.shorter
     }),
     variants: [{
       props: function props(_props) {
@@ -9554,23 +9559,23 @@ var SvgIconRoot = styled('svg', {
         fontSize: 'small'
       },
       style: {
-        fontSize: ((_theme$typography = theme.typography) === null || _theme$typography === undefined || (_theme$typography$pxT = _theme$typography.pxToRem) === null || _theme$typography$pxT === undefined ? undefined : _theme$typography$pxT.call(_theme$typography, 20)) || '1.25rem'
+        fontSize: ((_theme$typography = theme.typography) === null || _theme$typography === void 0 || (_theme$typography$pxT = _theme$typography.pxToRem) === null || _theme$typography$pxT === void 0 ? void 0 : _theme$typography$pxT.call(_theme$typography, 20)) || '1.25rem'
       }
     }, {
       props: {
         fontSize: 'medium'
       },
       style: {
-        fontSize: ((_theme$typography2 = theme.typography) === null || _theme$typography2 === undefined || (_theme$typography2$px = _theme$typography2.pxToRem) === null || _theme$typography2$px === undefined ? undefined : _theme$typography2$px.call(_theme$typography2, 24)) || '1.5rem'
+        fontSize: ((_theme$typography2 = theme.typography) === null || _theme$typography2 === void 0 || (_theme$typography2$px = _theme$typography2.pxToRem) === null || _theme$typography2$px === void 0 ? void 0 : _theme$typography2$px.call(_theme$typography2, 24)) || '1.5rem'
       }
     }, {
       props: {
         fontSize: 'large'
       },
       style: {
-        fontSize: ((_theme$typography3 = theme.typography) === null || _theme$typography3 === undefined || (_theme$typography3$px = _theme$typography3.pxToRem) === null || _theme$typography3$px === undefined ? undefined : _theme$typography3$px.call(_theme$typography3, 35)) || '2.1875rem'
+        fontSize: ((_theme$typography3 = theme.typography) === null || _theme$typography3 === void 0 || (_theme$typography3$px = _theme$typography3.pxToRem) === null || _theme$typography3$px === void 0 ? void 0 : _theme$typography3$px.call(_theme$typography3, 35)) || '2.1875rem'
       }
-    }].concat(_toConsumableArray(Object.entries(((_theme$vars2 = theme.vars) !== null && _theme$vars2 !== undefined ? _theme$vars2 : theme).palette).filter(function (_ref2) {
+    }].concat(_toConsumableArray(Object.entries(((_theme$vars2 = theme.vars) !== null && _theme$vars2 !== void 0 ? _theme$vars2 : theme).palette).filter(function (_ref2) {
       var _ref3 = _slicedToArray(_ref2, 2),
         value = _ref3[1];
       return value && value.main;
@@ -9583,7 +9588,7 @@ var SvgIconRoot = styled('svg', {
           color: color
         },
         style: {
-          color: (_palette = ((_theme$vars3 = theme.vars) !== null && _theme$vars3 !== undefined ? _theme$vars3 : theme).palette) === null || _palette === undefined || (_palette = _palette[color]) === null || _palette === undefined ? undefined : _palette.main
+          color: (_palette = ((_theme$vars3 = theme.vars) !== null && _theme$vars3 !== void 0 ? _theme$vars3 : theme).palette) === null || _palette === void 0 || (_palette = _palette[color]) === null || _palette === void 0 ? void 0 : _palette.main
         }
       };
     })), [{
@@ -9591,14 +9596,14 @@ var SvgIconRoot = styled('svg', {
         color: 'action'
       },
       style: {
-        color: (_palette2 = ((_theme$vars4 = theme.vars) !== null && _theme$vars4 !== undefined ? _theme$vars4 : theme).palette) === null || _palette2 === undefined || (_palette2 = _palette2.action) === null || _palette2 === undefined ? undefined : _palette2.active
+        color: (_palette2 = ((_theme$vars4 = theme.vars) !== null && _theme$vars4 !== void 0 ? _theme$vars4 : theme).palette) === null || _palette2 === void 0 || (_palette2 = _palette2.action) === null || _palette2 === void 0 ? void 0 : _palette2.active
       }
     }, {
       props: {
         color: 'disabled'
       },
       style: {
-        color: (_palette3 = ((_theme$vars5 = theme.vars) !== null && _theme$vars5 !== undefined ? _theme$vars5 : theme).palette) === null || _palette3 === undefined || (_palette3 = _palette3.action) === null || _palette3 === undefined ? undefined : _palette3.disabled
+        color: (_palette3 = ((_theme$vars5 = theme.vars) !== null && _theme$vars5 !== void 0 ? _theme$vars5 : theme).palette) === null || _palette3 === void 0 || (_palette3 = _palette3.action) === null || _palette3 === void 0 ? void 0 : _palette3.disabled
       }
     }, {
       props: {
@@ -9618,18 +9623,18 @@ var SvgIcon = /*#__PURE__*/React__namespace.forwardRef(function SvgIcon(inProps,
   var children = props.children,
     className = props.className,
     _props$color = props.color,
-    color = _props$color === undefined ? 'inherit' : _props$color,
+    color = _props$color === void 0 ? 'inherit' : _props$color,
     _props$component = props.component,
-    component = _props$component === undefined ? 'svg' : _props$component,
+    component = _props$component === void 0 ? 'svg' : _props$component,
     _props$fontSize = props.fontSize,
-    fontSize = _props$fontSize === undefined ? 'medium' : _props$fontSize,
+    fontSize = _props$fontSize === void 0 ? 'medium' : _props$fontSize,
     htmlColor = props.htmlColor,
     _props$inheritViewBox = props.inheritViewBox,
-    inheritViewBox = _props$inheritViewBox === undefined ? false : _props$inheritViewBox,
+    inheritViewBox = _props$inheritViewBox === void 0 ? false : _props$inheritViewBox,
     titleAccess = props.titleAccess,
     _props$viewBox = props.viewBox,
-    viewBox = _props$viewBox === undefined ? '0 0 24 24' : _props$viewBox,
-    other = _objectWithoutProperties$1(props, _excluded$a);
+    viewBox = _props$viewBox === void 0 ? '0 0 24 24' : _props$viewBox,
+    other = _objectWithoutProperties$1(props, _excluded$9);
   var hasSvgAsChild = /*#__PURE__*/ /*#__PURE__*/React__namespace.isValidElement(children) && children.type === 'svg';
   var ownerState = _objectSpread2(_objectSpread2({}, props), {}, {
     color: color,
@@ -9731,7 +9736,7 @@ process.env.NODE_ENV !== "production" ? SvgIcon.propTypes /* remove-proptypes */
    * @default '0 0 24 24'
    */
   viewBox: PropTypes.string
-} : undefined;
+} : void 0;
 SvgIcon.muiName = 'SvgIcon';
 
 function createSvgIcon(path, displayName) {
@@ -9762,16 +9767,16 @@ var ArrowDropDownIcon = createSvgIcon(/*#__PURE__*/jsxRuntimeExports.jsx("path",
 
 var Menu = function Menu(_ref) {
   var _ref$config = _ref.config,
-    config = _ref$config === undefined ? {
+    config = _ref$config === void 0 ? {
       items: [],
       logo: ''
     } : _ref$config,
     _ref$theme = _ref.theme,
-    theme = _ref$theme === undefined ? {} : _ref$theme,
+    theme = _ref$theme === void 0 ? {} : _ref$theme,
     externalIsCollapsed = _ref.isCollapsed,
     toggleMenu = _ref.toggleMenu,
     _ref$LinkComponent = _ref.LinkComponent,
-    LinkComponent = _ref$LinkComponent === undefined ? 'a' : _ref$LinkComponent;
+    LinkComponent = _ref$LinkComponent === void 0 ? 'a' : _ref$LinkComponent;
   var _useState = React.useState(false),
     _useState2 = _slicedToArray(_useState, 2),
     internalIsCollapsed = _useState2[0],
@@ -9884,13 +9889,13 @@ var GlobalStyles = ft(_templateObject || (_templateObject = _taggedTemplateLiter
   return theme.colors.hover;
 });
 
-var _excluded$9 = ["loading", "disabled", "loadingText", "children"];
+var _excluded$8 = ["loading", "disabled", "loadingText", "children"];
 var Button$1 = /*#__PURE__*/React__namespace.forwardRef(function Button(props, ref) {
   var loading = props.loading,
     disabled = props.disabled,
     loadingText = props.loadingText,
     children = props.children,
-    rest = _objectWithoutProperties$1(props, _excluded$9);
+    rest = _objectWithoutProperties$1(props, _excluded$8);
   return /*#__PURE__*/React__namespace.createElement(react.Button, _extends$2({
     disabled: loading || disabled,
     ref: ref
@@ -9928,84 +9933,97 @@ var themeForm = {
   size: 'md'
 };
 
-var StyledButton = function StyledButton(props) {
-  var handleSubmit = function handleSubmit(event) {
-    event.preventDefault();
-    if (props.onSubmit && !props.isDisabled) {
-      props.onSubmit();
+var StyledButton = function StyledButton(_ref) {
+  var label = _ref.label,
+    _ref$isLoading = _ref.isLoading,
+    isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading,
+    _ref$isDisabled = _ref.isDisabled,
+    isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
+    _ref$isSubmit = _ref.isSubmit,
+    isSubmit = _ref$isSubmit === void 0 ? false : _ref$isSubmit,
+    onClick = _ref.onClick,
+    onSubmit = _ref.onSubmit,
+    icon = _ref.icon,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 'md' : _ref$size,
+    _ref$loadingText = _ref.loadingText,
+    loadingText = _ref$loadingText === void 0 ? 'Loading...' : _ref$loadingText,
+    _ref$theme = _ref.theme,
+    theme = _ref$theme === void 0 ? themeForm : _ref$theme;
+  var mergedTheme = _objectSpread2(_objectSpread2({}, themeForm), theme);
+  var handleEvent = function handleEvent(event) {
+    if (isDisabled) return; // 🔹 Evita interacción si está deshabilitado
+
+    if (isSubmit && onSubmit) {
+      event.preventDefault();
+      onSubmit(event);
+    } else if (!isSubmit && onClick) {
+      onClick(event);
     }
   };
-  var handleClick = function handleClick() {
-    if (props.onClick && !props.isDisabled) {
-      props.onClick();
-    }
-  };
-  var theme = props.theme ? _objectSpread2(_objectSpread2({}, themeForm), props.theme) : themeForm;
-  if (props.isLoading) {
-    return /*#__PURE__*/React.createElement(Button$1, {
-      loading: true,
-      loadingText: props.loadingText || 'Loading...',
-      bg: themeForm.colors.buttonDisabled,
-      color: themeForm.colors.buttonText,
-      css: {
-        minWidth: themeForm.buttonMinWidth,
-        maxWidth: themeForm.buttonMaxWidth
-      },
-      size: props.size,
-      type: props.isSubmit ? 'submit' : 'button'
-    }, props.label);
-  }
   return /*#__PURE__*/React.createElement(Button$1, {
-    onClick: props.isSubmit ? undefined : handleClick,
-    onSubmit: props.isSubmit ? handleSubmit : undefined,
-    type: props.isSubmit ? 'submit' : 'button',
-    bg: props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonBg,
-    color: theme.colors.buttonText,
+    isLoading: isLoading,
+    loadingText: loadingText,
+    onClick: handleEvent // 🔹 Unifica `onClick` y `onSubmit`
+    ,
+    type: isSubmit ? 'submit' : 'button',
+    bg: isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonBg,
+    color: mergedTheme.colors.buttonText,
     css: {
-      minWidth: themeForm.buttonMinWidth,
-      maxWidth: themeForm.buttonMaxWidth
+      minWidth: mergedTheme.buttonMinWidth,
+      maxWidth: mergedTheme.buttonMaxWidth
     },
-    isDisabled: props.isDisabled,
+    isDisabled: isDisabled,
     _hover: {
-      bg: props.isDisabled ? theme.colors.buttonDisabled : theme.colors.buttonHover
+      bg: isDisabled ? mergedTheme.colors.buttonDisabled : mergedTheme.colors.buttonHover
     },
     _disabled: {
       cursor: 'not-allowed',
-      bg: themeForm.colors.buttonDisabled
+      bg: mergedTheme.colors.buttonDisabled
     },
-    size: props.size
-  }, props.icon && /*#__PURE__*/React.createElement("span", {
+    size: size
+  }, icon && /*#__PURE__*/React.createElement("span", {
     className: "button-icon"
-  }, props.icon), props.label);
+  }, icon), label);
 };
 
 var Button = function Button(_ref) {
   var _ref$label = _ref.label,
-    label = _ref$label === undefined ? '' : _ref$label,
+    label = _ref$label === void 0 ? '' : _ref$label,
     _ref$isLoading = _ref.isLoading,
-    isLoading = _ref$isLoading === undefined ? false : _ref$isLoading,
+    isLoading = _ref$isLoading === void 0 ? false : _ref$isLoading,
     _ref$isDisabled = _ref.isDisabled,
-    isDisabled = _ref$isDisabled === undefined ? false : _ref$isDisabled,
+    isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
     _ref$isSubmit = _ref.isSubmit,
-    isSubmit = _ref$isSubmit === undefined ? false : _ref$isSubmit,
+    isSubmit = _ref$isSubmit === void 0 ? false : _ref$isSubmit,
     onClick = _ref.onClick,
     onSubmit = _ref.onSubmit,
     _ref$icon = _ref.icon,
-    icon = _ref$icon === undefined ? null : _ref$icon,
+    icon = _ref$icon === void 0 ? null : _ref$icon,
     _ref$size = _ref.size,
-    size = _ref$size === undefined ? '' : _ref$size,
+    size = _ref$size === void 0 ? '' : _ref$size,
     _ref$loadingText = _ref.loadingText,
-    loadingText = _ref$loadingText === undefined ? '' : _ref$loadingText,
+    loadingText = _ref$loadingText === void 0 ? '' : _ref$loadingText,
     _ref$theme = _ref.theme,
-    theme = _ref$theme === undefined ? themeForm : _ref$theme;
+    theme = _ref$theme === void 0 ? themeForm : _ref$theme;
   var mergedTheme = _objectSpread2(_objectSpread2({}, themeForm), theme);
+  var handleClick = function handleClick(event) {
+    if (isDisabled) return; // Evita interacciones si está deshabilitado
+
+    if (isSubmit && onSubmit) {
+      event.preventDefault();
+      onSubmit(event); // 🔹 Llama a la función `onSubmit`
+    } else if (onClick) {
+      onClick(event); // 🔹 Llama a la función `onClick`
+    }
+  };
   return /*#__PURE__*/React.createElement(StyledButton, {
     label: label,
     isLoading: isLoading,
     isDisabled: isDisabled,
     size: size,
-    onClick: onClick,
-    onSubmit: onSubmit,
+    onClick: handleClick // 🔹 Solo manejamos eventos aquí
+    ,
     loadingText: loadingText,
     icon: icon,
     theme: mergedTheme,
@@ -10021,7 +10039,8 @@ Button.propTypes = {
   onSubmit: PropTypes.func,
   icon: PropTypes.element,
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
-  loadingText: PropTypes.string
+  loadingText: PropTypes.string,
+  theme: PropTypes.object
 };
 Button.defaultProps = {
   label: '',
@@ -10044,7 +10063,7 @@ var DefaultContext = {
 };
 var IconContext = React.createContext && /*#__PURE__*/React.createContext(DefaultContext);
 
-var _excluded$8 = ["attr", "size", "title"];
+var _excluded$7 = ["attr", "size", "title"];
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } } return target; }
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -10052,7 +10071,7 @@ function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbol
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), true).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (undefined !== e) { var i = e.call(t, r); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function Tree2Element(tree) {
   return tree && tree.map((node, i) => /*#__PURE__*/React.createElement(node.tag, _objectSpread({
     key: i
@@ -10070,7 +10089,7 @@ function IconBase(props) {
         size,
         title
       } = props,
-      svgProps = _objectWithoutProperties(props, _excluded$8);
+      svgProps = _objectWithoutProperties(props, _excluded$7);
     var computedSize = size || conf.size || "1em";
     var className;
     if (conf.className) className = conf.className;
@@ -10120,15 +10139,15 @@ var CloseButton = /*#__PURE__*/React__namespace.forwardRef(function CloseButton(
   }));
 });
 
-var _excluded$7 = ["children", "portalled", "portalRef", "backdrop"];
+var _excluded$6 = ["children", "portalled", "portalRef", "backdrop"];
 var DialogContent = /*#__PURE__*/React__namespace.forwardRef(function DialogContent(props, ref) {
   var children = props.children,
     _props$portalled = props.portalled,
-    portalled = _props$portalled === undefined ? true : _props$portalled,
+    portalled = _props$portalled === void 0 ? true : _props$portalled,
     portalRef = props.portalRef,
     _props$backdrop = props.backdrop,
-    backdrop = _props$backdrop === undefined ? true : _props$backdrop,
-    rest = _objectWithoutProperties$1(props, _excluded$7);
+    backdrop = _props$backdrop === void 0 ? true : _props$backdrop,
+    rest = _objectWithoutProperties$1(props, _excluded$6);
   return /*#__PURE__*/React__namespace.createElement(react.Portal, {
     disabled: !portalled,
     container: portalRef
@@ -10235,7 +10254,7 @@ Dialog.defaultProps = {
   placement: 'center'
 };
 
-var _excluded$6 = ["children", "inputProps"],
+var _excluded$5 = ["children", "inputProps"],
   _excluded2$1 = ["children", "label", "description"],
   _excluded3$1 = ["showSize", "clearable", "files"],
   _excluded4$1 = ["placeholder"];
@@ -10249,7 +10268,7 @@ function _nullishCoalesce(lhs, rhsFn) {
 var FileUploadRoot = /*#__PURE__*/React__namespace.forwardRef(function FileUploadRoot(props, ref) {
   var children = props.children,
     inputProps = props.inputProps,
-    rest = _objectWithoutProperties$1(props, _excluded$6);
+    rest = _objectWithoutProperties$1(props, _excluded$5);
   return /*#__PURE__*/React__namespace.createElement(react.FileUpload.Root, rest, /*#__PURE__*/React__namespace.createElement(react.FileUpload.HiddenInput, _extends$2({
     ref: ref
   }, inputProps)), children);
@@ -10320,7 +10339,7 @@ var FileInput = /*#__PURE__*/React__namespace.forwardRef(function FileInput(prop
     recipeProps = _inputRecipe$splitVar2[0],
     restProps = _inputRecipe$splitVar2[1];
   var _restProps$placeholde = restProps.placeholder,
-    placeholder = _restProps$placeholde === undefined ? 'Select file(s)' : _restProps$placeholde,
+    placeholder = _restProps$placeholde === void 0 ? 'Select file(s)' : _restProps$placeholde,
     rest = _objectWithoutProperties$1(restProps, _excluded4$1);
   return /*#__PURE__*/React__namespace.createElement(react.FileUpload.Trigger, {
     asChild: true
@@ -10349,16 +10368,16 @@ react.FileUpload.Trigger;
 
 var FileDropZone = function FileDropZone(_ref) {
   var _ref$maxWidth = _ref.maxWidth,
-    maxWidth = _ref$maxWidth === undefined ? 'xl' : _ref$maxWidth,
+    maxWidth = _ref$maxWidth === void 0 ? 'xl' : _ref$maxWidth,
     _ref$maxFiles = _ref.maxFiles,
-    maxFiles = _ref$maxFiles === undefined ? 10 : _ref$maxFiles,
+    maxFiles = _ref$maxFiles === void 0 ? 10 : _ref$maxFiles,
     _ref$label = _ref.label,
-    label = _ref$label === undefined ? 'Drag and drop here to upload' : _ref$label,
+    label = _ref$label === void 0 ? 'Drag and drop here to upload' : _ref$label,
     _ref$description = _ref.description,
-    description = _ref$description === undefined ? '.png, .jpg up to 5MB' : _ref$description,
+    description = _ref$description === void 0 ? '.png, .jpg up to 5MB' : _ref$description,
     onFileChange = _ref.onFileChange,
     _ref$accept = _ref.accept,
-    accept = _ref$accept === undefined ? ['image/png', 'image/jpeg'] : _ref$accept;
+    accept = _ref$accept === void 0 ? ['image/png', 'image/jpeg'] : _ref$accept;
   var handleFileChange = function handleFileChange(event) {
     if (onFileChange) {
       onFileChange(event);
@@ -10389,7 +10408,7 @@ FileDropZone.propTypes = {
   accept: PropTypes.arrayOf(PropTypes.string)
 };
 
-var _excluded$5 = ["startElement", "startElementProps", "endElement", "endElementProps", "children", "startOffset", "endOffset"];
+var _excluded$4 = ["startElement", "startElementProps", "endElement", "endElementProps", "children", "startOffset", "endOffset"];
 var InputGroup = /*#__PURE__*/React__namespace.forwardRef(function InputGroup(props, ref) {
   var startElement = props.startElement,
     startElementProps = props.startElementProps,
@@ -10397,10 +10416,10 @@ var InputGroup = /*#__PURE__*/React__namespace.forwardRef(function InputGroup(pr
     endElementProps = props.endElementProps,
     children = props.children,
     _props$startOffset = props.startOffset,
-    startOffset = _props$startOffset === undefined ? '6px' : _props$startOffset,
+    startOffset = _props$startOffset === void 0 ? '6px' : _props$startOffset,
     _props$endOffset = props.endOffset,
-    endOffset = _props$endOffset === undefined ? '6px' : _props$endOffset,
-    rest = _objectWithoutProperties$1(props, _excluded$5);
+    endOffset = _props$endOffset === void 0 ? '6px' : _props$endOffset,
+    rest = _objectWithoutProperties$1(props, _excluded$4);
   var child = React__namespace.Children.only(children);
   return /*#__PURE__*/React__namespace.createElement(react.Group, _extends$2({
     ref: ref
@@ -10422,7 +10441,7 @@ var FileField = function FileField(_ref) {
     accept = _ref.accept;
   var handleFileChange = function handleFileChange(event) {
     var _event$target;
-    var selectedFile = event === null || event === undefined || (_event$target = event.target) === null || _event$target === undefined ? undefined : _event$target.files[0];
+    var selectedFile = event === null || event === void 0 || (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.files[0];
     if (selectedFile && onFileChange) {
       onFileChange(selectedFile);
     }
@@ -10463,14 +10482,14 @@ FileField.defaultProps = {
   accept: null
 };
 
-var _excluded$4 = ["label", "children", "helperText", "errorText", "optionalText"];
+var _excluded$3 = ["label", "children", "helperText", "errorText", "optionalText"];
 var Field = /*#__PURE__*/React__namespace.forwardRef(function Field(props, ref) {
   var label = props.label,
     children = props.children,
     helperText = props.helperText,
     errorText = props.errorText,
     optionalText = props.optionalText,
-    rest = _objectWithoutProperties$1(props, _excluded$4);
+    rest = _objectWithoutProperties$1(props, _excluded$3);
   return /*#__PURE__*/React__namespace.createElement(react.Field.Root, _extends$2({
     ref: ref
   }, rest), label && /*#__PURE__*/React__namespace.createElement(react.Field.Label, null, label, /*#__PURE__*/React__namespace.createElement(react.Field.RequiredIndicator, {
@@ -10478,7 +10497,6 @@ var Field = /*#__PURE__*/React__namespace.forwardRef(function Field(props, ref) 
   })), children, helperText && /*#__PURE__*/React__namespace.createElement(react.Field.HelperText, null, helperText), errorText && /*#__PURE__*/React__namespace.createElement(react.Field.ErrorText, null, errorText));
 });
 
-var _excluded$3 = ["mergeTheme", "isDisabled", "isInvalid", "isRequired", "value", "onChange", "type"];
 var StyledBox$1 = function StyledBox(props) {
   return /*#__PURE__*/React.createElement(react.Box, _extends$2({}, props, {
     pb: 4,
@@ -10486,74 +10504,63 @@ var StyledBox$1 = function StyledBox(props) {
   }));
 };
 var StyledInput = function StyledInput(_ref) {
-  _ref.mergeTheme;
-    var isDisabled = _ref.isDisabled,
+  var isDisabled = _ref.isDisabled,
     isInvalid = _ref.isInvalid,
     isRequired = _ref.isRequired,
     value = _ref.value,
     onChange = _ref.onChange,
     type = _ref.type,
-    props = _objectWithoutProperties$1(_ref, _excluded$3);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, isInvalid ? /*#__PURE__*/React.createElement(Field, _extends$2({
+    errorText = _ref.errorText,
+    label = _ref.label,
+    labelColor = _ref.labelColor,
+    placeholder = _ref.placeholder,
+    size = _ref.size;
+  return /*#__PURE__*/React.createElement(Field, _extends$2({
     disabled: isDisabled,
-    invalid: true,
-    errorText: props.errorText || 'Error',
-    label: props.label,
+    invalid: isInvalid,
+    errorText: isInvalid ? errorText || 'Error' : undefined,
+    label: label,
     css: {
-      color: props.labelColor
+      color: labelColor
     }
   }, isRequired && {
     required: true
   }), /*#__PURE__*/React.createElement(react.Input, {
-    size: props.size,
-    placeholder: props.placeholder,
-    value: value,
+    size: size,
+    placeholder: placeholder,
+    value: value || '',
     onChange: onChange,
-    type: type // Pasar el tipo al Input
-  })) : /*#__PURE__*/React.createElement(Field, _extends$2({
-    disabled: isDisabled,
-    label: props.label,
-    css: {
-      color: props.labelColor
-    }
-  }, isRequired && {
-    required: true
-  }), /*#__PURE__*/React.createElement(react.Input, {
-    size: props.size,
-    placeholder: props.placeholder,
-    value: value,
-    onChange: onChange,
-    type: type // Pasar el tipo al Input
-  })));
+    type: type
+  }));
 };
 
 var TextField = function TextField(_ref) {
   var _ref$label = _ref.label,
-    label = _ref$label === undefined ? '' : _ref$label,
+    label = _ref$label === void 0 ? '' : _ref$label,
     _ref$value = _ref.value,
-    value = _ref$value === undefined ? '' : _ref$value,
+    value = _ref$value === void 0 ? '' : _ref$value,
     onChange = _ref.onChange,
     _ref$placeholder = _ref.placeholder,
-    placeholder = _ref$placeholder === undefined ? 'Enter text' : _ref$placeholder,
+    placeholder = _ref$placeholder === void 0 ? 'Enter text' : _ref$placeholder,
     _ref$errorMessage = _ref.errorMessage,
-    errorMessage = _ref$errorMessage === undefined ? '' : _ref$errorMessage,
+    errorMessage = _ref$errorMessage === void 0 ? '' : _ref$errorMessage,
     _ref$isInvalid = _ref.isInvalid,
-    isInvalid = _ref$isInvalid === undefined ? false : _ref$isInvalid,
+    isInvalid = _ref$isInvalid === void 0 ? false : _ref$isInvalid,
     _ref$isDisabled = _ref.isDisabled,
-    isDisabled = _ref$isDisabled === undefined ? false : _ref$isDisabled,
+    isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
     _ref$isRequired = _ref.isRequired,
-    isRequired = _ref$isRequired === undefined ? false : _ref$isRequired,
+    isRequired = _ref$isRequired === void 0 ? false : _ref$isRequired,
     _ref$type = _ref.type,
-    type = _ref$type === undefined ? 'text' : _ref$type,
+    type = _ref$type === void 0 ? 'text' : _ref$type,
     _ref$theme = _ref.theme,
-    theme = _ref$theme === undefined ? themeForm : _ref$theme;
+    theme = _ref$theme === void 0 ? themeForm : _ref$theme;
   var mergedTheme = _objectSpread2(_objectSpread2({}, themeForm), theme);
   return /*#__PURE__*/React.createElement(StyledBox$1, null, /*#__PURE__*/React.createElement(StyledInput, {
     label: label,
     type: type,
     errorText: errorMessage || '',
     placeholder: placeholder,
-    value: value,
+    value: value || '',
     onChange: onChange,
     isInvalid: isInvalid,
     "aria-invalid": isInvalid,
@@ -10607,7 +10614,7 @@ var SelectClearTrigger = /*#__PURE__*/React__namespace.forwardRef(function Selec
 });
 var SelectContent = /*#__PURE__*/React__namespace.forwardRef(function SelectContent(props, ref) {
   var _props$portalled = props.portalled,
-    portalled = _props$portalled === undefined ? true : _props$portalled,
+    portalled = _props$portalled === void 0 ? true : _props$portalled,
     portalRef = props.portalRef,
     rest = _objectWithoutProperties$1(props, _excluded2);
   return /*#__PURE__*/React__namespace.createElement(react.Portal, {
@@ -10652,7 +10659,7 @@ var SelectRoot = /*#__PURE__*/React__namespace.forwardRef(function SelectRoot(pr
 react.Select.Label;
 react.Select.ItemText;
 
-var _excluded$1 = ["label", "options", "isDisabled", "isInvalid", "isRequired", "isMultiple"];
+var _excluded$1 = ["label", "value", "options", "isDisabled", "isInvalid", "isRequired"];
 var StyledBox = function StyledBox(props) {
   return /*#__PURE__*/React.createElement(react.Box, _extends$2({}, props, {
     pb: 4,
@@ -10661,27 +10668,23 @@ var StyledBox = function StyledBox(props) {
 };
 var StyledSelect = function StyledSelect(_ref) {
   var label = _ref.label,
+    value = _ref.value,
     options = _ref.options,
     isDisabled = _ref.isDisabled,
     isInvalid = _ref.isInvalid,
     isRequired = _ref.isRequired,
-    isMultiple = _ref.isMultiple,
     props = _objectWithoutProperties$1(_ref, _excluded$1);
-  var _useState = React.useState([]),
-    _useState2 = _slicedToArray(_useState, 2);
-    _useState2[0];
-    var setValue = _useState2[1];
   var selectOptions = react.createListCollection({
-    items: options
+    items: options.map(function (opt) {
+      return {
+        value: String(opt.value),
+        label: opt.label
+      };
+    })
   });
   var handleValueChange = function handleValueChange(selectedItem) {
-    var value = Array.isArray(selectedItem.value) ? selectedItem.value[0] : selectedItem.value;
-    setValue(value);
-    if (props.onChange) {
-      props.onChange(value);
-    } else {
-      console.warn('props.onChange is undefined!');
-    }
+    var _props$onChange;
+    (_props$onChange = props.onChange) === null || _props$onChange === void 0 || _props$onChange.call(props, selectedItem.value);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, isInvalid ? /*#__PURE__*/React.createElement(Field, _extends$2({
     disabled: isDisabled,
@@ -10693,23 +10696,19 @@ var StyledSelect = function StyledSelect(_ref) {
     }
   }, isRequired && {
     required: true
-  }), /*#__PURE__*/React.createElement(SelectRoot, _extends$2({
+  }), /*#__PURE__*/React.createElement(SelectRoot, {
     collection: selectOptions,
     size: props.size,
-    defaultValue: props.defaultValue,
-    onValueChange: function onValueChange(value) {
-      handleValueChange(value);
-    }
-  }, isMultiple && {
-    multiple: true
-  }), /*#__PURE__*/React.createElement(SelectTrigger, null, /*#__PURE__*/React.createElement(SelectValueText, {
+    value: value,
+    onValueChange: handleValueChange
+  }, /*#__PURE__*/React.createElement(react.SelectControl, null, /*#__PURE__*/React.createElement(SelectTrigger, null, /*#__PURE__*/React.createElement(SelectValueText, {
     placeholder: props.placeholder
-  })), /*#__PURE__*/React.createElement(SelectContent, null, selectOptions.items.map(function (record) {
+  })), /*#__PURE__*/React.createElement(react.SelectIndicatorGroup, null, /*#__PURE__*/React.createElement(react.SelectIndicator, null))), /*#__PURE__*/React.createElement(react.Portal, null, /*#__PURE__*/React.createElement(react.SelectPositioner, null, /*#__PURE__*/React.createElement(SelectContent, null, selectOptions.items.map(function (record) {
     return /*#__PURE__*/React.createElement(SelectItem, {
       item: record,
       key: record.value
     }, record.label);
-  })))) : /*#__PURE__*/React.createElement(Field, _extends$2({
+  })))))) : /*#__PURE__*/React.createElement(Field, _extends$2({
     disabled: isDisabled,
     label: label,
     css: {
@@ -10717,59 +10716,52 @@ var StyledSelect = function StyledSelect(_ref) {
     }
   }, isRequired && {
     required: true
-  }), /*#__PURE__*/React.createElement(SelectRoot, _extends$2({
+  }), /*#__PURE__*/React.createElement(SelectRoot, {
+    key: value,
     collection: selectOptions,
     size: props.size,
-    defaultValue: props.defaultValue,
-    onValueChange: function onValueChange(value) {
-      handleValueChange(value);
-    }
-  }, isMultiple && {
-    multiple: true
-  }), /*#__PURE__*/React.createElement(SelectTrigger, null, /*#__PURE__*/React.createElement(SelectValueText, {
+    defaultValue: value,
+    onValueChange: handleValueChange
+  }, /*#__PURE__*/React.createElement(react.SelectControl, null, /*#__PURE__*/React.createElement(SelectTrigger, null, /*#__PURE__*/React.createElement(SelectValueText, {
     placeholder: props.placeholder
-  })), /*#__PURE__*/React.createElement(SelectContent, null, selectOptions.items.map(function (record) {
+  })), /*#__PURE__*/React.createElement(react.SelectIndicatorGroup, null, /*#__PURE__*/React.createElement(react.SelectIndicator, null))), /*#__PURE__*/React.createElement(react.Portal, null, /*#__PURE__*/React.createElement(react.SelectPositioner, null, /*#__PURE__*/React.createElement(SelectContent, null, selectOptions.items.map(function (record) {
     return /*#__PURE__*/React.createElement(SelectItem, {
       item: record,
       key: record.value
     }, record.label);
-  })))));
+  })))))));
 };
 
 var SelectField = function SelectField(_ref) {
   var _ref$label = _ref.label,
-    label = _ref$label === undefined ? '' : _ref$label,
-    _ref$defaultValue = _ref.defaultValue,
-    defaultValue = _ref$defaultValue === undefined ? '' : _ref$defaultValue,
+    label = _ref$label === void 0 ? '' : _ref$label,
+    _ref$value = _ref.value,
+    value = _ref$value === void 0 ? '' : _ref$value,
     onChange = _ref.onChange,
     _ref$options = _ref.options,
-    options = _ref$options === undefined ? [] : _ref$options,
+    options = _ref$options === void 0 ? [] : _ref$options,
     _ref$placeholder = _ref.placeholder,
-    placeholder = _ref$placeholder === undefined ? 'Select an option' : _ref$placeholder,
+    placeholder = _ref$placeholder === void 0 ? 'Select an option' : _ref$placeholder,
     _ref$errorMessage = _ref.errorMessage,
-    errorMessage = _ref$errorMessage === undefined ? '' : _ref$errorMessage,
+    errorMessage = _ref$errorMessage === void 0 ? '' : _ref$errorMessage,
     _ref$isInvalid = _ref.isInvalid,
-    isInvalid = _ref$isInvalid === undefined ? false : _ref$isInvalid,
+    isInvalid = _ref$isInvalid === void 0 ? false : _ref$isInvalid,
     _ref$isDisabled = _ref.isDisabled,
-    isDisabled = _ref$isDisabled === undefined ? false : _ref$isDisabled,
+    isDisabled = _ref$isDisabled === void 0 ? false : _ref$isDisabled,
     _ref$isRequired = _ref.isRequired,
-    isRequired = _ref$isRequired === undefined ? false : _ref$isRequired,
-    _ref$isMultiple = _ref.isMultiple,
-    isMultiple = _ref$isMultiple === undefined ? false : _ref$isMultiple,
+    isRequired = _ref$isRequired === void 0 ? false : _ref$isRequired,
     _ref$theme = _ref.theme,
-    theme = _ref$theme === undefined ? themeForm : _ref$theme;
+    theme = _ref$theme === void 0 ? themeForm : _ref$theme;
   var mergedTheme = _objectSpread2(_objectSpread2({}, themeForm), theme);
-  console.log(mergedTheme);
   return /*#__PURE__*/React.createElement(StyledBox, null, /*#__PURE__*/React.createElement(StyledSelect, {
     label: label,
-    defaultValue: defaultValue,
+    value: value,
     onChange: onChange,
     options: options,
     placeholder: placeholder,
     isInvalid: isInvalid,
     isDisabled: isDisabled,
     isRequired: isRequired,
-    isMultiple: isMultiple,
     errorMessage: errorMessage,
     borderColor: mergedTheme.colors.inputBorderColor,
     size: mergedTheme.size,
@@ -10803,7 +10795,7 @@ var Form = function Form(_ref) {
   var _useState = React.useState(function () {
       return fields.flat().reduce(function (acc, field) {
         if (field.name) {
-          acc[field.name] = field.defaultValue || '';
+          acc[field.name] = field.type === 'select' ? field.value || '' : field.value || '';
         }
         return acc;
       }, {});
@@ -10811,37 +10803,40 @@ var Form = function Form(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     formValues = _useState2[0],
     setFormValues = _useState2[1];
-  var _useState3 = React.useState(function () {
-      return fields.flat().reduce(function (acc, field) {
-        acc[field.name] = '';
+  React.useEffect(function () {
+    setFormValues(function (prevValues) {
+      var newValues = fields.flat().reduce(function (acc, field) {
+        if (field.name) {
+          var _ref2, _field$value;
+          var newValue = (_ref2 = (_field$value = field.value) !== null && _field$value !== void 0 ? _field$value : prevValues[field.name]) !== null && _ref2 !== void 0 ? _ref2 : '';
+          if (newValue !== prevValues[field.name]) {
+            acc[field.name] = newValue;
+          }
+        }
         return acc;
       }, {});
-    }),
+      return Object.keys(newValues).length ? _objectSpread2(_objectSpread2({}, prevValues), newValues) : prevValues;
+    });
+  }, [fields]);
+  var _useState3 = React.useState({}),
     _useState4 = _slicedToArray(_useState3, 2),
     errors = _useState4[0],
     setErrors = _useState4[1];
   var resetForm = function resetForm() {
     setFormValues(fields.flat().reduce(function (acc, field) {
       if (field.name) {
-        acc[field.name] = field.defaultValue || '';
+        acc[field.name] = field.type === 'select' ? String(field.value || '') : field.value || '';
       }
       return acc;
     }, {}));
-    setErrors(fields.flat().reduce(function (acc, field) {
-      acc[field.name] = '';
-      return acc;
-    }, {}));
+    setErrors({});
   };
   var validate = function validate() {
     var newErrors = {};
     fields.flat().forEach(function (field) {
       var value = formValues[field.name];
       if (field.isRequired && !value) {
-        if (field.errorMessage) {
-          newErrors[field.name] = field.errorMessage;
-        } else {
-          newErrors[field.name] = "".concat(field.label || 'This field', " is required.");
-        }
+        newErrors[field.name] = field.errorMessage || "".concat(field.label || 'This field', " is required.");
       }
       if (field.validate) {
         var customError = field.validate(value, formValues);
@@ -10861,22 +10856,10 @@ var Form = function Form(_ref) {
       return _objectSpread2(_objectSpread2({}, prev), {}, _defineProperty$1({}, name, ''));
     });
   };
-  var filterUndefinedFields = function filterUndefinedFields(values) {
-    var filteredValues = {};
-    Object.keys(values).forEach(function (key) {
-      if (key && key !== 'undefined') {
-        filteredValues[key] = values[key];
-      }
-    });
-    return filteredValues;
-  };
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
     if (validate()) {
-      var filteredValues = filterUndefinedFields(formValues);
-      if (onSubmit) {
-        onSubmit(filteredValues);
-      }
+      onSubmit === null || onSubmit === void 0 || onSubmit(formValues);
     }
   };
   return /*#__PURE__*/React.createElement(react.Box, {
@@ -10925,7 +10908,7 @@ var Form = function Form(_ref) {
           errorMessage: errors[subField.name],
           theme: theme,
           type: subField.type
-        }), subField.type === 'select' && /*#__PURE__*/React.createElement(SelectField, {
+        }), subField.type === 'select' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectField, {
           label: subField.label,
           value: formValues[subField.name],
           onChange: function onChange(value) {
@@ -10937,7 +10920,7 @@ var Form = function Form(_ref) {
           isInvalid: !!errors[subField.name],
           errorMessage: errors[subField.name],
           theme: theme
-        }), subField.type === 'file' && /*#__PURE__*/React.createElement(FileField, {
+        })), subField.type === 'file' && /*#__PURE__*/React.createElement(FileField, {
           label: subField.label,
           maxWidth: subField.maxWidth,
           accept: subField.accept,
@@ -10947,7 +10930,7 @@ var Form = function Form(_ref) {
         }));
       }));
     }
-    if (field.type === 'text' || field.type === 'date' || field.type === 'select' || field.type === 'file' || field.type === 'drop') {
+    if (['text', 'date', 'select', 'file', 'drop'].includes(field.type)) {
       return /*#__PURE__*/React.createElement(React.Fragment, {
         key: field.name
       }, field.type === 'text' && /*#__PURE__*/React.createElement(TextField, {
@@ -10973,7 +10956,7 @@ var Form = function Form(_ref) {
         errorMessage: errors[field.name],
         theme: theme,
         type: field.type
-      }), field.type === 'select' && /*#__PURE__*/React.createElement(SelectField, {
+      }), field.type === 'select' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectField, {
         label: field.label,
         value: formValues[field.name],
         onChange: function onChange(value) {
@@ -10985,7 +10968,7 @@ var Form = function Form(_ref) {
         isInvalid: !!errors[field.name],
         errorMessage: errors[field.name],
         theme: theme
-      }), field.type === 'file' && /*#__PURE__*/React.createElement(FileField, {
+      })), field.type === 'file' && /*#__PURE__*/React.createElement(FileField, {
         label: field.label,
         maxWidth: field.maxWidth,
         accept: field.accept,
@@ -11022,7 +11005,12 @@ var Form = function Form(_ref) {
       loadingText: button.loadingText,
       isDisabled: button.isDisabled,
       size: button.size,
-      onClick: button.isSubmit ? handleSubmit : button.isReset ? resetForm : button.onClick,
+      onClick: button.isSubmit ? handleSubmit : button.isReset ? function () {
+        return resetForm();
+      } : function (event) {
+        var _button$onClick;
+        return (_button$onClick = button.onClick) === null || _button$onClick === void 0 ? void 0 : _button$onClick.call(button, event, formValues, setFormValues);
+      },
       icon: button.icon,
       theme: button.theme,
       isSubmit: button.isSubmit
@@ -11036,7 +11024,7 @@ Form.propTypes = {
     label: PropTypes.string,
     type: PropTypes.oneOf(['text', 'date', 'select', 'button', 'file', 'drop']).isRequired,
     placeholder: PropTypes.string,
-    defaultValue: PropTypes.string,
+    value: PropTypes.string,
     options: PropTypes.array,
     isInvalid: PropTypes.bool,
     errorMessage: PropTypes.string,
@@ -11096,9 +11084,9 @@ var variantMap = {
 };
 var PaginationRoot = /*#__PURE__*/React__namespace.forwardRef(function PaginationRoot(props, ref) {
   var _props$size = props.size,
-    size = _props$size === undefined ? 'sm' : _props$size,
+    size = _props$size === void 0 ? 'sm' : _props$size,
     _props$variant = props.variant,
-    variant = _props$variant === undefined ? 'outline' : _props$variant,
+    variant = _props$variant === void 0 ? 'outline' : _props$variant,
     getHref = props.getHref,
     rest = _objectWithoutProperties$1(props, _excluded);
   return /*#__PURE__*/React__namespace.createElement(RootPropsProvider, {
@@ -11803,7 +11791,7 @@ var defaultStyles = {
 };
 
 function styleInject(css, ref) {
-  if (ref === undefined) ref = {};
+  if (ref === void 0) ref = {};
   var insertAt = ref.insertAt;
   if (typeof document === 'undefined') {
     return;
@@ -11845,11 +11833,11 @@ styleInject(css_248z);
 var Notifications = function Notifications(_ref) {
   var message = _ref.message,
     _ref$type = _ref.type,
-    type = _ref$type === undefined ? 'info' : _ref$type,
+    type = _ref$type === void 0 ? 'info' : _ref$type,
     _ref$duration = _ref.duration,
-    duration = _ref$duration === undefined ? 5000 : _ref$duration,
+    duration = _ref$duration === void 0 ? 5000 : _ref$duration,
     _ref$position = _ref.position,
-    position = _ref$position === undefined ? 'top-right' : _ref$position,
+    position = _ref$position === void 0 ? 'top-right' : _ref$position,
     theme = _ref.theme;
   var notify = function notify() {
     var styles = theme ? _objectSpread2(_objectSpread2({}, defaultStyles[type]), theme) : defaultStyles[type];
